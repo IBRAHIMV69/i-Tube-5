@@ -61,15 +61,15 @@
         .tags {
             display: flex;
             gap: 10px;
-            margin-top: 10px;
+            margin-top: 14px;
             overflow-x: auto;
-            padding: 8px 0;
+            padding: 8px ;
             width: 100%;
         }
 
         .tags .tag {
             padding: 5px 10px;
-            background-color: #333;
+            background-color: #hhh;
             border-radius: 20px;
             font-size: 14px;
             cursor: pointer;
@@ -88,7 +88,7 @@
             gap: 10px;
             padding: 7px;
             height: calc(100vh - 120px);
-            overflow-y: auto; /* Enable vertical scrolling */
+            overflow-y: auto; 
         }
 
         .video-item {
@@ -121,6 +121,7 @@
             cursor: pointer;
         }
 
+        /* Video Navigation Styles */
         #video-nav {
             display: none;
             position: fixed;
@@ -128,46 +129,49 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background-color: rgba(0, 0, 0, 0.9);
+            background-color: rgba(0, 0, 0, 0.8);
             z-index: 1001;
             overflow: hidden;
         }
 
         #video-nav iframe {
             width: 100%;
-            height: 40%;
+            height: 35%;
             border: none;
             position: relative;
+            border-radius: 12px;
             z-index: 1;
+            border: 1px solid #333;
         }
 
         #close-btn {
             background-color: #d32f2f;
             color: white;
-            font-size: 17px; 
-            font-weight: bold; 
+            font-size: 17px;
+            font-weight: bold;
             cursor: pointer;
-            border: none; 
-            border-radius: 20px; 
-            margin: 21px 0; 
-            padding: 4px 15px; top: 10px;
-            right: 10px; 
-            transition: all 0.3s ease; 
+            border: none;
+            border-radius: 10px;
+            margin: 8px;
+            padding: 5px 10px;
+            border: 1px solid #ccc;
+            transition: background 0.3s;
         }
 
         #close-btn:hover {
             background-color: #c62828;
         }
+
         #social-media {
             display: flex;
             justify-content: center;
             gap: 15px;
-            margin: 15px 0;
+            margin: 10px 0;
         }
 
         .social-icon {
             color: white;
-            font-size: 24px;
+            font-size: 21px;
             cursor: pointer;
         }
 
@@ -176,22 +180,24 @@
             bottom: 0;
             left: 0;
             right: 0;
-            z-index: 2;
+            z-index: 10;
             padding: 10px;
             background-color: rgba(0, 0, 0, 0.6);
+            border-top: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 12px;
         }
 
         #popular-videos h3 {
             margin: 0 0 15px;
-            font-size: 10px;
-            color: #fff;
+            font-size: 12px;
+            color: #ffffff;
             text-align: center;
         }
 
         #popular-container {
             display: flex;
             overflow-x: auto;
-            gap: 4px;
+            gap: 10px;
             padding: 5px 0;
         }
 
@@ -199,41 +205,53 @@
             flex: 0 0 auto;
             width: 150px;
             cursor: pointer;
+            border-radius: 12px;
+            transition: transform 0.3s;
+            overflow: hidden;
+        }
+
+        .popular-item:hover {
+            transform: scale(1.05);
         }
 
         .popular-item img {
             width: 90%;
-            height: 192px;
+            height: 180px;
             object-fit: cover;
-            border-radius: 5px;
+            border-radius: 12px;
         }
 
         .popular-item h4 {
-            font-size: 8.5px;
+            font-size: 8px;
             margin: 0 0 5px;
-            color: #fff;
+            color: #ffffff;
             text-align: center;
+            font-weight: bold;
         }
 
         /* Footer styles */
         footer {
             display: flex;
             justify-content: space-around;
-            padding: 10px 0;
+            padding: 12px 0;
             background-color: #141414;
             box-shadow: 0 -4px 6px rgba(0, 0, 0, 0.1);
             position: fixed;
             bottom: 0;
             left: 0;
             width: 100%;
-            transition: transform 0.3s; /* Smooth transition */
+            transition: transform 0.3s; 
         }
 
         footer .nav-icon {
             text-align: center;
-            font-size: 16px;
+            font-size: 12px; 
             color: #fff;
             cursor: pointer;
+        }
+
+        footer .nav-icon i {
+            font-size: 19px; 
         }
 
         footer .nav-icon:hover {
@@ -244,32 +262,20 @@
         #playlist-container {
             margin-top: 120px;
             display: grid;
-            grid-template-columns: repeat(2, 1fr); /* Change to a grid layout */
-            gap: 10px; /* Set the gap between items */
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px; 
             padding: 7px;
             height: calc(100vh - 120px);
-            overflow-y: auto; /* Enable vertical scrolling */
-        }
-
-        .playlist-item {
-            position: relative;
-            cursor: pointer;
-        }
-
-        .playlist-item img {
-            width: 100%;
-            aspect-ratio: 16 / 9;
-            object-fit: cover;
-            border-radius: 8px;
+            overflow-y: auto; 
         }
 
         /* Saved styles */
         #saved-container {
             margin-top: 120px;
             padding: 10px;
-            display: none; /* Initially hidden */
-            height: calc(100vh - 120px); /* Allow for scrolling */
-            overflow-y: auto; /* Enable vertical scrolling */
+            display: none; 
+            height: calc(100vh - 120px); 
+            overflow-y: auto; 
         }
 
         .saved-item {
@@ -298,16 +304,50 @@
 
         .saved-item span {
             cursor: pointer;
-            color: red; /* Change text color to red */
-            margin-left: 10px; /* Add some space between title and remove button */
-            font-size: 14px; /* Adjust font size */
-            transition: color 0.3s; /* Smooth color transition */
+            color: red; 
+            margin-left: 10px; 
+            font-size: 14px; 
+            transition: color 0.3s; 
         }
 
         .saved-item span:hover {
-            color: darkred; /* Darker shade on hover */
-            text-decoration: underline; /* Underline on hover */
+            color: darkred; 
+            text-decoration: underline; 
         }
+
+        /* Viewed History styles */
+        #viewed-history-container {
+            margin-top: 120px;
+            padding: 10px;
+            display: none; 
+            height: calc(100vh - 120px); 
+            overflow-y: auto; 
+        }
+
+        .viewed-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+            background-color: #141414;
+            padding: 10px;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .viewed-item img {
+            width: 180px;
+            height: 250px;
+            object-fit: cover;
+            border-radius: 5px;
+            margin-right: 10px;
+        }
+
+        .viewed-item h3 {
+            margin: 0;
+            font-size: 10px;
+            flex: 1;
+        }
+
         .install-message {
     position: fixed;
     bottom: 20px;
@@ -357,7 +397,6 @@
 }
     </style>
 </head>
-
 <body>
 
 <header>
@@ -372,7 +411,7 @@
         <div class="tag" onclick="filterByTag('Battles')">Battles</div>
         <div class="tag" onclick="filterByTag('SHARKS')">SHARKS</div>
         <div class="tag" onclick="filterByTag('Chinese')">Chinese</div>
-        <div class="tag" onclick="filterByTag('Hindi')">Hindi</div>
+        <div class="tag" onclick="filterByTag('Indian')">Indian</div>
         <div class="tag" onclick="filterByTag('Europe')">Europe</div>
     </div>
 </header>
@@ -383,32 +422,59 @@
     <button id="close-btn" class="close-btn">✖</button>
 </div>
 
-<!-- Home Section (Video Grid) -->
 <div id="frames-container"></div>
 
-<!-- Video Navigation -->
 <div id="video-nav">
-    <button id="close-btn" onclick="closeNav()" aria-label="Close video"> ⬅️ Back</button>
+    <button id="close-btn" onclick="closeNav()" aria-label="Close video"> ✖ Close</button>
     <iframe id="video-player" src="" allowfullscreen></iframe>
-    
-    <!-- Social Media Icons -->
+
     <div id="social-media">
         <i class="fab fa-telegram social-icon" onclick="shareLink('telegram')"></i>
         <i class="fab fa-twitter social-icon" onclick="shareLink('twitter')"></i>
         <i class="fab fa-whatsapp social-icon" onclick="shareLink('whatsapp')"></i>
         <i class="fas fa-share social-icon" onclick="shareLink('generic')"></i>
     </div>
-    
+
     <div id="popular-videos">
         <h3>Dive into non-stop fun with more movies below.</h3>
         <div id="popular-container"></div>
+        <div id="social-media" style="display: flex; justify-content: center; margin-top: 10px;">
+    <a href="https://www.facebook.com/username" target="_blank" class="social-icon">
+        <i class="fab fa-facebook-f"></i>
+    </a>
+    <a href="https://twitter.com/username" target="_blank" class="social-icon">
+        <i class="fab fa-twitter"></i>
+    </a>
+    <a href="https://telegram.me/username" target="_blank" class="social-icon">
+        <i class="fab fa-telegram-plane"></i>
+    </a>
+    <a href="https://www.pinterest.com/username" target="_blank" class="social-icon">
+        <i class="fab fa-pinterest"></i>
+    </a>
+    <a href="https://www.instagram.com/username" target="_blank" class="social-icon">
+        <i class="fab fa-instagram"></i>
+    </a>
+    <a href="https://wa.me/1234567890" target="_blank" class="social-icon">
+        <i class="fab fa-whatsapp"></i>
+    </a>
+    <a href="https://www.tiktok.com/@username" target="_blank" class="social-icon">
+        <i class="fab fa-tiktok"></i>
+    </a>
+    <a href="https://www.youtube.com/channel/UC123456" target="_blank" class="social-icon">
+        <i class="fab fa-youtube"></i>
+    </a>
+</div>
+<h3>To comment or discuss Business, follow us on social media.</h3>
     </div>
 </div>
 
-<!-- Playlist Section -->
+<div id="viewed-history-container">
+    <h2>Recently Viewed</h2>
+    <div id="viewed-content"></div>
+</div>
+
 <div id="playlist-container"></div>
 
-<!-- Saved Section -->
 <div id="saved-container">
     <h2>To save a movie here, click on the movie star.</h2>
     <div id="saved-content"></div>
@@ -423,6 +489,9 @@
     </div>
     <div class="nav-icon" id="saved-btn" onclick="showSaved()">
         <i class="fas fa-bookmark"></i><br>Saved
+    </div>
+    <div class="nav-icon" id="viewed-history-btn" onclick="showViewedHistory()">
+        <i class="fas fa-history"></i><br>History
     </div>
 </footer>
 
@@ -443,8 +512,8 @@ const data = [
     },
     {
         imgUrl: "https://bit.ly/4gCtC1L",
-        videoUrl: "https://youtube.com/embed/CetjkiaH2x0",
-        title: "APOCALYPSE",
+        videoUrl: "https://youtube.com/embed/4Q8fJlbUn3w",
+        title: "APOCALYPSE 2 - TRAILER",
         tag: "Battles",
     },
     {
@@ -453,29 +522,44 @@ const data = [
         title: "TSUNAMI SHARKS",
         tag: "SHARKS",
     },
-    {
-        imgUrl: "https://bit.ly/4gu8VVv",
-        videoUrl: "https://youtube.com/embed/t7zbGjXvUxA",
-        title: "SKY MONSTER",
-        tag: "Monster",
-    },
-    {
-        imgUrl: "https://bit.ly/3W3HPMy",
-        videoUrl: "https://youtube.com/embed/_vFRK1LGWoE",
-        title: "DOUBLE ISMART",
-        tag: "Hindi",
-    },
-    // Add more video data as needed
 ];
 
 // Load saved videos from local storage
 let savedVideos = JSON.parse(localStorage.getItem('savedVideos')) || [];
+let viewedVideos = JSON.parse(localStorage.getItem('videoHistory')) || [];
+
+// Video Management Class
+class VideoHistory {
+    constructor() {
+        this.history = JSON.parse(localStorage.getItem('videoHistory')) || [];
+    }
+
+    addVideo(video) {
+        const existingIndex = this.history.findIndex(item => item.videoUrl === video.videoUrl);
+        if (existingIndex !== -1) {
+            this.history.splice(existingIndex, 1);
+        }
+        this.history.unshift(video);
+        if (this.history.length > 10) {
+            this.history.pop();
+        }
+        localStorage.setItem('videoHistory', JSON.stringify(this.history));
+    }
+
+    getHistory() {
+        return this.history;
+    }
+}
+
+// Initialize history
+const historyManager = new VideoHistory();
 
 const displayHome = () => {
     document.getElementById('frames-container').style.display = 'grid';
     document.getElementById('playlist-container').style.display = 'none';
     document.getElementById('saved-container').style.display = 'none';
-    createVideoItems(data); // Create Home Page Video Items
+    document.getElementById('viewed-history-container').style.display = 'none';
+    createVideoItems(data);
 };
 
 const createVideoItems = (filteredData = data) => {
@@ -491,7 +575,10 @@ const createVideoItems = (filteredData = data) => {
         img.alt = item.title || 'Video thumbnail';
         img.onerror = () => img.style.display = 'none';
 
-        img.onclick = () => openVideoNav(item.videoUrl);
+        img.onclick = () => {
+            openVideoNav(item.videoUrl);
+            historyManager.addVideo(item);
+        };
 
         const title = document.createElement('div');
         title.className = 'video-title';
@@ -501,9 +588,9 @@ const createVideoItems = (filteredData = data) => {
         saveButton.className = 'save-button';
         saveButton.innerHTML = '<i class="fas fa-star"></i>'; // Save icon
         saveButton.onclick = (e) => {
-            e.stopPropagation(); // Prevent triggering the video click
+            e.stopPropagation();
             saveVideo(item);
-            saveButton.style.color = 'gold'; // Change color to indicate saved
+            saveButton.style.color = 'gold';
             alert(`${item.title} has been saved!`);
         };
 
@@ -518,6 +605,7 @@ const openVideoNav = (videoUrl) => {
     document.getElementById('video-nav').style.display = 'block';
     document.getElementById('video-player').src = videoUrl;
     populatePopularVideos();
+    updateViewedVideos();
 };
 
 const closeNav = () => {
@@ -546,30 +634,59 @@ const populatePopularVideos = () => {
 };
 
 const saveVideo = (video) => {
-    if (!savedVideos.some(savedVideo => savedVideo.videoUrl === video.videoUrl)) { // Only save if not already saved
-        savedVideos.push(video);
+    // Check if the video is already saved
+    const existingIndex = savedVideos.findIndex(savedVideo => savedVideo.videoUrl === video.videoUrl);
+    
+    if (existingIndex === -1) { // Not saved yet
+        savedVideos.unshift(video); // Add to the beginning of the array
         localStorage.setItem('savedVideos', JSON.stringify(savedVideos)); // Save to local storage
+    } else {
+        alert(`${video.title} is already saved!`);
     }
+};
+
+const updateViewedVideos = () => {
+    const viewedContent = document.getElementById('viewed-content');
+    viewedContent.innerHTML = '';
+
+    const history = historyManager.getHistory();
+    history.forEach((item) => {
+        const viewedItem = document.createElement('div');
+        viewedItem.className = 'viewed-item';
+
+        const img = document.createElement('img');
+        img.src = item.imgUrl;
+        img.alt = item.title || 'Video thumbnail';
+        img.onclick = () => openVideoNav(item.videoUrl);
+
+        const title = document.createElement('h3');
+        title.textContent = item.title;
+
+        viewedItem.appendChild(img);
+        viewedItem.appendChild(title);
+        viewedContent.appendChild(viewedItem);
+    });
+
+    document.getElementById('viewed-history-container').style.display = 'block';
 };
 
 const displayPlaylist = () => {
     document.getElementById('frames-container').style.display = 'none';
     document.getElementById('saved-container').style.display = 'none';
-    
-    // Show playlist container similar to home
+    document.getElementById('viewed-history-container').style.display = 'none';
+
     const playlistContainer = document.getElementById('playlist-container');
     playlistContainer.style.display = 'grid';
-    playlistContainer.innerHTML = ''; // Clear existing content
+    playlistContainer.innerHTML = '';
 
     const playlistData = [
-        { imgUrl: "https://bit.ly/4gCtC1L", videoUrl: "https://youtube.com/embed/CetjkiaH2x0", title: "APOCALYPSE 2" },
+        { imgUrl: "https://bit.ly/4gCtC1L", videoUrl: "https://youtube.com/embed/4Q8fJlbUn3w", title: "APOCALYPSE 2" },
         { imgUrl: "https://bit.ly/4fFLfwd", videoUrl: "https://youtube.com/embed/BAQV7hQdznE", title: "VIKING BATTLE" }
-        // Add more predefined playlist videos as needed
     ];
 
     playlistData.forEach(item => {
         const playlistItem = document.createElement('div');
-        playlistItem.className = 'video-item'; // Using same class as home videos
+        playlistItem.className = 'video-item';
 
         const img = document.createElement('img');
         img.src = item.imgUrl;
@@ -580,14 +697,13 @@ const displayPlaylist = () => {
         title.className = 'video-title';
         title.innerText = item.title;
 
-        // Save Button for Playlist Videos
         const saveButton = document.createElement('button');
         saveButton.className = 'save-button';
-        saveButton.innerHTML = '<i class="fas fa-star"></i>'; // Save icon
+        saveButton.innerHTML = '<i class="fas fa-star"></i>'; 
         saveButton.onclick = (e) => {
-            e.stopPropagation(); // Prevent triggering the video click
+            e.stopPropagation();
             saveVideo(item);
-            saveButton.style.color = 'gold'; // Change color to indicate saved
+            saveButton.style.color = 'gold';
             alert(`${item.title} has been saved!`);
         };
 
@@ -601,8 +717,7 @@ const displayPlaylist = () => {
 const displaySaved = () => {
     document.getElementById('frames-container').style.display = 'none';
     document.getElementById('playlist-container').style.display = 'none';
-    document.getElementById('saved-container').style.display = 'block';
-
+    document.getElementById('viewed-history-container').style.display = 'none';
     const savedContent = document.getElementById('saved-content');
     savedContent.innerHTML = '';
 
@@ -621,7 +736,7 @@ const displaySaved = () => {
         const removeButton = document.createElement('span');
         removeButton.textContent = '⭐ Remove';
         removeButton.onclick = (e) => {
-            e.stopPropagation(); // Prevent triggering the video click
+            e.stopPropagation();
             removeSavedVideo(index);
         };
 
@@ -630,9 +745,8 @@ const displaySaved = () => {
         savedItem.appendChild(removeButton);
         savedContent.appendChild(savedItem);
     });
-};
-
-// Show the install message 15 seconds after the page loads
+    
+    // Show the install message 15 seconds after the page loads
 window.onload = function() {
     setTimeout(function() {
         const installMessage = document.getElementById('install-message');
@@ -645,13 +759,23 @@ window.onload = function() {
         closeButton.onclick = function() {
             installMessage.style.display = 'none';
         };
-    }, 40000); // 40000 milliseconds = 30 seconds
+    }, 4000); // 400 milliseconds = 0 seconds
+};
+
+    document.getElementById('saved-container').style.display = 'block';
+};
+
+const showViewedHistory = () => {
+    document.getElementById('frames-container').style.display = 'none';
+    document.getElementById('playlist-container').style.display = 'none';
+    document.getElementById('saved-container').style.display = 'none';
+    updateViewedVideos();
 };
 
 const removeSavedVideo = (index) => {
-    savedVideos.splice(index, 1); // Remove saved video from array
-    localStorage.setItem('savedVideos', JSON.stringify(savedVideos)); // Update local storage
-    displaySaved(); // Refresh saved videos display
+    savedVideos.splice(index, 1);
+    localStorage.setItem('savedVideos', JSON.stringify(savedVideos));
+    displaySaved(); // Refresh the display after removal
 };
 
 const showHome = () => {
@@ -673,7 +797,7 @@ const handleSearch = () => {
         const searchTerm = document.getElementById('search-bar').value.toLowerCase();
         const filteredData = data.filter(item => item.title.toLowerCase().includes(searchTerm));
         createVideoItems(filteredData);
-    }, 300); // Debounce time in milliseconds
+    }, 300);
 };
 
 const filterByTag = (tag) => {
@@ -719,22 +843,16 @@ const footer = document.querySelector('footer');
 const handleScroll = () => {
     const st = window.pageYOffset || document.documentElement.scrollTop;
     if (st > lastScrollTop) {
-        // Scrolling down
-        footer.style.transform = 'translateY(100%)'; // Move footer out of view
+        footer.style.transform = 'translateY(100%)'; 
     } else {
-        // Scrolling up
-        footer.style.transform = 'translateY(0)'; // Move footer back into view
+        footer.style.transform = 'translateY(0)'; 
     }
-    lastScrollTop = st <= 0 ? 0 : st; // For Mobile or margin
+    lastScrollTop = st <= 0 ? 0 : st; 
 };
 
-// Attach the scroll event listener
 window.addEventListener('scroll', handleScroll);
-
-// Call the function on page load
 handleScroll();
 
-// Shuffle Array Function
 function shuffleArray(array) {
     for (let i = array.length - 1; i > 0; i--) {
         const j = Math.floor(Math.random() * (i + 1));
@@ -743,13 +861,11 @@ function shuffleArray(array) {
     return array;
 }
 
-// Shuffle videos on load
 const shuffledData = shuffleArray(data);
-createVideoItems(shuffledData); // Display Home Page by default
+createVideoItems(shuffledData);
 
-// Initial function call to display home page
 document.addEventListener('DOMContentLoaded', () => {
-    displayHome(); // Show Home Page on initial load
+    displayHome();
 });
 </script>
 
