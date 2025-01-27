@@ -1,900 +1,228 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Video Unlock System with Local Storage</title>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+    <title>Video Upload</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
         body {
-            font-family: Arial, sans-serif;
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f7fc;
+            color: #333;
             margin: 0;
             padding: 0;
-            background-color: #121212; /* Dark background */
-            color: #fff; /* Light text */
         }
 
-        header {
-            position: fixed;
-            top: 0;
-            left: 0;
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 40px;
+            background: #fff;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+        }
+
+        h2 {
+            text-align: center;
+            color: #2c3e50;
+            margin-bottom: 30px;
+        }
+
+        label {
+            font-weight: bold;
+            display: block;
+            margin-bottom: 8px;
+            color: #2c3e50;
+        }
+
+        input[type="text"], input[type="url"], input[type="file"] {
             width: 100%;
-            height: 90px;
-            background-color: #1c1c1c; /* Darker gray for header */
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            padding: 8px;
-            border: 1px solid #444;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.5); /* Subtle shadow */
-            z-index: 1000;
+            padding: 12px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            font-size: 14px;
+            color: #333;
         }
 
-        .header-top {
+        input[type="file"] {
+            padding: 6px;
+        }
+
+        .cover-preview {
+            display: flex;
+            justify-content: center;
+            margin-top: 10px;
+        }
+
+        .cover-preview img {
+            width: 200px;
+            height: auto;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .buttons-container {
             display: flex;
             justify-content: space-between;
-            align-items: center;
-            width: 100%;
+            margin-top: 20px;
         }
 
-        .logo {
-            font-size: 20px;
-            background-color: #e50914; /* Netflix red for emphasis */
-            border-radius: 20px;
-            padding: 5px 12px;
-            border: 1px solid #444;
-            font-weight: bold;
-            color: #fff;
-        }
-
-        #search-bar {
-            flex: 1;
-            margin: 0 12px;
-            padding: 8px;
+        button {
+            background-color: #3498db;
+            color: white;
             border: none;
-            border-radius: 20px;
-            font-size: 14px;
-            border: 1px solid #444;
-            background-color: #333; /* Darker gray for input */
-            color: #fff; /* Light text */
-        }
-
-        #search-bar::placeholder {
-            color: #aaa; /* Light gray placeholder */
-        }
-
-        .tags {
-            display: flex;
-            gap: 10px;
-            margin-top: 10px;
-            overflow-x: auto;
-            padding: 8px 0;
-            width: 100%;
-        }
-
-        .tags .tag {
-            padding: 5px 12px;
-            background-color: #333; /* Darker gray for tags */
-            border-radius: 20px;
-            font-size: 14px;
+            padding: 12px 20px;
+            border-radius: 8px;
             cursor: pointer;
-            border: 1px solid #444; /* Subtle border */
-            color: #fff;
+            font-size: 14px;
             transition: background-color 0.3s ease;
         }
 
-        .tags .tag:hover {
-            background-color: #e50914; /* Highlight with red */
+        button:hover {
+            background-color: #2980b9;
         }
 
-        #frames-container {
-            margin-top: 120px;
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 10px;
-            padding: 7px;
-            height: calc(100vh - 120px);
-            overflow-y: auto; 
-        }
-
-        .video-item {
-            position: relative;
-            cursor: pointer;
-        }
-
-        .video-item img {
-            width: 100%;
-            aspect-ratio: 16 / 23;
-            object-fit: cover;
-            border-radius: 8px;
-        }
-
-        .video-title {
-            font-size: 10px;
-            text-align: center;
-            margin-top: 5px;
-        }
-
-        .save-button {
-            position: absolute;
-            top: 5px;
-            right: 5px;
-            background-color: rgba(0, 0, 0, 0.7);
-            color: white;
-            font-size: 15px;
-            border: none;
-            border-radius: 20px;
-            padding: 5px 5px;
-            cursor: pointer;
-        }
-
-        /* Video Navigation Styles */
-        #video-nav {
+        .share-icons {
             display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: #121212;
-            z-index: 1001;
-            overflow: hidden;
+            margin-top: 20px;
         }
 
-        #video-nav iframe {
-            width: 100%;
-            height: 37%;
-            border: none;
-            border-radius: 10px;
-            z-index: 1;
-            border: 1px solid #333;
-            margin-top: 45px;
-        }
-
-        #close-btn {
-            background-color: #d32f2f;
-            color: white;
-            font-size: 15px;
-            font-weight: bold;
-            cursor: pointer;
-            border: none;
-            border-radius: 10px;
-            margin: 0px;
-            padding: 4px 10px;
-            border: 1px solid #ccc;
-            transition: background 0.3s;
-            position: absolute;
-            top: 10px;
-            right: 9px;
-            z-index: 2;
-        }
-
-        #close-btn:hover {
-            background-color: #c62828;
-        }
-
-        #social-media {
-            display: flex;
-            justify-content: center;
-            gap: 15px;
-            margin: 10px 0;
-        }
-
-        .social-icon {
-            color: white;
+        .share-icons a {
             font-size: 20px;
-            cursor: pointer;
-        }
-
-        #popular-videos {
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            z-index: 10;
-            padding: 10px;
-            background-color: rgba(0, 0, 0, 0.6);
-            border-top: 1px solid rgba(255, 255, 255, 0.2);
-            border-radius: 12px;
-        }
-
-        #popular-videos h3 {
-            margin: 0 0 15px;
-            font-size: 14px;
-            color: #ffffff;
-            text-align: center;
-        }
-
-        #popular-container {
-            display: flex;
-            overflow-x: auto;
-            gap: 3px;
-            padding: 2px 0;
-        }
-
-        .popular-item {
-            flex: 0 0 auto;
-            width: 150px;
-            cursor: pointer;
-            border-radius: 12px;
-            transition: transform 0.3s;
-            overflow: hidden;
-            position: relative;
-        }
-
-        .popular-item img {
-            width: 100%;
-            height: 188px;
-            object-fit: cover;
-            border-radius: 12px;
-        }
-
-        .play-button {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            background-color: rgba(255, 255, 255, 0.7);
-            border: none;
-            border-radius: 50%; /* Rounded shape */
-            width: 45px;
-            height: 45px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            transition: background-color 0.3s, transform 0.3s;
-        }
-
-        .play-button:hover {
-            background-color: #e50914; /* Highlight on hover */
-            transform: scale(1.1); /* Slightly increase size on hover */
-        }
-
-        .play-button i {
-            color: #000; /* Icon color */
-            font-size: 20px;
-        }
-
-        /* Footer styles */
-        footer {
-            display: flex;
-            justify-content: space-around;
-            padding: 13px 0;
-            border-radius: 12px;
-            border: 1px solid #333;
-            background-color: #1c1c1c;
-            box-shadow: 0 -4px 6px rgba(0, 0, 0, 0.1);
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            transition: transform 0.3s; 
-        }
-
-        footer .nav-icon {
-            text-align: center;
-            font-size: 12px; 
-            color: #fff;
-            cursor: pointer;
-        }
-
-        footer .nav-icon i {
-            font-size: 19px; 
-        }
-
-        footer .nav-icon:hover {
-            color: #ff0000;
-        }
-
-        /* Playlist styles */
-        #playlist-container {
-            margin-top: 120px;
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 10px; 
-            padding: 7px;
-            height: calc(100vh - 120px);
-            overflow-y: auto; 
-        }
-
-        /* Saved styles */
-        #saved-container {
-            margin-top: 120px;
-            padding: 10px;
-            display: none; 
-            height: calc(100vh - 120px); 
-            overflow-y: auto; 
-        }
-
-        .saved-item {
-            display: flex;
-            align-items: center;
-            margin-bottom: 10px;
-            background-color: #141414;
-            padding: 10px;
-            border-radius: 5px;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-        }
-
-        .saved-item img {
-            width: 150px;
-            height: 200px;
-            object-fit: cover;
-            border-radius: 5px;
-            margin-right: 10px;
-        }
-
-        .saved-item h3 {
-            margin: 0;
-            font-size: 10px;
-            flex: 1;
-        }
-
-        .saved-item span {
-            cursor: pointer;
-            color: red; 
-            margin-left: 10px; 
-            font-size: 14px; 
-            transition: color 0.3s; 
-        }
-
-        .saved-item span:hover {
-            color: darkred; 
-            text-decoration: underline; 
-        }
-
-        #history-container {
-            margin-top: 120px;
-            padding: 10px;
-            display: none;
-            height: calc(100vh - 120px);
-            overflow-y: auto;
-        }
-
-        .history-item {
-            display: flex;
-            align-items: center;
-            margin-bottom: 10px;
-            background-color: #121212;
-            padding: 10px;
-            border-radius: 5px;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-        }
-
-        .history-item img {
-            width: 150px;
-            height: 200px;
-            object-fit: cover;
-            border-radius: 5px;
-            margin-right: 10px;
-        }
-
-        .history-item h3 {
-            margin: 0;
-            font-size: 8px;
-            flex: 1;
-        }
-
-        /* Install message styles */
-        .install-message {
-            position: fixed;
-            bottom: 20px;
-            left: 50%;
-            transform: translateX(-50%);
-            background-color: #fff; /* Blue background */
-            color: #333;
-            padding: 2px 20px;
-            border-radius: 12px;
-            display: flex;
-            font-size: 9.8px;
-            border: 1px solid #ccc;
-            flex-direction: column; /* Stack items vertically */
-            align-items: center;
-            justify-content: center;
-            width: 80%;
-            max-width: 500px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-            z-index: 10000;
-        }
-
-        .install-btn {
-            background-color: #ff0000; /* Green button */
-            color: white;
-            border: 1px solid #ccc;
-            padding: 10px 25px;
-            border-radius: 8px;
+            margin-right: 15px;
             text-decoration: none;
-            font-weight: bold;
-            margin-top: 1px; /* Space between the paragraph and the button */
+            color: #2c3e50;
         }
 
-        .close-btn {
-            background-color: #d32f2f;
-            color: white;
+        .share-icons a:hover {
+            color: #3498db;
+        }
+
+        .icon-button {
+            background: transparent;
+            border: none;
             font-size: 20px;
-            padding: 5px 10px;
-            border: 1px solid #ccc;
             cursor: pointer;
-            font-weight: bold;
-            position: absolute;
-            top: 15px;
-            right: 10px;
         }
 
-        .close-btn:hover {
-            color: #ff0000;
+        .icon-button:hover {
+            color: #3498db;
         }
+
+        .copy-text {
+            color: #2c3e50;
+            font-size: 14px;
+            margin-top: 10px;
+        }
+
+        #coverLink {
+            font-family: 'Courier New', monospace;
+            background: #f7f7f7;
+            color: #7f8c8d;
+            padding: 8px;
+            border-radius: 6px;
+            border: 1px solid #ddd;
+            width: 100%;
+            font-size: 12px;
+            margin-top: 10px;
+        }
+
     </style>
 </head>
-
 <body>
 
-<header>
-    <div class="header-top">
-        <div class="logo">i Tube</div>
-        <input type="text" id="search-bar" placeholder="Search i Tube..." oninput="handleSearch()" aria-label="Search videos" />
-    </div>
-    <div class="tags">
-        <div class="tag" onclick="filterByTag('Action')">Action</div>
-        <div class="tag" onclick="filterByTag('Horror')">Horror</div>
-        <div class="tag" onclick="filterByTag('Indian')">Indian</div>
-        <div class="tag" onclick="filterByTag('Europe')">Europe</div>
-        <div class="tag" onclick="filterByTag('Chinese')">Chinese</div>
-    </div>
-</header>
+<div class="container">
+    <h2>Upload Video</h2>
+    <label for="cover">Upload Cover:</label>
+    <input type="file" id="cover" accept="image/*"><br><br>
 
-<div id="frames-container"></div>
+    <div id="coverPreview" class="cover-preview"></div>
+    <input type="text" id="coverLink" placeholder="Cover Image Link" readonly><br><br>
+    <button id="copyCoverLinkBtn" onclick="copyCoverLink()">Copy Cover Image URL</button><br><br>
 
-<div id="video-nav">
-    <button id="close-btn" onclick="closeNav()" aria-label="Close video">✖ Close</button>
-    <iframe id="video-player" src="" allowfullscreen></iframe>
-    
-    <div id="social-media">
-        <i class="fab fa-telegram social-icon" onclick="shareLink('telegram')"></i>
-        <i class="fab fa-twitter social-icon" onclick="shareLink('twitter')"></i>
-        <i class="fab fa-whatsapp social-icon" onclick="shareLink('whatsapp')"></i>
-        <i class="fas fa-share social-icon" onclick="shareLink('generic')"></i>
+    <label for="videoUrl">Video URL:</label>
+    <input type="url" id="videoUrl"><br><br>
+
+    <label for="videoTitle">Video Title:</label>
+    <input type="text" id="videoTitle"><br><br>
+
+    <label for="videoYear">Video Year:</label>
+    <input type="text" id="videoYear"><br><br>
+
+    <label for="videoTag">Video Tag:</label>
+    <input type="text" id="videoTag"><br><br>
+
+    <label for="videoLanguage">Video Language:</label>
+    <input type="text" id="videoLanguage"><br><br>
+
+    <div class="buttons-container">
+        <button id="copyDocuments" onclick="copyDocuments()"> 
+            <i class="fas fa-copy"></i> Copy Documents
+        </button>
+        <button id="shareBtn" onclick="toggleShareIcons()"> 
+            <i class="fas fa-share-alt"></i> Share
+        </button>
     </div>
-    
-    <div id="popular-videos">
-        <h3>Dive into non-stop fun with more movies below.</h3>
-        <div id="popular-container"></div>
-        
-        <h3>Follow us on social media.</h3>
-        <div id="social-media" style="display: flex; justify-content: center; margin-top: 10px;">
-            <a href="https://www.facebook.com/username" target="_blank" class="social-icon">
-                <i class="fab fa-facebook-f"></i>
-            </a>
-            <a href="https://twitter.com/username" target="_blank" class="social-icon">
-                <i class="fab fa-twitter"></i>
-            </a>
-            <a href="https://telegram.me/username" target="_blank" class="social-icon">
-                <i class="fab fa-telegram social-icon"></i>
-            </a>
-            <a href="https://www.pinterest.com/username" target="_blank" class="social-icon">
-                <i class="fab fa-pinterest"></i>
-            </a>
-            <a href="https://www.instagram.com/username" target="_blank" class="social-icon">
-                <i class="fab fa-instagram"></i>
-            </a>
-            <a href="https://wa.me/1234567890" target="_blank" class="social-icon">
-                <i class="fab fa-whatsapp"></i>
-            </a>
-            <a href="https://www.tiktok.com/@username" target="_blank" class="social-icon">
-                <i class="fab fa-tiktok"></i>
-            </a>
-            <a href="https://www.youtube.com/channel/UC123456" target="_blank" class="social-icon">
-                <i class="fab fa-youtube"></i>
-            </a>
-        </div>
+
+    <div class="share-icons" id="shareIcons">
+        <a href="https://t.me" target="_blank">
+            <i class="fab fa-telegram"></i> Telegram
+        </a>
+        <a href="https://wa.me" target="_blank">
+            <i class="fab fa-whatsapp"></i> WhatsApp
+        </a>
     </div>
+
+    <div class="copy-text" id="copyText"></div>
 </div>
-
-<div id="playlist-container">
-    <h2></h2>
-    <div id="playlist-content"></div>
-</div>
-
-<div id="saved-container">
-    <h2>Favorites</h2>
-    <div id="saved-content"></div>
-</div>
-
-<div id="history-container">
-    <h2>History Views</h2>
-    <div id="history-content"></div>
-</div>
-
-<footer>
-    <div class="nav-icon" id="home-btn" onclick="showHome()">
-        <i class="fas fa-home"></i><br>Home
-    </div>
-    <div class="nav-icon" id="playlist-btn" onclick="showPlaylist()">
-        <i class="fas fa-fire"></i><br>Popular 
-    </div>
-    <div class="nav-icon" id="saved-btn" onclick="showSaved()">
-        <i class="fas fa-bookmark"></i><br>Favorites 
-    </div>
-    <div class="nav-icon" id="history-btn" onclick="showHistory()">
-        <i class="fas fa-history"></i><br>History
-    </div>
-</footer>
 
 <script>
-// Sample video data
-const data = [
-    {
-        imgUrl: "https://bit.ly/4gZ1VzL",
-        videoUrl: "https://youtube.com/embed/xzk1ko7AN2M",
-        title: "Pterodactyl 2, 2023",
-        tag: "Horror",
-    },
-    {
-        imgUrl: "https://bit.ly/4fFLfwd",
-        videoUrl: "https://youtube.com/embed/BAQV7hQdznE",
-        title: "Viking: Battle of Heirs 2023",
-        tag: "Action",
-    },
-    {
-        imgUrl: "https://bit.ly/4gCtC1L",
-        videoUrl: "https://youtube.com/embed/4Q8fJlbUn3w",
-        title: "Apocalypto 2006",
-        tag: "Battles",
-    },
-    {
-        imgUrl: "https://bit.ly/3Phnujl",
-        videoUrl: "https://youtube.com/embed/rsvGs96-ddo",
-        title: "Tsunami Sharks 2024",
-        tag: "Horror",
-    },
-    {
-        imgUrl: "https://bit.ly/3EdJhpW",
-        videoUrl: "https://youtube.com/embed/_q0HpkMrhdc",
-        title: "Conan the Adventurer (1997)",
-        tag: "Action",
-    },
-    {
-        imgUrl: "https://bit.ly/4haIvbD",
-        videoUrl: "https://v.moviebox.ng/SroObuh5AM",
-        title: "The Crow 2024",
-        tag: "Horror",
-    },
-    {
-        imgUrl: "https://bit.ly/405kXOj",
-        videoUrl: "https://youtube.com/embed/CumW3IY1mMg",
-        title: "God of War",
-        tag: "Action",
-    },
-    {
-        imgUrl: "https://bit.ly/4gCtcbn",
-        videoUrl: "https://youtube.com/embed/9QB2GjHg0Tw",
-        title: "Flight from Hell 2014",
-        tag: "Action",
-    },
-];
-
-// Load data from local storage
-let savedVideos = JSON.parse(localStorage.getItem('savedVideos')) || [];
-let historyVideos = JSON.parse(localStorage.getItem('historyVideos')) || [];
-
-// Display Home Page
-const displayHome = () => {
-    document.getElementById('frames-container').style.display = 'grid';
-    document.getElementById('playlist-container').style.display = 'none';
-    document.getElementById('saved-container').style.display = 'none';
-    document.getElementById('history-container').style.display = 'none';
-    createVideoItems(data);
-};
-
-// Create video items
-const createVideoItems = (filteredData = data) => {
-    const container = document.getElementById('frames-container');
-    container.innerHTML = '';
-
-    filteredData.forEach((item) => {
-        const videoItem = document.createElement('div');
-        videoItem.className = 'video-item';
-
-        const img = document.createElement('img');
-        img.src = item.imgUrl;
-        img.alt = item.title || 'Video thumbnail';
-        img.onerror = () => img.style.display = 'none';
-
-        img.onclick = () => {
-            addToHistory(item); // Add to history before playing
-            openVideoNav(item.videoUrl);
-        };
-
-        const title = document.createElement('div');
-        title.className = 'video-title';
-        title.innerText = item.title;
-
-        const saveButton = document.createElement('button');
-        saveButton.className = 'save-button';
-        saveButton.innerHTML = '<i class="fas fa-bookmark"></i>'; // Save icon
-        saveButton.onclick = (e) => {
-            e.stopPropagation(); // Prevent triggering the video click
-            saveVideo(item); // Save video and refresh display
-            saveButton.style.color = 'gold'; // Change color to indicate saved
-        };
-
-        videoItem.appendChild(img);
-        videoItem.appendChild(title);
-        videoItem.appendChild(saveButton);
-        container.appendChild(videoItem);
-    });
-};
-
-const openVideoNav = (videoUrl) => {
-    document.getElementById('video-nav').style.display = 'block';
-    document.getElementById('video-player').src = videoUrl;
-    populatePopularVideos();
-};
-
-const closeNav = () => {
-    document.getElementById('video-nav').style.display = 'none';
-    document.getElementById('video-player').src = '';
-};
-
-const populatePopularVideos = () => {
-    const popularContainer = document.getElementById('popular-container');
-    popularContainer.innerHTML = '';
-    
-    data.forEach((item) => {
-        const popularItem = document.createElement('div');
-        popularItem.className = 'popular-item';
-        
-        const img = document.createElement('img');
-        img.src = item.imgUrl;
-
-        const playButton = document.createElement('button');
-        playButton.className = 'play-button';
-        playButton.innerHTML = '<i class="fas fa-play"></i>'; // Play icon
-        playButton.onclick = (e) => {
-            e.stopPropagation(); // Prevent triggering the parent click event
-            addToHistory(item); // Add to history before playing
-            openVideoNav(item.videoUrl);
-        };
-
-        popularItem.appendChild(img);
-        popularItem.appendChild(playButton);
-        popularContainer.appendChild(popularItem);
-    });
-};
-
-const saveVideo = (video) => {
-    if (!savedVideos.some(savedVideo => savedVideo.videoUrl === video.videoUrl)) {
-        savedVideos.unshift(video); // Add to the beginning
-        localStorage.setItem('savedVideos', JSON.stringify(savedVideos));
-        displaySaved(); // Refresh saved display
-    } else {
-        alert(`${video.title} is already saved!`);
-    }
-};
-
-// Add to history
-const addToHistory = (video) => {
-    // Check if the video is already in history
-    if (!historyVideos.some(historyVideo => historyVideo.videoUrl === video.videoUrl)) {
-        historyVideos.unshift(video); // Add to the beginning
-        if (historyVideos.length > 10) { // Keep only the last 10 viewed videos
-            historyVideos.pop(); // Remove the oldest video
+    // Function to handle cover image preview and link
+    document.getElementById('cover').addEventListener('change', function (event) {
+        const file = event.target.files[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                document.getElementById('coverPreview').innerHTML = `<img src="${e.target.result}" alt="Cover Image" width="200px">`;
+                document.getElementById('coverLink').value = e.target.result; // Display the image URL in the input
+            };
+            reader.readAsDataURL(file);
         }
-        localStorage.setItem('historyVideos', JSON.stringify(historyVideos)); // Save to storage
-    }
-};
-
-// Display saved videos
-const displaySaved = () => {
-    document.getElementById('frames-container').style.display = 'none';
-    document.getElementById('playlist-container').style.display = 'none';
-    document.getElementById('history-container').style.display = 'none';
-    document.getElementById('saved-container').style.display = 'block';
-
-    const savedContent = document.getElementById('saved-content');
-    savedContent.innerHTML = '';
-
-    savedVideos.forEach((item, index) => {
-        const savedItem = document.createElement('div');
-        savedItem.className = 'saved-item';
-
-        const img = document.createElement('img');
-        img.src = item.imgUrl;
-        img.alt = item.title || 'Video thumbnail';
-        img.onclick = () => openVideoNav(item.videoUrl);
-
-        const title = document.createElement('h3');
-        title.textContent = item.title;
-
-        const removeButton = document.createElement('span');
-        removeButton.textContent = '🔖 REMOVE';
-        removeButton.onclick = (e) => {
-            e.stopPropagation(); // Prevent triggering the video click
-            removeSavedVideo(index);
-        };
-
-        savedItem.appendChild(img);
-        savedItem.appendChild(title);
-        savedItem.appendChild(removeButton);
-        savedContent.appendChild(savedItem);
     });
-};
 
-// Remove saved video
-const removeSavedVideo = (index) => {
-    savedVideos.splice(index, 1);
-    localStorage.setItem('savedVideos', JSON.stringify(savedVideos));
-    displaySaved(); // Refresh display
-};
-
-// Display playlist videos
-const displayPlaylist = () => {
-    document.getElementById('frames-container').style.display = 'grid';
-    document.getElementById('saved-container').style.display = 'none';
-    document.getElementById('history-container').style.display = 'none';
-    document.getElementById('playlist-container').style.display = 'block';
-
-    const playlistContent = document.getElementById('playlist-content');
-    playlistContent.innerHTML = '';
-
-    // Here you can add some predefined playlist videos
-    const playlistData = [
-        { imgUrl: "https://bit.ly/4gCtC1L", videoUrl: "https://youtube.com/embed/CetjkiaH2x0", title: "APOCALYPSE 2" },
-        { imgUrl: "https://bit.ly/4fFLfwd", videoUrl: "https://youtube.com/embed/BAQV7hQdznE", title: "VIKING BATTLE" },
-        { imgUrl: "https://bit.ly/4gZ1VzL", videoUrl: "https://youtube.com/embed/xzk1ko7AN2M", title: "PTERODACTYL 2", tag: "Monster" },
-    ];
-
-    createVideoItems(playlistData); // Display playlist videos in grid
-};
-
-// Show history videos
-const displayHistory = () => {
-    document.getElementById('frames-container').style.display = 'none';
-    document.getElementById('playlist-container').style.display = 'none';
-    document.getElementById('saved-container').style.display = 'none';
-    document.getElementById('history-container').style.display = 'block';
-
-    const historyContent = document.getElementById('history-content');
-    historyContent.innerHTML = '';
-
-    historyVideos.forEach((item) => {
-        const historyItem = document.createElement('div');
-        historyItem.className = 'history-item';
-
-        const img = document.createElement('img');
-        img.src = item.imgUrl;
-        img.alt = item.title || 'Video thumbnail';
-        img.onclick = () => openVideoNav(item.videoUrl);
-
-        const title = document.createElement('h3');
-        title.textContent = item.title;
-
-        historyItem.appendChild(img);
-        historyItem.appendChild(title);
-        historyContent.appendChild(historyItem);
-    });
-};
-
-// Show respective section based on clicked button
-const showHome = () => {
-    displayHome();
-};
-
-const showPlaylist = () => {
-    displayPlaylist();
-};
-
-const showSaved = () => {
-    displaySaved();
-};
-
-const showHistory = () => {
-    displayHistory();
-};
-
-let debounceTimer;
-const handleSearch = () => {
-    clearTimeout(debounceTimer);
-    debounceTimer = setTimeout(() => {
-        const searchTerm = document.getElementById('search-bar').value.toLowerCase();
-        const filteredData = data.filter(item => item.title.toLowerCase().includes(searchTerm));
-        createVideoItems(filteredData);
-    }, 300); // Debounce time in milliseconds
-};
-
-const filterByTag = (tag) => {
-    const filteredData = data.filter(item => item.tag === tag);
-    createVideoItems(filteredData);
-};
-
-// Share Functionality
-const shareLink = (platform) => {
-    const url = 'https://i-tube-movies.netlify.app/';
-    let shareUrl = '';
-
-    switch(platform) {
-        case 'telegram':
-            shareUrl = `https://telegram.me/share/url?url=${encodeURIComponent(url)}`;
-            break;
-        case 'twitter':
-            shareUrl = `https://twitter.com/intent/tweet?url=${encodeURIComponent(url)}`;
-            break;
-        case 'whatsapp':
-            shareUrl = `https://wa.me/?text=${encodeURIComponent(url)}`;
-            break;
-        case 'generic':
-            if (navigator.share) {
-                navigator.share({
-                    title: 'Check out this video platform!',
-                    url: url
-                }).catch(err => console.error(err));
-                return;
-            } else {
-                alert('Sharing is not supported in your browser.');
-                return;
-            }
+    // Function to copy cover image URL
+    function copyCoverLink() {
+        const coverLink = document.getElementById('coverLink').value;
+        navigator.clipboard.writeText(coverLink).then(() => {
+            alert('Cover Image URL copied to clipboard');
+        });
     }
 
-    window.open(shareUrl, '_blank');
-};
+    // Function to copy document data
+    function copyDocuments() {
+        const coverLink = document.getElementById('coverLink').value;
+        const videoUrl = document.getElementById('videoUrl').value;
+        const videoTitle = document.getElementById('videoTitle').value;
+        const videoYear = document.getElementById('videoYear').value;
+        const videoTag = document.getElementById('videoTag').value;
+        const videoLanguage = document.getElementById('videoLanguage').value;
 
-// Scroll handling for hiding/showing footer
-let lastScrollTop = 0;
-const footer = document.querySelector('footer');
+        const documentData = `Cover: ${coverLink}\nVideo URL: ${videoUrl}\nTitle: ${videoTitle}\nYear: ${videoYear}\nTag: ${videoTag}\nLanguage: ${videoLanguage}`;
 
-const handleScroll = () => {
-    const st = window.pageYOffset || document.documentElement.scrollTop;
-    if (st > lastScrollTop) {
-        footer.style.transform = 'translateY(100%)'; 
-    } else {
-        footer.style.transform = 'translateY(0)'; 
+        navigator.clipboard.writeText(documentData).then(() => {
+            alert('Documents copied to clipboard');
+            document.getElementById('copyText').textContent = "Documents copied to clipboard!";
+        });
     }
-    lastScrollTop = st <= 0 ? 0 : st; 
-};
 
-window.addEventListener('scroll', handleScroll);
-handleScroll();
-
-// Show the install message after the page loads
-window.onload = function() {
-    const installMessage = document.createElement('div');
-    installMessage.className = 'install-message';
-    installMessage.innerHTML = `
-        <p>Install our app for the best experience!</p>
-        <a href="#" class="install-btn">Install</a>
-        <span class="close-btn">&times;</span>
-    `;
-    document.body.appendChild(installMessage);
-
-    const closeButton = installMessage.querySelector('.close-btn');
-
-    // Close the message when the close button is clicked
-    closeButton.onclick = function() {
-        installMessage.style.display = 'none';
-    };
-};
-
-// Shuffle Array Function
-function shuffleArray(array) {
-    for (let i = array.length - 1; i > 0; i--) {
-        const j = Math.floor(Math.random() * (i + 1));
-        [array[i], array[j]] = [array[j], array[i]];
+    // Function to toggle share icons visibility
+    function toggleShareIcons() {
+        const shareIcons = document.getElementById('shareIcons');
+        shareIcons.style.display = (shareIcons.style.display === 'none' || shareIcons.style.display === '') ? 'block' : 'none';
     }
-    return array;
-}
-
-// Shuffle videos on load
-const shuffledData = shuffleArray(data);
-createVideoItems(shuffledData); // Display Home Page by default
-
-// Initial function call to display home page
-document.addEventListener('DOMContentLoaded', () => {
-    displayHome(); // Show Home Page on initial load
-});
 </script>
 
 </body>
-
 </html>
