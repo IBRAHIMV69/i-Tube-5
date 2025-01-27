@@ -140,7 +140,7 @@
 
     <div id="coverPreview" class="cover-preview"></div>
     <input type="text" id="coverLink" placeholder="Cover Image Link" readonly><br><br>
-    <button id="copyCoverLinkBtn" onclick="copyCoverLink()">Copy Cover Image URL</button><br><br>
+    <button id="openImageBtn" onclick="openImageInBrowser()">Open the Image in Browser</button><br><br>
 
     <label for="videoUrl">Video URL:</label>
     <input type="url" id="videoUrl"><br><br>
@@ -189,12 +189,14 @@
         }
     });
 
-    // Function to copy cover image URL
-    function copyCoverLink() {
+    // Function to open the image URL in the browser
+    function openImageInBrowser() {
         const coverLink = document.getElementById('coverLink').value;
-        navigator.clipboard.writeText(coverLink).then(() => {
-            alert('Cover Image URL copied to clipboard');
-        });
+        if (coverLink) {
+            window.open(coverLink, '_blank'); // Open the image URL in a new browser tab
+        } else {
+            alert('No image uploaded');
+        }
     }
 
     // Function to copy document data
