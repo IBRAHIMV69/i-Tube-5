@@ -183,12 +183,9 @@
     document.getElementById('cover').addEventListener('change', function (event) {
         const file = event.target.files[0];
         if (file) {
-            const reader = new FileReader();
-            reader.onload = function(e) {
-                document.getElementById('coverPreview').innerHTML = `<img src="${e.target.result}" alt="Cover Image" width="200px">`;
-                document.getElementById('coverLink').value = e.target.result; // Display the image URL in the input
-            };
-            reader.readAsDataURL(file);
+            const url = URL.createObjectURL(file); // Create a URL for the uploaded image file
+            document.getElementById('coverPreview').innerHTML = `<img src="${url}" alt="Cover Image" width="200px">`;
+            document.getElementById('coverLink').value = url; // Display the image URL in the input field
         }
     });
 
