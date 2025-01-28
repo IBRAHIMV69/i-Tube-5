@@ -3,238 +3,26 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Video Upload</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <title>Full-Screen YouTube Video</title>
     <style>
         body {
-            font-family: 'Arial', sans-serif;
-            background-color: #f4f7fc;
-            color: #333;
             margin: 0;
-            padding: 0;
-        }
-
-        .container {
-            max-width: 900px;
-            margin: 0 auto;
-            padding: 40px;
-            background: #fff;
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
-            border-radius: 10px;
-        }
-
-        h2 {
-            text-align: center;
-            color: #2c3e50;
-            margin-bottom: 30px;
-        }
-
-        label {
-            font-weight: bold;
-            display: block;
-            margin-bottom: 8px;
-            color: #2c3e50;
-        }
-
-        input[type="text"], input[type="url"], input[type="file"] {
-            width: 100%;
-            padding: 12px;
-            border: 2px solid #ddd;
-            border-radius: 8px;
-            margin-bottom: 20px;
-            font-size: 14px;
-            color: #333;
-        }
-
-        input[type="file"] {
-            padding: 6px;
-        }
-
-        .cover-preview {
             display: flex;
             justify-content: center;
-            margin-top: 10px;
+            align-items: center;
+            height: 100vh;
+            background-color: #000;
         }
-
-        .cover-preview img {
-            width: 200px;
-            height: auto;
-            border-radius: 8px;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-        }
-
-        .buttons-container {
-            display: flex;
-            justify-content: space-between;
-            margin-top: 20px;
-        }
-
-        button {
-            background-color: #3498db;
-            color: white;
+        iframe {
+            width: 100vw;
+            height: 100vh;
             border: none;
-            padding: 12px 20px;
-            border-radius: 8px;
-            cursor: pointer;
-            font-size: 14px;
-            transition: background-color 0.3s ease;
         }
-
-        button:hover {
-            background-color: #2980b9;
-        }
-
-        .share-icons {
-            display: none;
-            margin-top: 20px;
-        }
-
-        .share-icons a {
-            font-size: 20px;
-            margin-right: 15px;
-            text-decoration: none;
-            color: #2c3e50;
-        }
-
-        .share-icons a:hover {
-            color: #3498db;
-        }
-
-        .icon-button {
-            background: transparent;
-            border: none;
-            font-size: 20px;
-            cursor: pointer;
-        }
-
-        .icon-button:hover {
-            color: #3498db;
-        }
-
-        .copy-text {
-            color: #2c3e50;
-            font-size: 14px;
-            margin-top: 10px;
-        }
-
-        #coverLink {
-            font-family: 'Courier New', monospace;
-            background: #f7f7f7;
-            color: #7f8c8d;
-            padding: 8px;
-            border-radius: 6px;
-            border: 1px solid #ddd;
-            width: 100%;
-            font-size: 12px;
-            margin-top: 10px;
-        }
-
     </style>
 </head>
+<script type='text/javascript' src='//pl25477453.profitablecpmrate.com/c5/ac/ae/c5acae1e1c0828f2d66bcd397d7635b6.js'></script>
 <body>
-
-<div class="container">
-    <h2>Upload Video</h2>
-    <label for="cover">Upload Cover:</label>
-    <input type="file" id="cover" accept="image/*"><br><br>
-
-    <div id="coverPreview" class="cover-preview"></div>
-    <input type="text" id="coverLink" placeholder="Cover Image Link" readonly><br><br>
-    <button id="openImageBtn" onclick="openImageInBrowser()">Open the Image in Browser</button><br><br>
-    <button id="copyCoverBtn" onclick="copyCoverUrl()">Copy Image URL</button><br><br>
-
-    <label for="videoUrl">Video URL:</label>
-    <input type="url" id="videoUrl"><br><br>
-
-    <label for="videoTitle">Video Title:</label>
-    <input type="text" id="videoTitle"><br><br>
-
-    <label for="videoYear">Video Year:</label>
-    <input type="text" id="videoYear"><br><br>
-
-    <label for="videoTag">Video Tag:</label>
-    <input type="text" id="videoTag"><br><br>
-
-    <label for="videoLanguage">Video Language:</label>
-    <input type="text" id="videoLanguage"><br><br>
-
-    <div class="buttons-container">
-        <button id="copyDocuments" onclick="copyDocuments()"> 
-            <i class="fas fa-copy"></i> Copy Documents
-        </button>
-        <button id="shareBtn" onclick="toggleShareIcons()"> 
-            <i class="fas fa-share-alt"></i> Share
-        </button>
-    </div>
-
-    <div class="share-icons" id="shareIcons">
-        <a href="https://t.me" target="_blank">
-            <i class="fab fa-telegram"></i> Telegram
-        </a>
-        <a href="https://wa.me" target="_blank">
-            <i class="fab fa-whatsapp"></i> WhatsApp
-        </a>
-    </div>
-
-    <div class="copy-text" id="copyText"></div>
-</div>
-
-<script>
-    // Function to handle cover image preview and link
-    document.getElementById('cover').addEventListener('change', function (event) {
-        const file = event.target.files[0];
-        if (file) {
-            const url = URL.createObjectURL(file); // Create a URL for the uploaded image file
-            document.getElementById('coverPreview').innerHTML = `<img src="${url}" alt="Cover Image" width="200px">`;
-            document.getElementById('coverLink').value = url; // Display the image URL in the input field
-        }
-    });
-
-    // Function to open the image URL in the browser
-    function openImageInBrowser() {
-        const coverLink = document.getElementById('coverLink').value;
-        if (coverLink) {
-            window.open(coverLink, '_blank'); // Open the image URL in a new browser tab
-        } else {
-            alert('No image uploaded');
-        }
-    }
-
-    // Function to copy the cover image URL
-    function copyCoverUrl() {
-        const coverLink = document.getElementById('coverLink').value;
-        if (coverLink) {
-            navigator.clipboard.writeText(coverLink).then(() => {
-                alert('Cover Image URL copied to clipboard');
-            });
-        } else {
-            alert('No cover image URL to copy');
-        }
-    }
-
-    // Function to copy document data
-    function copyDocuments() {
-        const coverLink = document.getElementById('coverLink').value;
-        const videoUrl = document.getElementById('videoUrl').value;
-        const videoTitle = document.getElementById('videoTitle').value;
-        const videoYear = document.getElementById('videoYear').value;
-        const videoTag = document.getElementById('videoTag').value;
-        const videoLanguage = document.getElementById('videoLanguage').value;
-
-        const documentData = `Cover: ${coverLink}\nVideo URL: ${videoUrl}\nTitle: ${videoTitle}\nYear: ${videoYear}\nTag: ${videoTag}\nLanguage: ${videoLanguage}`;
-
-        navigator.clipboard.writeText(documentData).then(() => {
-            alert('Documents copied to clipboard');
-            document.getElementById('copyText').textContent = "Documents copied to clipboard!";
-        });
-    }
-
-    // Function to toggle share icons visibility
-    function toggleShareIcons() {
-        const shareIcons = document.getElementById('shareIcons');
-        shareIcons.style.display = (shareIcons.style.display === 'none' || shareIcons.style.display === '') ? 'block' : 'none';
-    }
-</script>
-
+    <iframe src="https://moviebox.ng/" allowfullscreen></iframe>
 </body>
+<script type='text/javascript' src='//pl25431103.profitablecpmrate.com/b8/d6/d8/b8d6d8b390bce762a2078b7957a71c0e.js'></script>
 </html>
