@@ -3,26 +3,470 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Full-Screen YouTube Video</title>
+    <title>Hausa Novels</title>
     <style>
         body {
+            font-family: Arial, sans-serif;
             margin: 0;
+            padding: 0;
+            background-color: #f9f9f9;
+        }
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 90px;
+            background-color: #fff;
             display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 8px 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            z-index: 1000;
+        }
+        .header-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+        }
+        .logo {
+            font-size: 18px;
+            border: 1px solid #ccc;
+            background: linear-gradient(to right, #2c3e50, #4ca1af);
+            border-radius: 20px;
+            padding: 6px 10px;
+            font-weight: bold;
+            color: #fff;
+        }
+        #search-bar {
+            flex: 1;
+            margin: 0 12px;
+            padding: 6px;
+            border: 2px solid #ccc;
+            border-radius: 20px;
+            font-size: 14px;
+        }
+        .icons {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        .tags {
+            display: flex;
+            gap: 10px;
+            margin-top: 10px;
+            overflow-x: auto;
+            padding: 8px 0;
+            width: 100%;
+        }
+        .tags .tag {
+            padding: 5px 10px;
+            background-color: #f1f1f1;
+            border-radius: 20px;
+            font-size: 14px;
+            cursor: pointer;
+            border: 1px solid #ddd;
+        }
+        #frames-container {
+            margin-top: 120px;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 4px;
+            padding: 7px;
+        }
+        .frame {
+            width: 100%; /* Full width of the grid column */
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            text-align: center;
+        }
+
+        .frame img {
+            width: 100%;
+            aspect-ratio: 16 / 23; /* Maintain consistent image proportions */
+            object-fit: cover;
+            cursor: pointer;
+        }
+
+        .frame .content {
+            padding: 2px;
+        }
+
+        .frame .content h2 {
+            font-size: 7px; /* Adjusted font size */
+            margin: 0 0 8px;
+            color: #333;
+        }
+
+        .frame .content p {
+            font-size: 0.5px;
+            margin: 5px 0;
+            color: #555;
+        }
+
+        .frame .content button {
+            background-color: #FF0000;
+            color: #fff;
+            border: 1px solid #ccc;
+            padding: 7px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            font-size: 9px;
+            text-align: center;
+        }
+
+        .frame .content button:hover {
+            background-color: #FF0000;
+        }
+
+        @media (max-width: 200px) {
+            #frames-container {
+                grid-template-columns: 1fr; /* Single column layout for smaller screens */
+            }
+        }
+
+        /* New Navigation Modal Styles */
+        .nav-container {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            z-index: 2000;
             justify-content: center;
             align-items: center;
-            height: 100vh;
-            background-color: #000;
         }
-        iframe {
-            width: 100vw;
-            height: 100vh;
+
+        .nav-content {
+            background-color: #fff;
+            width: 100%;
+            height: 100%; /* Adjusted height to leave space for the header */
+            max-width: 800px;
+            border-radius: 12px;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .nav-header {
+            background-color: #333;
+            color: #fff;
+            padding: 8px;
+            text-align: right;
+            flex-shrink: 0; /* Prevent header from shrinking */
+        }
+
+        .nav-header button {
+            background: none;
             border: none;
+            color: #fff;
+            font-size: 20px;
+            cursor: pointer;
+        }
+
+        .nav-body {
+            flex-grow: 1; /* Allow body to take remaining space */
+            overflow: hidden;
+        }
+
+        .nav-body iframe {
+            width: 100%;
+            height: 100%; /* Fill the remaining space */
+            border: none;
+        }
+
+        .notification {
+            padding: 15px 25px;
+            font-size: 10px;
+            font-weight: bold;
+            color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            animation: fadeInOut 3s ease-in-out;
+        }
+
+        /* Success notification */
+        .notification.success {
+            background-color: #4caf50; /* Green */
+        }
+
+        /* Warning notification */
+        .notification.warning {
+            background-color: #ff9800; /* Orange */
+        }
+
+        /* Info notification */
+        .notification.info {
+            background-color: #2196f3; /* Blue */
+        }
+
+        /* Animation for fade in/out effect */
+        @keyframes fadeInOut {
+            0% {
+                opacity: 0;
+                transform: translate(-50%, -60%);
+            }
+            10% {
+                opacity: 1;
+                transform: translate(-50%, -50%);
+            }
+            90% {
+                opacity: 1;
+                transform: translate(-50%, -50%);
+            }
+            100% {
+                opacity: 0;
+                transform: translate(-50%, -40%);
+            }
+        }
+
+        .button {
+            padding: 10px 20px;
+            font-size: 16px;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            opacity: 0.9;
+        }
+
+        button:disabled {
+            cursor: not-allowed;
+        }
+
+        button.green {
+            background-color: #4caf50;
+        }
+
+        button.blue {
+            background-color: #007bff;
         }
     </style>
 </head>
-<script type='text/javascript' src='//pl25477453.profitablecpmrate.com/c5/ac/ae/c5acae1e1c0828f2d66bcd397d7635b6.js'></script>
 <body>
-    <iframe src="https://moviebox.ng/" allowfullscreen></iframe>
+
+<header>
+    <div class="header-top">
+        <div class="logo">i Novels</div>
+        <input type="text" id="search-bar" placeholder=" Search..." oninput="handleSearch()" />
+    </div>
+    <div class="tags">
+        <div class="tag" onclick="filterByTag('America')">America</div>
+        <div class="tag" onclick="filterByTag('Chinese')">Chinese</div>
+        <div class="tag" onclick="filterByTag('Indian')">Indian</div>
+        <div class="tag" onclick="filterByTag('Europe')">Europe</div>
+        <div class="tag" onclick="filterByTag('Africa')">Africa</div>
+        <div class="tag" onclick="filterByTag('Japan')">Japan</div>
+        <div class="tag" onclick="filterByTag('Australia')">Australia</div>
+    </div>
+</header>
+
+<div id="frames-container"></div>
+
+<!-- Updated Navigation Modal -->
+<div class="nav-container" id="video-nav">
+    <div class="nav-content">
+        <div class="nav-header">
+            <button id="close-btn" onclick="closeNav()">✖</button>
+        </div>
+        <div class="nav-body">
+            <iframe id="video-player" src="" frameborder="0" allowfullscreen></iframe>
+        </div>
+    </div>
+</div>
+
+<script>
+    const data = [
+        {
+            imgUrl: "https://bit.ly/4gCtC1L",
+            videoUrl: "https://youtube.com/embed/CetjkiaH2x0",
+            adUrl: "https://www.profitablecpmrate.com/hz39pi8hu?key=b1e59314de7d94008170a99be19232cb",
+            title: "APOCALYPSE 2",
+            tag: "America",
+            videoId: "VIDEO_ID_1"            
+        },
+        {
+            imgUrl: "https://bit.ly/4fFLfwd",
+            videoUrl: "https://youtube.com/embed/BAQV7hQdznE",
+            adUrl: "https://www.profitablecpmrate.com/hz39pi8hu?key=b1e59314de7d94008170a99be19232cb",
+            title: "VIKING BATTLE OF HEIRS",
+            tag: "Chinese",
+        },
+        {
+            imgUrl: "https://bit.ly/3VRBV13",
+            videoUrl: "https://youtube.com/embed/3_i60BLtN_s",
+            adUrl: "https://www.profitablecpmrate.com/hz39pi8hu?key=b1e59314de7d94008170a99be19232cb",
+            title: "GUNS OF EDEN",
+            tag: "America",
+        },
+        {
+            imgUrl: "https://bit.ly/405kXOj",
+            videoUrl: "https://youtube.com/embed/CumW3IY1mMg",
+            adUrl: "https://www.profitablecpmrate.com/hz39pi8hu?key=b1e59314de7d94008170a99be19232cb",
+            title: "GOD OF WAR",
+            tag: "America",
+        },
+        {
+            imgUrl: "https://bit.ly/4gFznvC",
+            videoUrl: "https://youtube.com/embed/SFtKVKoscqA",
+            adUrl: "https://www.profitablecpmrate.com/hz39pi8hu?key=b1e59314de7d94008170a99be19232cb",
+            title: "CORA",
+            tag: "America",
+        },
+        {
+            imgUrl: "https://bit.ly/4gDe4dm",
+            videoUrl: "https://youtube.com/embed/hJzZRl1C8X0",
+            adUrl: "https://www.profitablecpmrate.com/hz39pi8hu?key=b1e59314de7d94008170a99be19232cb",
+            title: "JACK THE GIANT SLAYER",
+            tag: "America",
+        },
+        {
+            imgUrl: "https://bit.ly/4fwBQqK",
+            videoUrl: "https://youtube.com/embed/BjkncLAZu80",
+            adUrl: "https://www.profitablecpmrate.com/hz39pi8hu?key=b1e59314de7d94008170a99be19232cb",
+            title: "VIKING HUNTRESS",
+            tag: "America",
+        },
+        {
+            imgUrl: "https://bit.ly/3ZLSaxS",
+            videoUrl: "https://youtube.com/embed/UPjyNg1mKAM",
+            adUrl: "https://www.profitablecpmrate.com/hz39pi8hu?key=b1e59314de7d94008170a99be19232cb",
+            title: "JURASSIC TRIANGLE",
+            tag: "America",
+        },
+        {
+            imgUrl: "https://bit.ly/3VSO1am",
+            videoUrl: "https://youtube.com/embed/iTNyJse9fdk",
+            adUrl: "https://www.profitablecpmrate.com/hz39pi8hu?key=b1e59314de7d94008170a99be19232cb",
+            title: "ALIEN INVASION",
+            tag: "America",
+        },
+        {
+            imgUrl: "https://bit.ly/3BxGSW6",
+            videoUrl: "https://youtube.com/embed/siFLpeqOWDQ",
+            adUrl: "https://www.profitablecpmrate.com/hz39pi8hu?key=b1e59314de7d94008170a99be19232cb",
+            title: "KNIGHT OF THE DEAD",
+            tag: "America",
+        },
+        {
+            imgUrl: "https://bit.ly/3Pi2GYX",
+            videoUrl: "https://youtube.com/embed/Ma9xquhYyT0",
+            adUrl: "https://www.profitablecpmrate.com/hz39pi8hu?key=b1e59314de7d94008170a99be19232cb",
+            title: "GOATMAN",
+            tag: "America",
+        }
+    ];
+
+    const createFrames = (filteredData = data) => {
+        const container = document.getElementById('frames-container');
+        container.innerHTML = '';
+        filteredData.forEach((item) => {
+            const frame = document.createElement('div');
+            frame.className = 'frame';
+
+            const img = document.createElement('img');
+            img.src = item.imgUrl;
+            img.alt = item.title;
+            img.onclick = () => openVideoNav(item.videoUrl, item.title);
+
+            const content = document.createElement('div');
+            content.className = 'content';
+
+            const title = document.createElement('h2');
+            title.textContent = item.title;
+
+            const button = document.createElement('button');
+            const visited = localStorage.getItem(`${item.title}-ad-visited`);
+            button.textContent = visited ? 'Unlocked ✅' : 'Watch Ad 🔒';
+            button.style.backgroundColor = visited ? '#4caf50' : '#ff0000'; // Green if unlocked
+            button.onclick = () => {
+                if (!visited) {
+                    visitAd(item.title, item.adUrl, button);
+                } else {
+                    showNotification('This video is already unlocked!', 'info');
+                }
+            };
+
+            content.appendChild(title);
+            content.appendChild(button);
+            frame.appendChild(img);
+            frame.appendChild(content);
+            container.appendChild(frame);
+        });
+    };
+
+    const visitAd = (videoId, adUrl, button) => {
+        window.open(adUrl, '_blank');
+        localStorage.setItem(`${videoId}-ad-visited`, Date.now());
+        button.textContent = 'Unlocked 🔓'; // Update button text
+        button.style.backgroundColor = '#4caf50'; // Change button color to green
+        showNotification('The video is now unlocked!', 'success');
+    };
+
+    const openVideoNav = (videoUrl, videoId) => {
+        const visited = localStorage.getItem(`${videoId}-ad-visited`);
+        if (!visited) {
+            showNotification('Please Watch the Ad to unlock this Video.', 'warning');
+            return;
+        }
+        document.getElementById('video-nav').style.display = 'flex'; // Use flex to center the modal
+        document.getElementById('video-player').src = videoUrl;
+    };
+
+    const showNotification = (message, type) => {
+        const notification = document.createElement('div');
+        notification.className = `notification ${type}`;
+        notification.textContent = message;
+
+        // Append notification to the body
+        document.body.appendChild(notification);
+
+        // Center the notification
+        notification.style.position = 'fixed';
+        notification.style.top = '50%';
+        notification.style.left = '50%';
+        notification.style.transform = 'translate(-50%, -50%)';
+        notification.style.zIndex = '9999';
+
+        // Remove notification after 3 seconds
+        setTimeout(() => {
+            notification.remove();
+        }, 3000); // 3 seconds
+    };
+
+    const closeNav = () => {
+        document.getElementById('video-nav').style.display = 'none';
+        document.getElementById('video-player').src = '';
+    };
+
+    const handleSearch = () => {
+        const searchTerm = document.getElementById('search-bar').value.toLowerCase();
+        const filteredData = data.filter(item => item.title.toLowerCase().includes(searchTerm));
+        createFrames(filteredData);
+    };
+
+    const filterByTag = (tag) => {
+        const filteredData = data.filter(item => item.tag === tag);
+        createFrames(filteredData);
+    };
+
+    createFrames();
+</script>
+
 </body>
-<script type='text/javascript' src='//pl25707252.profitablecpmrate.com/0d/9b/2e/0d9b2e8693ad60d4b306ee4bc7b23e99.js'></script>
 </html>
