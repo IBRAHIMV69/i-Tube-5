@@ -19,6 +19,8 @@
             height: 90px;
             background-color: #fff;
             display: flex;
+            border: 1px solid #ccc;
+            border-radius: 8px;
             flex-direction: column;
             align-items: center;
             padding: 8px 8px;
@@ -74,7 +76,7 @@
             margin-top: 120px;
             display: grid;
             grid-template-columns: repeat(3, 1fr);
-            gap: 8px;
+            gap: 5px;
             padding: 7px;
         }
         .frame {
@@ -94,7 +96,7 @@
         }
 
         .frame .content h2 {
-            font-size: 5px;
+            font-size: 8px;
             text-align: center;
             margin-top: 5px;
         }
@@ -109,8 +111,8 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            width: 100%;
-            font-size: 7px;
+            width: 100%;            
+            font-size: 8px;
             text-align: center;
         }
 
@@ -285,9 +287,9 @@
     const data = [
         {
             imgUrl: "https://bit.ly/4gCtC1L",
-            videoUrl: "https://youtube.com/embed/CetjkiaH2x0",
+            videoUrl: "https://www.creativenovels.com.ng/2023/09/mr-romantic-4.html?m=1",
             adUrl: "https://www.profitablecpmrate.com/hz39pi8hu?key=b1e59314de7d94008170a99be19232cb",
-            title: "🎧 APOCALYPSE 2",
+            title: "APOCALYPSE 2",
             tag: "America",
             videoId: "VIDEO_ID_1"            
         },
@@ -363,120 +365,129 @@
         }
     ];
 
-const createFrames = (filteredData = data) => {
-    const container = document.getElementById('frames-container');
-    container.innerHTML = '';
-    filteredData.forEach((item) => {
-        const frame = document.createElement('div');
-        frame.className = 'frame';
+    const createFrames = (filteredData = data) => {
+        const container = document.getElementById('frames-container');
+        container.innerHTML = '';
+        filteredData.forEach((item) => {
+            const frame = document.createElement('div');
+            frame.className = 'frame';
 
-        const img = document.createElement('img');
-        img.src = item.imgUrl;
-        img.alt = item.title;
-        img.onclick = () => openVideoNav(item.videoUrl, item.title);
+            const img = document.createElement('img');
+            img.src = item.imgUrl;
+            img.alt = item.title;
 
-        const content = document.createElement('div');
-        content.className = 'content';
+            const content = document.createElement('div');
+            content.className = 'content';
 
-        const title = document.createElement('h2');
-        title.textContent = item.title;
+            const title = document.createElement('h2');
+            title.textContent = item.title;
 
-        const button = document.createElement('button');
-        const visited = localStorage.getItem(`${item.title}-ad-visited`);
-        const unlockTime = localStorage.getItem(`${item.title}-unlock-time`);
+            const button = document.createElement('button');
+            const visited = localStorage.getItem(`${item.title}-ad-visited`);
+            const unlockTime = localStorage.getItem(`${item.title}-unlock-time`);
+            const currentTime = Date.now();
+
+            // Check if 2 hours have passed since the video was unlocked
+            if (visited && unlockTime && (currentTime - parseInt(unlockTime)) < 7200000) {
+                button.textContent = 'Read ✅';
+                button.style.backgroundColor = '#4caf50'; // Green if unlocked
+
+                // Enable thumbnail click to open video
+                img.onclick = () => openVideoNav(item.videoUrl, item.title);
+
+                // Enable button to open video directly
+                button.onclick = () => openVideoNav(item.videoUrl, item.title);
+            } else {
+                button.textContent = 'Watch Ad 🔒';
+                button.style.backgroundColor = '#ff0000'; // Red if locked
+
+                // Disable thumbnail click
+                img.onclick = () => showNotification('Please Watch the Ad to unlock this Video.', 'warning');
+
+                // Enable button to unlock video
+                button.onclick = () => {
+                    visitAd(item.title, item.adUrl, button);
+                };
+            }
+
+            content.appendChild(title);
+            content.appendChild(button);
+            frame.appendChild(img);
+            frame.appendChild(content);
+            container.appendChild(frame);
+        });
+    };
+
+    const visitAd = (videoId, adUrl, button) => {
+        window.open(adUrl, '_blank');
+        const unlockTime = Date.now();
+        localStorage.setItem(`${videoId}-ad-visited`, true);
+        localStorage.setItem(`${videoId}-unlock-time`, unlockTime);
+        button.textContent = 'Read ✅'; // Update button text
+        button.style.backgroundColor = '#4caf50'; // Change button color to green
+
+        // Enable thumbnail click and button to open video
+        const img = button.closest('.frame').querySelector('img');
+        img.onclick = () => openVideoNav(data.find(item => item.title === videoId).videoUrl, videoId);
+        button.onclick = () => openVideoNav(data.find(item => item.title === videoId).videoUrl, videoId);
+
+        showNotification('The video is now unlocked!', 'success');
+    };
+
+    const openVideoNav = (videoUrl, videoId) => {
+        const visited = localStorage.getItem(`${videoId}-ad-visited`);
+        const unlockTime = localStorage.getItem(`${videoId}-unlock-time`);
         const currentTime = Date.now();
 
-        // Check if 2 hours have passed since the video was unlocked
-        if (visited && unlockTime && (currentTime - parseInt(unlockTime)) < 7200000) {
-            button.textContent = 'Unlocked ✅';
-            button.style.backgroundColor = '#4caf50'; // Green if unlocked
-        } else {
-            button.textContent = 'Watch Ad 🔒';
-            button.style.backgroundColor = '#ff0000'; // Red if locked
-            localStorage.removeItem(`${item.title}-ad-visited`);
-            localStorage.removeItem(`${item.title}-unlock-time`);
+        if (!visited || (currentTime - parseInt(unlockTime)) >= 7200000) {
+            showNotification('Please Watch the Ad to unlock this Video.', 'warning');
+            return;
         }
+        document.getElementById('video-nav').style.display = 'flex'; // Use flex to center the modal
+        document.getElementById('video-player').src = videoUrl;
 
-        button.onclick = () => {
-            if (!visited || (currentTime - parseInt(unlockTime)) >= 7200000) {
-                visitAd(item.title, item.adUrl, button);
-            } else {
-                showNotification('This video is already unlocked!', 'info');
-            }
-        };
+        // Reset the unlock timer if the user is watching the video
+        localStorage.setItem(`${videoId}-unlock-time`, currentTime);
+    };
 
-        content.appendChild(title);
-        content.appendChild(button);
-        frame.appendChild(img);
-        frame.appendChild(content);
-        container.appendChild(frame);
-    });
-};
+    const showNotification = (message, type) => {
+        const notification = document.createElement('div');
+        notification.className = `notification ${type}`;
+        notification.textContent = message;
 
-const visitAd = (videoId, adUrl, button) => {
-    window.open(adUrl, '_blank');
-    const unlockTime = Date.now();
-    localStorage.setItem(`${videoId}-ad-visited`, true);
-    localStorage.setItem(`${videoId}-unlock-time`, unlockTime);
-    button.textContent = 'Unlocked 🔓'; // Update button text
-    button.style.backgroundColor = '#4caf50'; // Change button color to green
-    showNotification('The video is now unlocked!', 'success');
-};
+        // Append notification to the body
+        document.body.appendChild(notification);
 
-const openVideoNav = (videoUrl, videoId) => {
-    const visited = localStorage.getItem(`${videoId}-ad-visited`);
-    const unlockTime = localStorage.getItem(`${videoId}-unlock-time`);
-    const currentTime = Date.now();
+        // Center the notification
+        notification.style.position = 'fixed';
+        notification.style.top = '50%';
+        notification.style.left = '50%';
+        notification.style.transform = 'translate(-50%, -50%)';
+        notification.style.zIndex = '9999';
 
-    if (!visited || (currentTime - parseInt(unlockTime)) >= 7200000) {
-        showNotification('Please Watch the Ad to unlock this Video.', 'warning');
-        return;
-    }
-    document.getElementById('video-nav').style.display = 'flex'; // Use flex to center the modal
-    document.getElementById('video-player').src = videoUrl;
+        // Remove notification after 3 seconds
+        setTimeout(() => {
+            notification.remove();
+        }, 3000); // 3 seconds
+    };
 
-    // Reset the unlock timer if the user is watching the video
-    localStorage.setItem(`${videoId}-unlock-time`, currentTime);
-};
+    const closeNav = () => {
+        document.getElementById('video-nav').style.display = 'none';
+        document.getElementById('video-player').src = '';
+    };
 
-const showNotification = (message, type) => {
-    const notification = document.createElement('div');
-    notification.className = `notification ${type}`;
-    notification.textContent = message;
+    const handleSearch = () => {
+        const searchTerm = document.getElementById('search-bar').value.toLowerCase();
+        const filteredData = data.filter(item => item.title.toLowerCase().includes(searchTerm));
+        createFrames(filteredData);
+    };
 
-    // Append notification to the body
-    document.body.appendChild(notification);
+    const filterByTag = (tag) => {
+        const filteredData = data.filter(item => item.tag === tag);
+        createFrames(filteredData);
+    };
 
-    // Center the notification
-    notification.style.position = 'fixed';
-    notification.style.top = '50%';
-    notification.style.left = '50%';
-    notification.style.transform = 'translate(-50%, -50%)';
-    notification.style.zIndex = '9999';
-
-    // Remove notification after 3 seconds
-    setTimeout(() => {
-        notification.remove();
-    }, 3000); // 3 seconds
-};
-
-const closeNav = () => {
-    document.getElementById('video-nav').style.display = 'none';
-    document.getElementById('video-player').src = '';
-};
-
-const handleSearch = () => {
-    const searchTerm = document.getElementById('search-bar').value.toLowerCase();
-    const filteredData = data.filter(item => item.title.toLowerCase().includes(searchTerm));
-    createFrames(filteredData);
-};
-
-const filterByTag = (tag) => {
-    const filteredData = data.filter(item => item.tag === tag);
-    createFrames(filteredData);
-};
-
-// Check and lock videos after 2 hours
+    // Check and lock videos after 2 hours
 const checkAndLockVideos = () => {
     data.forEach((item) => {
         const visited = localStorage.getItem(`${item.title}-ad-visited`);
