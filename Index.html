@@ -4,7 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Video Unlock System</title>
+    <!-- Add Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
+        /* Your existing CSS styles */
         body {
             font-family: Arial, sans-serif;
             margin: 0;
@@ -16,14 +19,14 @@
             top: 0;
             left: 0;
             width: 100%;
-            height: 90px;
+            height: 35px;
             background-color: #fff;
             display: flex;
             border: 1px solid #ccc;
             border-radius: 8px;
             flex-direction: column;
             align-items: center;
-            padding: 8px 8px;
+            padding: 20px 8px;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
             z-index: 1000;
         }
@@ -34,17 +37,18 @@
             width: 100%;
         }
         .logo {
-            font-size: 20px;
+            font-size: 18px;
+            margin: 0 12px;
             border: 1px solid #ccc;
             background: linear-gradient(to right, #2c3e50, #4ca1af);
             border-radius: 20px;
-            padding: 6px 10px;
+            padding: 9px 12px;
             font-weight: bold;
             color: #fff;
         }
         #search-bar {
-            flex: 1;
-            margin: 0 12px;
+            flex: 0 1 150px;
+            margin: 0 12px;            
             padding: 7px;
             background-color: #f1f1f1;
             border: 2px solid #ccc;
@@ -56,51 +60,229 @@
             align-items: center;
             gap: 5px;
         }
-        .tags {
-            display: flex;
-            gap: 10px;
-            margin-top: 12px;
-            overflow-x: auto;
-            padding: 8px 0;
-            width: 100%;
-        }
-        .tags .tag {
-            padding: 5px 15px;
-            background-color: #f1f1f1;
-            border-radius: 20px;
-            font-size: 10px;
+        .history-icon {
+            font-size: 20px;
             cursor: pointer;
-            border: 1px solid #ddd;
+            color: #333;
         }
-        #frames-container {
-            margin-top: 120px;
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap:10px;
-            padding: 6px;
+        .history-icon:hover {
+            color: #007bff;
+        }
+
+        /* History Modal */
+        .history-modal {
+            display: none;
+            position: fixed;
+            top: 80px;
+            right: 8px;
+            width: 320px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            z-index: 1000;
+            padding: 10px;
+        }
+        .history-modal.open {
+            display: block;
+        }
+        .history-modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+        .history-modal-header h3 {
+            font-size: 16px;
+            margin: 0;
+            color: #333;
+        }
+        .history-modal-header button {
+            background: none;
+            border: none;
+            color: #333;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        .history-modal-header button:hover {
+            color: #007bff;
+        }
+        .history-list {
+            max-height: 300px;
+            overflow-y: auto;
+        }
+        .history-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px;
+            border-bottom: 1px solid #eee;
+        }
+        .history-item:last-child {
+            border-bottom: none;
+        }
+        .history-item img {
+            width: 80px;
+            height: 100px;
+            object-fit: cover;
+            border-radius: 5px;
+        }
+        .history-item .content {
+            flex: 1;
+        }
+        .history-item h4 {
+            font-size: 14px;
+            margin: 0;
+            color: #333;
+        }
+        .history-item p {
+            font-size: 12px;
+            margin: 0;
+            color: #777;
+        }
+        .history-item button {
+            background-color: #FF0000;
+            color: #fff;
+            border: 1px solid #ccc;
+            padding: 5px 5px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 9px;
+            text-align: center;
+        }
+        .history-item button:hover {
+            background-color: #FF0000;
+        }
+        .clear-history-button {
+            width: 100%;
+            background-color: #ff0000;
+            color: #fff;
+            border: none;
+            padding: 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+        .clear-history-button:hover {
+            background-color: #cc0000;
+        }
+
+        /* Discover Section */
+        .discover-container {
+            margin-top: 90px;
+            padding: 10px;
+        }
+        .discover-title {
+            font-size: 20px;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        .discover-scroll {
+            display: flex;
+            overflow-x: auto;
+            gap: 10px;
+            padding-bottom: 10px;
+        }
+        .discover-scroll::-webkit-scrollbar {
+            height: 0px;
+        }
+        .discover-scroll::-webkit-scrollbar-thumb {
+            background-color: #888;
+            border-radius: 4px;
+        }
+        .discover-scroll::-webkit-scrollbar-track {
+            background-color: #f1f1f1;
+        }
+        .discover-item {
+            flex: 0 0 auto;
+            width: 156px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            text-align: center;
+            position: relative;
+        }
+        .discover-item img {
+            width: 100%;
+            aspect-ratio: 16 / 23;
+            object-fit: cover;
+            border-radius: 5px;
+        }
+        .discover-item .content {
+            padding: 10px;
+        }
+        .discover-item .content h2 {
+            font-size: 8px;
+            margin: 0;
+            color: #333;
+        }
+        .discover-item .content p {
+            font-size: 10px;
+            color: #777;
+            margin: 5px 0;
+        }
+
+        /* Category Section */
+        .category-container {
+            margin-top: 10px;
+            padding: 10px;
+        }
+        .category-title {
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .category-title button {
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 12px;
+        }
+        .category-title button:hover {
+            background-color: #0056b3;
+        }
+        .category-scroll {
+            display: flex;
+            overflow-x: auto;
+            gap: 10px;
+            padding-bottom: 10px;
+        }
+        .category-scroll::-webkit-scrollbar {
+            height: 0px;
+        }
+        .category-scroll::-webkit-scrollbar-thumb {
+            background-color: #888;
+            border-radius: 4px;
+        }
+        .category-scroll::-webkit-scrollbar-track {
+            background-color: #f1f1f1;
         }
         .frame {
-            width: 100%; /* Full width of the grid column */
+            flex: 0 0 auto;
+            width: 120px;
             background-color: #fff;
             border-radius: 8px;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
             overflow: hidden;
             text-align: center;
         }
-
         .frame img {
             width: 100%;
-            aspect-ratio: 16 / 24;
+            aspect-ratio: 16 / 23;
             object-fit: cover;
             border-radius: 5px;
         }
-
         .frame .content h2 {
             font-size: 0px;
             text-align: center;
             margin-top: 0px;
         }
-
         .frame .content button {
             background-color: #FF0000;
             color: #fff;
@@ -115,18 +297,23 @@
             font-size: 9px;
             text-align: center;
         }
-
         .frame .content button:hover {
             background-color: #FF0000;
         }
 
-        @media (max-width: 200px) {
-            #frames-container {
-                grid-template-columns: 1fr; /* Single column layout for smaller screens */
-            }
+        /* Grid Layout for View All and Search Results */
+        .grid-container {
+            margin-top: 90px;
+            padding: 10px;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+        }
+        .grid-container .frame {
+            width: 100%;
         }
 
-        /* New Navigation Modal Styles */
+        /* Navigation Modal Styles */
         .nav-container {
             display: none;
             position: fixed;
@@ -139,26 +326,23 @@
             justify-content: center;
             align-items: center;
         }
-
         .nav-content {
             background-color: #fff;
             width: 100%;
-            height: 100%; /* Adjusted height to leave space for the header */
+            height: 100%;
             max-width: 800px;
             border-radius: 8px;
             overflow: hidden;
             display: flex;
             flex-direction: column;
         }
-
         .nav-header {
             background-color: #333;
             color: #fff;
             padding: 5px;
             text-align: right;
-            flex-shrink: 0; /* Prevent header from shrinking */
+            flex-shrink: 0;
         }
-
         .nav-header button {
             background: none;
             border: none;
@@ -166,18 +350,20 @@
             font-size: 20px;
             cursor: pointer;
         }
-
+        .nav-header button:hover {
+            color: #007bff;
+        }
         .nav-body {
-            flex-grow: 1; /* Allow body to take remaining space */
+            flex-grow: 1;
             overflow: hidden;
         }
-
         .nav-body iframe {
             width: 100%;
-            height: 100%; /* Fill the remaining space */
+            height: 100%;
             border: none;
         }
 
+        /* Notification Styles */
         .notification {
             padding: 15px 25px;
             font-size: 10px;
@@ -188,23 +374,15 @@
             text-align: center;
             animation: fadeInOut 3s ease-in-out;
         }
-
-        /* Success notification */
         .notification.success {
-            background-color: #4caf50; /* Green */
+            background-color: #4caf50;
         }
-
-        /* Warning notification */
         .notification.warning {
-            background-color: #ff9800; /* Orange */
+            background-color: #ff9800;
         }
-
-        /* Info notification */
         .notification.info {
-            background-color: #2196f3; /* Blue */
+            background-color: #2196f3;
         }
-
-        /* Animation for fade in/out effect */
         @keyframes fadeInOut {
             0% {
                 opacity: 0;
@@ -223,289 +401,456 @@
                 transform: translate(-50%, -40%);
             }
         }
-
-        .button {
-            padding: 10px 20px;
-            font-size: 16px;
-            color: #fff;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            transition: background-color 0.3s ease;
-        }
-
-        button:hover {
-            opacity: 0.9;
-        }
-
-        button:disabled {
-            cursor: not-allowed;
-        }
-
-        button.green {
-            background-color: #4caf50;
-        }
-
-        button.blue {
-            background-color: #007bff;
-        }
     </style>
 </head>
 <body>
-
-<header>
-    <div class="header-top">
-        <div class="logo">i Novels</div>
-        <input type="text" id="search-bar" placeholder=" Search..." oninput="handleSearch()" />
-    </div>
-    <div class="tags">
-        <div class="tag" onclick="filterByTag('Audio')">♥️</div>
-        <div class="tag" onclick="filterByTag('Audio')">🎧</div>
-        <div class="tag" onclick="filterByTag('Love')">English</div>
-        <div class="tag" onclick="filterByTag('Love')">Hausa</div>
-        <div class="tag" onclick="filterByTag('Africa')">Africa</div>
-        <div class="tag" onclick="filterByTag('Japan')">Japan</div>
-        <div class="tag" onclick="filterByTag('Australia')">Australia</div>
-    </div>
-</header>
-
-<div id="frames-container"></div>
-
-<!-- Updated Navigation Modal -->
-<div class="nav-container" id="video-nav">
-    <div class="nav-content">
-        <div class="nav-header">
-            <button id="close-btn" onclick="closeNav()">✖</button>
+    <header>
+        <div class="header-top">
+            <div class="logo">Hausa Novels</div>
+            <div class="history-icon" onclick="toggleHistoryModal()"><i class="fas fa-history"></i></div>
+            <input type="text" id="search-bar" placeholder=" Search..." oninput="handleSearch()" />
         </div>
-        <div class="nav-body">
-            <iframe id="video-player" src="" frameborder="0" allowfullscreen></iframe>
+    </header>
+
+    <!-- History Modal -->
+    <div class="history-modal" id="history-modal">
+        <div class="history-modal-header">
+            <h3>History Views</h3>
+            <button onclick="toggleHistoryModal()">✖</button>
+        </div>
+        <div class="history-list" id="history-list"></div>
+        <button class="clear-history-button" onclick="clearHistory()">Clear All History</button>
+    </div>
+
+    <!-- Discover Section -->
+    <div class="discover-container" id="discover-container">
+        <div class="discover-title">Discover</div>
+        <div class="discover-scroll" id="discover-scroll"></div>
+    </div>
+
+    <!-- Categories Section -->
+    <div id="categories-container"></div>
+
+    <!-- Grid Layout for View All and Search Results -->
+    <div id="grid-container" class="grid-container" style="display: none;"></div>
+
+    <!-- Navigation Modal -->
+    <div class="nav-container" id="video-nav">
+        <div class="nav-content">
+            <div class="nav-header">
+                <button id="close-btn" onclick="closeNav()">✖</button>
+            </div>
+            <div class="nav-body">
+                <iframe id="video-player" src="" frameborder="0" allowfullscreen></iframe>
+            </div>
         </div>
     </div>
-</div>
 
-<script>
-    const data = [
-        {
-            imgUrl: "https://bitly.cx/ph6T1",
-            videoUrl: "https://iuptelegram.blogspot.com/2025/02/one.html",
-            adUrl: "https://www.profitablecpmrate.com/hz39pi8hu?key=b1e59314de7d94008170a99be19232cb",
-            title: "TSANTSAR SO",
-            tag: "America",
-            videoId: "VIDEO_ID_1"            
-        },
-        {
-            imgUrl: "https://bit.ly/4fFLfwd",
-            videoUrl: "https://iuptelegram.blogspot.com/2025/02/full-screen-audio-playlist-reset.html",
-            adUrl: "https://www.profitablecpmrate.com/hz39pi8hu?key=b1e59314de7d94008170a99be19232cb",
-            title: "VIKING BATTLE OF HEIRS",
-            tag: "Chinese",
-        },
-        {
-            imgUrl: "https://bit.ly/3VRBV13",
-            videoUrl: "https://youtube.com/embed/3_i60BLtN_s",
-            adUrl: "https://www.profitablecpmrate.com/hz39pi8hu?key=b1e59314de7d94008170a99be19232cb",
-            title: "GUNS OF EDEN",
-            tag: "America",
-        },
-        {
-            imgUrl: "https://bit.ly/405kXOj",
-            videoUrl: "https://youtube.com/embed/CumW3IY1mMg",
-            adUrl: "https://www.profitablecpmrate.com/hz39pi8hu?key=b1e59314de7d94008170a99be19232cb",
-            title: "GOD OF WAR",
-            tag: "America",
-        },
-        {
-            imgUrl: "https://bit.ly/4gFznvC",
-            videoUrl: "https://youtube.com/embed/SFtKVKoscqA",
-            adUrl: "https://www.profitablecpmrate.com/hz39pi8hu?key=b1e59314de7d94008170a99be19232cb",
-            title: "CORA",
-            tag: "America",
-        },
-        {
-            imgUrl: "https://bit.ly/4gDe4dm",
-            videoUrl: "https://youtube.com/embed/hJzZRl1C8X0",
-            adUrl: "https://www.profitablecpmrate.com/hz39pi8hu?key=b1e59314de7d94008170a99be19232cb",
-            title: "JACK THE GIANT SLAYER",
-            tag: "America",
-        },
-        {
-            imgUrl: "https://bit.ly/4fwBQqK",
-            videoUrl: "https://youtube.com/embed/BjkncLAZu80",
-            adUrl: "https://www.profitablecpmrate.com/hz39pi8hu?key=b1e59314de7d94008170a99be19232cb",
-            title: "VIKING HUNTRESS",
-            tag: "America",
-        },
-        {
-            imgUrl: "https://bit.ly/3ZLSaxS",
-            videoUrl: "https://youtube.com/embed/UPjyNg1mKAM",
-            adUrl: "https://www.profitablecpmrate.com/hz39pi8hu?key=b1e59314de7d94008170a99be19232cb",
-            title: "JURASSIC TRIANGLE",
-            tag: "America",
-        },
-        {
-            imgUrl: "https://bit.ly/3VSO1am",
-            videoUrl: "https://youtube.com/embed/iTNyJse9fdk",
-            adUrl: "https://www.profitablecpmrate.com/hz39pi8hu?key=b1e59314de7d94008170a99be19232cb",
-            title: "ALIEN INVASION",
-            tag: "America",
-        },
-        {
-            imgUrl: "https://bit.ly/3BxGSW6",
-            videoUrl: "https://youtube.com/embed/siFLpeqOWDQ",
-            adUrl: "https://www.profitablecpmrate.com/hz39pi8hu?key=b1e59314de7d94008170a99be19232cb",
-            title: "KNIGHT OF THE DEAD",
-            tag: "America",
-        },
-        {
-            imgUrl: "https://bit.ly/3Pi2GYX",
-            videoUrl: "https://youtube.com/embed/Ma9xquhYyT0",
-            adUrl: "https://www.profitablecpmrate.com/hz39pi8hu?key=b1e59314de7d94008170a99be19232cb",
-            title: "GOATMAN",
-            tag: "America",
-        }
-    ];
+    <script>
+        const data = [
+    {
+        imgUrl: "https://bitly.cx/ph6T1",
+        videoUrl: "https://iuptelegram.blogspot.com/2025/02/one.html",
+        adUrl: "https://www.profitablecpmrate.com/hz39pi8hu?key=b1e59314de7d94008170a99be19232cb",
+        title: "TSANTSAR SO",
+        category: "Action",
+        description: "A thrilling action-packed adventure.",
+    },
+    {
+        imgUrl: "https://bit.ly/4fFLfwd",
+        videoUrl: "https://iuptelegram.blogspot.com/2025/02/full-screen-audio-playlist-reset.html",
+        adUrl: "https://www.profitablecpmrate.com/hz39pi8hu?key=b1e59314de7d94008170a99be19232cb",
+        title: "VIKING BATTLE OF HEIRS",
+        category: "Adventure",
+        description: "Epic battles and heroic journeys.",
+    },
+    {
+        imgUrl: "https://bit.ly/3VRBV13",
+        videoUrl: "https://youtube.com/embed/3_i60BLtN_s",
+        adUrl: "https://www.profitablecpmrate.com/hz39pi8hu?key=b1e59314de7d94008170a99be19232cb",
+        title: "GUNS OF EDEN",
+        category: "Action",
+        description: "A story of survival and redemption.",
+    },
+    {
+        imgUrl: "https://bit.ly/405kXOj",
+        videoUrl: "https://youtube.com/embed/CumW3IY1mMg",
+        adUrl: "https://www.profitablecpmrate.com/hz39pi8hu?key=b1e59314de7d94008170a99be19232cb",
+        title: "GOD OF WAR",
+        category: "Action",
+        description: "The legend of a warrior's journey.",
+    },
+    {
+        imgUrl: "https://bit.ly/4gFznvC",
+        videoUrl: "https://youtube.com/embed/SFtKVKoscqA",
+        adUrl: "https://www.profitablecpmrate.com/hz39pi8hu?key=b1e59314de7d94008170a99be19232cb",
+        title: "CORA",
+        category: "Drama",
+        description: "A heartwarming tale of love and loss.",
+    },
+    {
+        imgUrl: "https://bit.ly/4gDe4dm",
+        videoUrl: "https://youtube.com/embed/hJzZRl1C8X0",
+        adUrl: "https://www.profitablecpmrate.com/hz39pi8hu?key=b1e59314de7d94008170a99be19232cb",
+        title: "JACK THE GIANT SLAYER",
+        category: "Adventure",
+        description: "A classic tale of bravery and courage.",
+    },
+    {
+        imgUrl: "https://bit.ly/4fwBQqK",
+        videoUrl: "https://youtube.com/embed/BjkncLAZu80",
+        adUrl: "https://www.profitablecpmrate.com/hz39pi8hu?key=b1e59314de7d94008170a99be19232cb",
+        title: "VIKING HUNTRESS",
+        category: "Action",
+        description: "A fierce warrior's quest for justice.",
+    },
+    {
+        imgUrl: "https://bit.ly/3ZLSaxS",
+        videoUrl: "https://youtube.com/embed/UPjyNg1mKAM",
+        adUrl: "https://www.profitablecpmrate.com/hz39pi8hu?key=b1e59314de7d94008170a99be19232cb",
+        title: "JURASSIC TRIANGLE",
+        category: "Sci-Fi",
+        description: "A prehistoric adventure like no other.",
+    },
+    {
+        imgUrl: "https://bit.ly/3VSO1am",
+        videoUrl: "https://youtube.com/embed/iTNyJse9fdk",
+        adUrl: "https://www.profitablecpmrate.com/hz39pi8hu?key=b1e59314de7d94008170a99be19232cb",
+        title: "ALIEN INVASION",
+        category: "Sci-Fi",
+        description: "Earth's last stand against an alien threat.",
+    },
+    {
+        imgUrl: "https://bit.ly/3BxGSW6",
+        videoUrl: "https://youtube.com/embed/siFLpeqOWDQ",
+        adUrl: "https://www.profitablecpmrate.com/hz39pi8hu?key=b1e59314de7d94008170a99be19232cb",
+        title: "KNIGHT OF THE DEAD",
+        category: "Action",
+        description: "A knight's battle against the undead.",
+    },
+    {
+        imgUrl: "https://bit.ly/3Pi2GYX",
+        videoUrl: "https://youtube.com/embed/Ma9xquhYyT0",
+        adUrl: "https://www.profitablecpmrate.com/hz39pi8hu?key=b1e59314de7d94008170a99be19232cb",
+        title: "GOATMAN",
+        category: "Horror",
+        description: "A terrifying tale of a mythical creature.",
+    }
+];
 
-    const createFrames = (filteredData = data) => {
-        const container = document.getElementById('frames-container');
-        container.innerHTML = '';
-        filteredData.forEach((item) => {
-            const frame = document.createElement('div');
-            frame.className = 'frame';
+const createDiscoverSection = () => {
+    const discoverScroll = document.getElementById('discover-scroll');
+    discoverScroll.innerHTML = '';
 
-            const img = document.createElement('img');
-            img.src = item.imgUrl;
-            img.alt = item.title;
+    // Select the first 5 videos for the Discover section
+    const discoverData = data.slice(0, 5);
 
-            const content = document.createElement('div');
-            content.className = 'content';
+    discoverData.forEach(item => {
+        const discoverItem = document.createElement('div');
+        discoverItem.className = 'discover-item';
 
-            const title = document.createElement('h2');
-            title.textContent = item.title;
+        const img = document.createElement('img');
+        img.src = item.imgUrl;
+        img.alt = item.title;
 
-            const button = document.createElement('button');
-            const visited = localStorage.getItem(`${item.title}-ad-visited`);
-            const unlockTime = localStorage.getItem(`${item.title}-unlock-time`);
-            const currentTime = Date.now();
+        const content = document.createElement('div');
+        content.className = 'content';
+        content.innerHTML = `
+            <h2>${item.title}</h2>
+            <p>${item.description}</p>
+        `;
 
-            // Check if 2 hours have passed since the video was unlocked
-            if (visited && unlockTime && (currentTime - parseInt(unlockTime)) < 7200000) {
-                button.textContent = 'Read ✅';
-                button.style.backgroundColor = '#4caf50'; // Green if unlocked
+        discoverItem.appendChild(img);
+        discoverItem.appendChild(content);
+        discoverScroll.appendChild(discoverItem);
 
-                // Enable thumbnail click to open video
-                img.onclick = () => openVideoNav(item.videoUrl, item.title);
+        // Add click event to open video (no ad requirement for Discover section)
+        discoverItem.onclick = () => {
+            openVideoNav(item.videoUrl, item.title);
+        };
+    });
+};
 
-                // Enable button to open video directly
-                button.onclick = () => openVideoNav(item.videoUrl, item.title);
-            } else {
-                button.textContent = 'Watch Ad 🔒';
-                button.style.backgroundColor = '#ff0000'; // Red if locked
+const createCategories = () => {
+    const categories = [...new Set(data.map(item => item.category))]; // Get unique categories
+    const container = document.getElementById('categories-container');
+    container.innerHTML = '';
 
-                // Disable thumbnail click
-                img.onclick = () => showNotification('Please Watch the Ad to unlock this Video.', 'warning');
+    categories.forEach(category => {
+        const categoryData = data.filter(item => item.category === category);
+        const categoryContainer = document.createElement('div');
+        categoryContainer.className = 'category-container';
 
-                // Enable button to unlock video
-                button.onclick = () => {
-                    visitAd(item.title, item.adUrl, button);
-                };
-            }
+        const categoryTitle = document.createElement('div');
+        categoryTitle.className = 'category-title';
+        categoryTitle.innerHTML = `
+            <span>${category}</span>
+            <button onclick="showAllVideos('${category}')">More ></button></button>
+        `;
 
-            content.appendChild(title);
-            content.appendChild(button);
-            frame.appendChild(img);
-            frame.appendChild(content);
-            container.appendChild(frame);
+        const categoryScroll = document.createElement('div');
+        categoryScroll.className = 'category-scroll';
+
+        // Display all videos in the category (no slice limit)
+        categoryData.forEach(item => {
+            const frame = createFrame(item);
+            categoryScroll.appendChild(frame);
         });
-    };
 
-    const visitAd = (videoId, adUrl, button) => {
-        window.open(adUrl, '_blank');
-        const unlockTime = Date.now();
-        localStorage.setItem(`${videoId}-ad-visited`, true);
-        localStorage.setItem(`${videoId}-unlock-time`, unlockTime);
-        button.textContent = 'Read ✅'; // Update button text
-        button.style.backgroundColor = '#4caf50'; // Change button color to green
+        categoryContainer.appendChild(categoryTitle);
+        categoryContainer.appendChild(categoryScroll);
+        container.appendChild(categoryContainer);
+    });
+};
 
-        // Enable thumbnail click and button to open video
-        const img = button.closest('.frame').querySelector('img');
-        img.onclick = () => openVideoNav(data.find(item => item.title === videoId).videoUrl, videoId);
-        button.onclick = () => openVideoNav(data.find(item => item.title === videoId).videoUrl, videoId);
+const createFrame = (item) => {
+    const frame = document.createElement('div');
+    frame.className = 'frame';
 
-        showNotification('The video is now unlocked!', 'success');
-    };
+    const img = document.createElement('img');
+    img.src = item.imgUrl;
+    img.alt = item.title;
 
-    const openVideoNav = (videoUrl, videoId) => {
-        const visited = localStorage.getItem(`${videoId}-ad-visited`);
-        const unlockTime = localStorage.getItem(`${videoId}-unlock-time`);
+    const content = document.createElement('div');
+    content.className = 'content';
+
+    const title = document.createElement('h2');
+    title.textContent = item.title;
+
+    const button = document.createElement('button');
+    const visited = localStorage.getItem(`${item.title}-ad-visited`);
+    const unlockTime = localStorage.getItem(`${item.title}-unlock-time`);
+    const currentTime = Date.now();
+
+    if (visited && unlockTime && (currentTime - parseInt(unlockTime)) < 10000) {
+        button.textContent = 'Read ✅';
+        button.style.backgroundColor = '#4caf50';
+        img.onclick = () => openVideoNav(item.videoUrl, item.title);
+        button.onclick = () => openVideoNav(item.videoUrl, item.title);
+    } else {
+        button.textContent = 'Watch Ad 🔒';
+        button.style.backgroundColor = '#ff0000';
+        img.onclick = () => showNotification('Please Watch the Ad to unlock this Video.', 'warning');
+        button.onclick = () => visitAd(item.title, item.adUrl, button);
+    }
+
+    content.appendChild(title);
+    content.appendChild(button);
+    frame.appendChild(img);
+    frame.appendChild(content);
+    return frame;
+};
+
+const visitAd = (videoId, adUrl, button) => {
+    window.open(adUrl, '_blank');
+    const unlockTime = Date.now();
+    localStorage.setItem(`${videoId}-ad-visited`, true);
+    localStorage.setItem(`${videoId}-unlock-time`, unlockTime);
+    button.textContent = 'Read ✅';
+    button.style.backgroundColor = '#4caf50';
+
+    const img = button.closest('.frame').querySelector('img');
+    img.onclick = () => openVideoNav(data.find(item => item.title === videoId).videoUrl, videoId);
+    button.onclick = () => openVideoNav(data.find(item => item.title === videoId).videoUrl, videoId);
+
+    showNotification('The video is now unlocked!', 'success');
+};
+
+const openVideoNav = (videoUrl, videoId) => {
+    document.getElementById('video-nav').style.display = 'flex';
+    document.getElementById('video-player').src = videoUrl;
+
+    // Add video to history
+    addToHistory(videoId);
+};
+
+const addToHistory = (videoId) => {
+    const history = JSON.parse(localStorage.getItem('videoHistory')) || [];
+    const video = data.find(item => item.title === videoId);
+
+    if (video) {
+        // Remove duplicate entries
+        const filteredHistory = history.filter(item => item.title !== videoId);
+        // Add the new entry at the beginning
+        filteredHistory.unshift(video);
+        // Save the updated history
+        localStorage.setItem('videoHistory', JSON.stringify(filteredHistory));
+        // Update the history list
+        updateHistoryList();
+    }
+};
+
+const updateHistoryList = () => {
+    const history = JSON.parse(localStorage.getItem('videoHistory')) || [];
+    const historyList = document.getElementById('history-list');
+    historyList.innerHTML = '';
+
+    if (history.length === 0) {
+        historyList.innerHTML = '<p>No history available.</p>';
+        return;
+    }
+
+    history.forEach(item => {
+        const historyItem = document.createElement('div');
+        historyItem.className = 'history-item';
+
+        const img = document.createElement('img');
+        img.src = item.imgUrl;
+        img.alt = item.title;
+
+        const content = document.createElement('div');
+        content.className = 'content';
+        content.innerHTML = `
+            <h4>${item.title}</h4>
+            <p>${item.description}</p>
+        `;
+
+        const button = document.createElement('button');
+        const visited = localStorage.getItem(`${item.title}-ad-visited`);
+        const unlockTime = localStorage.getItem(`${item.title}-unlock-time`);
         const currentTime = Date.now();
 
-        if (!visited || (currentTime - parseInt(unlockTime)) >= 7200000) {
-            showNotification('Please Watch the Ad to unlock this Video.', 'warning');
-            return;
+        if (visited && unlockTime && (currentTime - parseInt(unlockTime)) < 7200000) {
+            button.textContent = 'Read ✅';
+            button.style.backgroundColor = '#4caf50';
+            button.onclick = () => openVideoNav(item.videoUrl, item.title);
+        } else {
+            button.textContent = 'Watch Ad 🔒';
+            button.style.backgroundColor = '#ff0000';
+            button.onclick = () => visitAd(item.title, item.adUrl, button);
         }
-        document.getElementById('video-nav').style.display = 'flex'; // Use flex to center the modal
-        document.getElementById('video-player').src = videoUrl;
 
-        // Reset the unlock timer if the user is watching the video
-        localStorage.setItem(`${videoId}-unlock-time`, currentTime);
+        historyItem.appendChild(img);
+        historyItem.appendChild(content);
+        historyItem.appendChild(button);
+        historyList.appendChild(historyItem);
+    });
+};
+
+const toggleHistoryModal = () => {
+    const historyModal = document.getElementById('history-modal');
+    historyModal.classList.toggle('open');
+};
+
+const clearHistory = () => {
+    localStorage.removeItem('videoHistory');
+    updateHistoryList();
+    showNotification('All history has been cleared.', 'success');
+};
+
+const showAllVideos = (category) => {
+    const categoryData = data.filter(item => item.category === category);
+    const gridContainer = document.getElementById('grid-container');
+    gridContainer.innerHTML = '';
+
+    // Hide other sections
+    document.getElementById('discover-container').style.display = 'none';
+    document.getElementById('categories-container').style.display = 'none';
+    gridContainer.style.display = 'grid';
+
+    // Add a back button
+    const backButton = document.createElement('button');
+    backButton.textContent = 'Back to Categories';
+    backButton.style.marginBottom = '10px';
+    backButton.style.padding = '10px';
+    backButton.style.backgroundColor = '#007bff';
+    backButton.style.color = '#fff';
+    backButton.style.border = 'none';
+    backButton.style.borderRadius = '5px';
+    backButton.style.cursor = 'pointer';
+    backButton.onclick = () => {
+        gridContainer.style.display = 'none';
+        document.getElementById('discover-container').style.display = 'block';
+        document.getElementById('categories-container').style.display = 'block';
     };
+    gridContainer.appendChild(backButton);
 
-    const showNotification = (message, type) => {
-        const notification = document.createElement('div');
-        notification.className = `notification ${type}`;
-        notification.textContent = message;
+    // Add videos to the grid
+    categoryData.forEach(item => {
+        const frame = createFrame(item);
+        gridContainer.appendChild(frame);
+    });
+};
 
-        // Append notification to the body
-        document.body.appendChild(notification);
+const handleSearch = () => {
+    const searchTerm = document.getElementById('search-bar').value.toLowerCase();
+    const filteredData = data.filter(item => item.title.toLowerCase().includes(searchTerm));
+    const gridContainer = document.getElementById('grid-container');
+    gridContainer.innerHTML = '';
 
-        // Center the notification
-        notification.style.position = 'fixed';
-        notification.style.top = '50%';
-        notification.style.left = '50%';
-        notification.style.transform = 'translate(-50%, -50%)';
-        notification.style.zIndex = '9999';
+    // Hide other sections
+    document.getElementById('discover-container').style.display = 'none';
+    document.getElementById('categories-container').style.display = 'none';
+    gridContainer.style.display = 'grid';
 
-        // Remove notification after 3 seconds
-        setTimeout(() => {
-            notification.remove();
-        }, 3000); // 3 seconds
+    // Add a back button
+    const backButton = document.createElement('button');
+    backButton.textContent = 'Back to Categories';
+    backButton.style.marginBottom = '10px';
+    backButton.style.padding = '10px';
+    backButton.style.backgroundColor = '#007bff';
+    backButton.style.color = '#fff';
+    backButton.style.border = 'none';
+    backButton.style.borderRadius = '5px';
+    backButton.style.cursor = 'pointer';
+    backButton.onclick = () => {
+        gridContainer.style.display = 'none';
+        document.getElementById('discover-container').style.display = 'block';
+        document.getElementById('categories-container').style.display = 'block';
     };
+    gridContainer.appendChild(backButton);
 
-    const closeNav = () => {
-        document.getElementById('video-nav').style.display = 'none';
-        document.getElementById('video-player').src = '';
-    };
+    // Add search results to the grid
+    if (filteredData.length > 0) {
+        filteredData.forEach(item => {
+            const frame = createFrame(item);
+            gridContainer.appendChild(frame);
+        });
+    } else {
+        showNotification('No videos found.', 'warning');
+    }
+};
 
-    const handleSearch = () => {
-        const searchTerm = document.getElementById('search-bar').value.toLowerCase();
-        const filteredData = data.filter(item => item.title.toLowerCase().includes(searchTerm));
-        createFrames(filteredData);
-    };
+const showNotification = (message, type) => {
+    const notification = document.createElement('div');
+    notification.className = `notification ${type}`;
+    notification.textContent = message;
 
-    const filterByTag = (tag) => {
-        const filteredData = data.filter(item => item.tag === tag);
-        createFrames(filteredData);
-    };
+    document.body.appendChild(notification);
+    notification.style.position = 'fixed';
+    notification.style.top = '50%';
+    notification.style.left = '50%';
+    notification.style.transform = 'translate(-50%, -50%)';
+    notification.style.zIndex = '9999';
 
-    // Check and lock videos after 2 hours
+    setTimeout(() => {
+        notification.remove();
+    }, 3000);
+};
+
+const closeNav = () => {
+    document.getElementById('video-nav').style.display = 'none';
+    document.getElementById('video-player').src = '';
+};
+
 const checkAndLockVideos = () => {
     data.forEach((item) => {
         const visited = localStorage.getItem(`${item.title}-ad-visited`);
         const unlockTime = localStorage.getItem(`${item.title}-unlock-time`);
         const currentTime = Date.now();
 
-        if (visited && unlockTime && (currentTime - parseInt(unlockTime)) >= 7200000) {
+        if (visited && unlockTime && (currentTime - parseInt(unlockTime)) >= 800000) {
             localStorage.removeItem(`${item.title}-ad-visited`);
             localStorage.removeItem(`${item.title}-unlock-time`);
         }
     });
 };
 
-// Run the checkAndLockVideos function every 2 hours
-setInterval(checkAndLockVideos, 7200000);
+setInterval(checkAndLockVideos, 800000);
 
-createFrames();
-</script>
-
+createDiscoverSection();
+createCategories();
+updateHistoryList();
+    </script>
 </body>
 </html>
