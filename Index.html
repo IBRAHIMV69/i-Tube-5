@@ -19,14 +19,14 @@
             top: 0;
             left: 0;
             width: 100%;
-            height: 35px;
+            height: 50px;
             background-color: #fff;
             display: flex;
             border: 1px solid #ccc;
             border-radius: 8px;
             flex-direction: column;
             align-items: center;
-            padding: 20px 8px;
+            padding: 5px 8px;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
             z-index: 1000;
         }
@@ -168,8 +168,8 @@
 
         /* Discover Section */
         .discover-container {
-            margin-top: 90px;
-            padding: 10px;
+            margin-top: 80px;
+            padding: 8px;
         }
         .discover-title {
             font-size: 20px;
@@ -209,7 +209,7 @@
             border-radius: 5px;
         }
         .discover-item .content {
-            padding: 10px;
+            padding: 5px;
         }
         .discover-item .content h2 {
             font-size: 8px;
@@ -236,7 +236,7 @@
             align-items: center;
         }
         .category-title button {
-            background-color: #007bff;
+            background-color: #333;
             color: #fff;
             border: none;
             padding: 5px 10px;
@@ -537,6 +537,18 @@
         description: "A terrifying tale of a mythical creature.",
     }
 ];
+
+// Function to shuffle an array
+    const shuffleArray = (array) => {
+        for (let i = array.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [array[i], array[j]] = [array[j], array[i]]; // Swap elements
+        }
+        return array;
+    };
+
+    // Shuffle the data array on load
+    shuffleArray(data);
 
 const createDiscoverSection = () => {
     const discoverScroll = document.getElementById('discover-scroll');
