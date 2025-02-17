@@ -37,7 +37,7 @@
             width: 100%;
         }
         .logo {
-            font-size: 17px;
+            font-size: 18px;
             margin: 0 12px;
             border: 1px solid #ccc;
             background: linear-gradient(to right, #2c3e50, #4ca1af);
@@ -194,7 +194,7 @@
         }
         .discover-item {
             flex: 0 0 auto;
-            width: 120px;
+            width: 156px;
             background-color: #fff;
             border-radius: 8px;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
@@ -209,11 +209,11 @@
             border-radius: 5px;
         }
         .discover-item .content {
-            padding: 0px;
+            padding: 5px;
         }
         .discover-item .content h2 {
-            font-size: 0px;
-            margin: 0;
+            font-size: 8px;
+            margin: 1;
             color: #333;
         }
         .discover-item .content p {
@@ -221,22 +221,6 @@
             color: #777;
             margin: 0px 0;
         }
-        .discover-item button {
-    background-color: #ff0000;
-    color: #fff;
-    border: 1px solid #ccc;
-    padding: 5px 5px;
-    border-radius: 8px;
-    cursor: pointer;
-    font-size: 9px;
-    text-align: center;
-    width: 100%;
-    margin-top: 5px;
-}
-
-.discover-item button:hover {
-    background-color: #cc0000;
-}
 
         /* Category Section */
         .category-container {
@@ -266,7 +250,7 @@
         .category-scroll {
             display: flex;
             overflow-x: auto;
-            gap: 10px;
+            gap: 4px;
             padding-bottom: 10px;
         }
         .category-scroll::-webkit-scrollbar {
@@ -282,7 +266,7 @@
         
         .frame {
             flex: 0 0 auto;
-            width: 110px;
+            width: 120px;
             background-color: #fff;
             border-radius: 8px;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
@@ -418,31 +402,6 @@
                 transform: translate(-50%, -40%);
             }
         }
-        #social-media {
-    display: flex;
-    justify-content: center;
-    gap: 15px;
-    margin: 20px 0;
-}
-
-.social-icon {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    width: 35px; /* Adjust size */
-    height: 35px;
-    border-radius: 50%;
-    background: linear-gradient(to right, #2c3e50, #4ca1af);
-    color: white;
-    font-size: 20px;
-    cursor: pointer;
-    text-decoration: none; /* Prevents default link styling */
-    transition: background-color 0.3s ease; /* Smooth hover effect */
-}
-
-.social-icon:hover {
-    background-color: #555; /* Slightly lighter color on hover */
-}
     </style>
 </head>
 <body>
@@ -487,29 +446,6 @@
             </div>
         </div>
     </div>
-    
-        <div id="social-media" style="display: flex; justify-content: center; margin-top: 10px;">
-            <a href="https://www.facebook.com/username" target="_blank" class="social-icon">
-                <i class="fab fa-facebook-f fa-circle"></i>
-            </a>
-            <a href="https://twitter.com/username" target="_blank" class="social-icon">
-                <i class="fab fa-twitter"></i>
-            </a>
-            <a href="https://telegram.me/username" target="_blank" class="social-icon">
-                <i class="fab fa-telegram social-icon"></i>
-            </a>
-            <a href="https://www.instagram.com/username" target="_blank" class="social-icon">
-                <i class="fab fa-instagram"></i>
-            </a>
-            <a href="https://wa.me/1234567890" target="_blank" class="social-icon">
-                <i class="fab fa-whatsapp"></i>
-            </a>
-            <a href="https://www.tiktok.com/@username" target="_blank" class="social-icon">
-                <i class="fab fa-tiktok"></i>
-            </a>
-        </div>
-    </div>
-</div>
 
     <script>
         const data = [
@@ -637,28 +573,14 @@ const createDiscoverSection = () => {
             <p>${item.description}</p>
         `;
 
-        // Add the "Watch Ad 🔒" button
-        const button = document.createElement('button');
-        const visited = localStorage.getItem(`${item.title}-ad-visited`);
-        const unlockTime = localStorage.getItem(`${item.title}-unlock-time`);
-        const currentTime = Date.now();
-
-        if (visited && unlockTime && (currentTime - parseInt(unlockTime)) < 10000) {
-            button.textContent = 'Read ✅';
-            button.style.backgroundColor = '#4caf50';
-            img.onclick = () => openVideoNav(item.videoUrl, item.title);
-            button.onclick = () => openVideoNav(item.videoUrl, item.title);
-        } else {
-            button.textContent = 'Watch Ad 🔒';
-            button.style.backgroundColor = '#ff0000';
-            img.onclick = () => showNotification('Please watch the ad to unlock this video.', 'warning');
-            button.onclick = () => visitAd(item.title, item.adUrl, button);
-        }
-
-        content.appendChild(button);
         discoverItem.appendChild(img);
         discoverItem.appendChild(content);
         discoverScroll.appendChild(discoverItem);
+
+        // Add click event to open video (no ad requirement for Discover section)
+        discoverItem.onclick = () => {
+            openVideoNav(item.videoUrl, item.title);
+        };
     });
 };
 
@@ -808,21 +730,13 @@ const updateHistoryList = () => {
         const currentTime = Date.now();
 
         if (visited && unlockTime && (currentTime - parseInt(unlockTime)) < 7200000) {
-            // Video is unlocked
             button.textContent = 'Read ✅';
             button.style.backgroundColor = '#4caf50';
             button.onclick = () => openVideoNav(item.videoUrl, item.title);
-
-            // Add click event to the image to open the video
-            img.onclick = () => openVideoNav(item.videoUrl, item.title);
         } else {
-            // Video is locked
             button.textContent = 'Watch Ad 🔒';
             button.style.backgroundColor = '#ff0000';
             button.onclick = () => visitAd(item.title, item.adUrl, button);
-
-            // Add click event to the image to show a notification
-            img.onclick = () => showNotification('Please Watch the Ad to unlock this Video.', 'warning');
         }
 
         historyItem.appendChild(img);
