@@ -40,7 +40,7 @@
             font-size: 17px;
             margin: 0 12px;
             border: 1px solid #ccc;
-            background: linear-gradient(to right, #004d00, #00b300);
+            background: linear-gradient(to right, #2c3e50, #4ca1af);
             border-radius: 20px;
             padding: 9px 12px;
             font-weight: bold;
@@ -66,7 +66,7 @@
             color: #333;
         }
         .history-icon:hover {
-            color: #00b300;
+            color: #007bff;
         }
 
         /* History Modal */
@@ -154,7 +154,7 @@
         }
         .clear-history-button {
             width: 100%;
-            background: linear-gradient(to right, #004d00, #00b300);
+            background-color: #ff0000;
             color: #fff;
             border: none;
             padding: 10px;
@@ -163,7 +163,7 @@
             margin-top: 10px;
         }
         .clear-history-button:hover {
-            background-color: #00b300;
+            background-color: #cc0000;
         }
 
         /* Discover Section */
@@ -179,7 +179,7 @@
         .discover-scroll {
             display: flex;
             overflow-x: auto;
-            gap: 8px;
+            gap: 10px;
             padding-bottom: 10px;
         }
         .discover-scroll::-webkit-scrollbar {
@@ -222,7 +222,7 @@
             margin: 0px 0;
         }
         .discover-item button {
-    background: linear-gradient(to right, #004d00, #00b300);
+    background-color: #ff0000;
     color: #fff;
     border: 1px solid #ccc;
     padding: 5px 5px;
@@ -252,16 +252,16 @@
             align-items: center;
         }
         .category-title button {
-            background-color: #f0f0f0;
+            background: linear-gradient(to right, #2c3e50, #4ca1af);
+            color: #fff;
             border: none;
             padding: 5px 10px;
-            border: 1px solid #ccc;
-            border-radius: 8px;
+            border-radius: 5px;
             cursor: pointer;
             font-size: 15px;
         }
         .category-title button:hover {
-            background-color: #f0f0f0;
+            background-color: #0056b3;
         }
         .category-scroll {
             display: flex;
@@ -301,7 +301,7 @@
             margin-top: 0px;
         }
         .frame .content button {
-            background: linear-gradient(to right, #004d00, #00b300);
+            background-color: #FF0000;
             color: #fff;
             border: 1px solid #ccc;
             padding: 5px 5px;
@@ -432,7 +432,7 @@
     width: 35px; /* Adjust size */
     height: 35px;
     border-radius: 50%;
-    background: linear-gradient(to right, #004d00, #00b300);
+    background: linear-gradient(to right, #2c3e50, #4ca1af);
     color: white;
     font-size: 20px;
     cursor: pointer;
@@ -466,7 +466,7 @@
 
     <!-- Discover Section -->
     <div class="discover-container" id="discover-container">
-        <div class="discover-title">🔥 Trending</div>
+        <div class="discover-title">Explore Novels</div>
         <div class="discover-scroll" id="discover-scroll"></div>
     </div>
 
@@ -645,7 +645,7 @@ const createDiscoverSection = () => {
 
         if (visited && unlockTime && (currentTime - parseInt(unlockTime)) < 10000) {
             button.textContent = 'Read ✅';
-            button.style.backgroundColor = '#00b300';
+            button.style.backgroundColor = '#4caf50';
             img.onclick = () => openVideoNav(item.videoUrl, item.title);
             button.onclick = () => openVideoNav(item.videoUrl, item.title);
         } else {
@@ -721,7 +721,7 @@ const createFrame = (item) => {
 
     if (visited && unlockTime && (currentTime - parseInt(unlockTime)) < 10000) {
         button.textContent = 'Read ✅';
-        button.style.backgroundColor = '#00b300';
+        button.style.backgroundColor = '#4caf50';
         img.onclick = () => openVideoNav(item.videoUrl, item.title);
         button.onclick = () => openVideoNav(item.videoUrl, item.title);
     } else {
@@ -744,7 +744,7 @@ const visitAd = (videoId, adUrl, button) => {
     localStorage.setItem(`${videoId}-ad-visited`, true);
     localStorage.setItem(`${videoId}-unlock-time`, unlockTime);
     button.textContent = 'Read ✅';
-    button.style.backgroundColor = '#00b300';
+    button.style.backgroundColor = '#4caf50';
 
     const img = button.closest('.frame').querySelector('img');
     img.onclick = () => openVideoNav(data.find(item => item.title === videoId).videoUrl, videoId);
@@ -810,7 +810,7 @@ const updateHistoryList = () => {
         if (visited && unlockTime && (currentTime - parseInt(unlockTime)) < 7200000) {
             // Video is unlocked
             button.textContent = 'Read ✅';
-            button.style.backgroundColor = '#00b300';
+            button.style.backgroundColor = '#4caf50';
             button.onclick = () => openVideoNav(item.videoUrl, item.title);
 
             // Add click event to the image to open the video
@@ -858,7 +858,7 @@ const showAllVideos = (category) => {
     backButton.textContent = 'Back to Categories';
     backButton.style.marginBottom = '10px';
     backButton.style.padding = '10px';
-    backButton.style.backgroundColor = '#00b300';
+    backButton.style.backgroundColor = '#2c3e50';
     backButton.style.color = '#fff';
     backButton.style.border = 'none';
     backButton.style.borderRadius = '5px';
@@ -893,7 +893,7 @@ const handleSearch = () => {
     backButton.textContent = 'Back to Categories';
     backButton.style.marginBottom = '10px';
     backButton.style.padding = '10px';
-    backButton.style.backgroundColor = '#00b300';
+    backButton.style.backgroundColor = '#007bff';
     backButton.style.color = '#fff';
     backButton.style.border = 'none';
     backButton.style.borderRadius = '5px';
