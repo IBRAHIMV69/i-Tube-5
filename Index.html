@@ -195,7 +195,7 @@
         .discover-item {
             flex: 0 0 auto;
             width: 120px;
-            background-color: #fff;
+            background: linear-gradient(to right, #004d00, #00b300);
             border-radius: 8px;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
             overflow: hidden;
@@ -850,21 +850,13 @@ const updateHistoryList = () => {
         const currentTime = Date.now();
 
         if (visited && unlockTime && (currentTime - parseInt(unlockTime)) < 7200000) {
-            // Video is unlocked
-            button.textContent = 'Read ✅';
-            button.style.backgroundColor = '#00b300';
+            button.textContent = 'Read More ✅';
+            button.style.backgroundColor = '#4caf50';
             button.onclick = () => openVideoNav(item.videoUrl, item.title);
-
-            // Add click event to the image to open the video
-            img.onclick = () => openVideoNav(item.videoUrl, item.title);
         } else {
-            // Video is locked
             button.textContent = 'Watch Ad 🔒';
             button.style.backgroundColor = '#ff0000';
             button.onclick = () => visitAd(item.title, item.adUrl, button);
-
-            // Add click event to the image to show a notification
-            img.onclick = () => showNotification('Please Watch the Ad to unlock this Video.', 'warning');
         }
 
         historyItem.appendChild(img);
