@@ -74,7 +74,7 @@
             display: none;
             position: fixed;
             top: 80px;
-            right: 10px;
+            right: 8px;
             width: 320px;
             background-color: #fff;
             border-radius: 8px;
@@ -158,7 +158,7 @@
             color: #fff;
             border: none;
             padding: 10px;
-            border-radius: 8px;
+            border-radius: 5px;
             cursor: pointer;
             margin-top: 10px;
         }
@@ -195,7 +195,7 @@
         .discover-item {
             flex: 0 0 auto;
             width: 120px;
-            background: linear-gradient(to right, #004d00, #00b300);
+            background-color: #fff;
             border-radius: 8px;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
             overflow: hidden;
@@ -443,52 +443,6 @@
 .social-icon:hover {
     background-color: #555; /* Slightly lighter color on hover */
 }
-.notification-bar {
-            position: fixed;
-            bottom: 80px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 90%;
-            max-width: 400px;
-            background: linear-gradient(to right, #004d00, #00b300);
-            color: white;
-            padding: 10px;
-            border-radius: 8px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            opacity: 0;
-            transition: opacity 0.5s ease-in-out;
-            z-index: 1000;
-        }
-        .notification-bar img {
-            width: 50px;
-            height: 50px;
-            border-radius: 8px;
-            margin-right: 10px;
-        }
-        .notification-text {
-            flex: 1;
-            font-size: 11px;
-            text-align: left;
-        }
-        .notification-button {
-            background: #ccff00;
-            color: #000;
-            padding: 5px 15px;
-            border-radius: 20px;
-            font-weight: bold;
-            cursor: pointer;
-            border: none;
-        }
-        .close-button {
-            background: none;
-            border: none;
-            color: white;
-            font-size: 18px;
-            cursor: pointer;
-            margin-left: 10px;
-        }
     </style>
 </head>
 <body>
@@ -499,13 +453,6 @@
             <input type="text" id="search-bar" placeholder=" Search..." oninput="handleSearch()" />
         </div>
     </header>
-    
-    <div class="notification-bar" id="notification-bar">
-        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTslGS8WKA921cWsf4c_xYECCYQoSoToHcjo19yW9d_wXRLBQeU-nEEMwA&s=10" alt="App Logo">
-        <div class="notification-text">Enjoy more unparalleled Novels download Hausa Novels app.</div>
-        <button class="notification-button" onclick="window.open('https://ucarecdn.com/82947fa9-98e5-4948-89ec-8fedd32b4be4/', '_blank')">OPEN</button>
-        <button class="close-button" onclick="closeNotification()">✖</button>
-    </div>
 
     <!-- History Modal -->
     <div class="history-modal" id="history-modal">
@@ -519,7 +466,7 @@
 
     <!-- Discover Section -->
     <div class="discover-container" id="discover-container">
-        <div class="discover-title">Explore Novels</div>
+        <div class="discover-title">🔥 Trending</div>
         <div class="discover-scroll" id="discover-scroll"></div>
     </div>
 
@@ -540,8 +487,8 @@
             </div>
         </div>
     </div>
-
-<div id="social-media" style="display: flex; justify-content: center; margin-top: 10px;">
+    
+        <div id="social-media" style="display: flex; justify-content: center; margin-top: 10px;">
             <a href="https://www.facebook.com/username" target="_blank" class="social-icon">
                 <i class="fab fa-facebook-f fa-circle"></i>
             </a>
@@ -550,9 +497,6 @@
             </a>
             <a href="https://telegram.me/username" target="_blank" class="social-icon">
                 <i class="fab fa-telegram social-icon"></i>
-            </a>
-            <a href="https://www.youtube.com/channel/UC123456" target="_blank" class="social-icon">
-                <i class="fab fa-youtube"></i>
             </a>
             <a href="https://www.instagram.com/username" target="_blank" class="social-icon">
                 <i class="fab fa-instagram"></i>
@@ -693,14 +637,30 @@ const createDiscoverSection = () => {
             <p>${item.description}</p>
         `;
 
+        // Add the "Watch Ad 🔒" button
+        const button = document.createElement('button');
+        const visited = localStorage.getItem(`${item.title}-ad-visited`);
+        const unlockTime = localStorage.getItem(`${item.title}-unlock-time`);
+        const currentTime = Date.now();
+
+        if (visited && unlockTime && (currentTime - parseInt(unlockTime)) < 10000) {
+            // Video is unlocked
+            button.textContent = 'Read ✅';
+            button.style.backgroundColor = '#00b300';
+            img.onclick = () => openVideoNav(item.videoUrl, item.title);
+            button.onclick = () => openVideoNav(item.videoUrl, item.title);
+        } else {
+            // Video is locked
+            button.textContent = 'Watch Ad 🔒';
+            button.style.backgroundColor = '#ff0000';
+            img.onclick = () => showNotification('Please watch the ad to unlock this video.', 'warning');
+            button.onclick = () => visitAd(item.title, item.adUrl, button);
+        }
+
+        content.appendChild(button);
         discoverItem.appendChild(img);
         discoverItem.appendChild(content);
         discoverScroll.appendChild(discoverItem);
-
-        // Add click event to open video (no ad requirement for Discover section)
-        discoverItem.onclick = () => {
-            openVideoNav(item.videoUrl, item.title);
-        };
     });
 };
 
@@ -763,7 +723,7 @@ const createFrame = (item) => {
 
     if (visited && unlockTime && (currentTime - parseInt(unlockTime)) < 10000) {
         button.textContent = 'Read ✅';
-        button.style.backgroundColor = '#4caf50';
+        button.style.backgroundColor = '#00b300';
         img.onclick = () => openVideoNav(item.videoUrl, item.title);
         button.onclick = () => openVideoNav(item.videoUrl, item.title);
     } else {
@@ -781,25 +741,39 @@ const createFrame = (item) => {
 };
 
 const visitAd = (videoId, adUrl, button) => {
+    // Open the ad in a new tab
     window.open(adUrl, '_blank');
+
+    // Mark the video as unlocked in localStorage
     const unlockTime = Date.now();
     localStorage.setItem(`${videoId}-ad-visited`, true);
     localStorage.setItem(`${videoId}-unlock-time`, unlockTime);
+
+    // Update the button text and color
     button.textContent = 'Read ✅';
-    button.style.backgroundColor = '#4caf50';
+    button.style.backgroundColor = '#00b300';
 
-    const img = button.closest('.frame').querySelector('img');
-    img.onclick = () => openVideoNav(data.find(item => item.title === videoId).videoUrl, videoId);
-    button.onclick = () => openVideoNav(data.find(item => item.title === videoId).videoUrl, videoId);
+    // Find the associated image and update its click behavior
+    const img = button.closest('.discover-item, .history-item, .frame').querySelector('img');
+    const video = data.find(item => item.title === videoId);
 
+    if (video) {
+        img.onclick = () => openVideoNav(video.videoUrl, videoId);
+        button.onclick = () => openVideoNav(video.videoUrl, videoId);
+    }
+
+    // Show a success notification
     showNotification('The video is now unlocked!', 'success');
 };
 
 const openVideoNav = (videoUrl, videoId) => {
+    // Display the video navigation modal
     document.getElementById('video-nav').style.display = 'flex';
+
+    // Set the video URL in the iframe
     document.getElementById('video-player').src = videoUrl;
 
-    // Add video to history
+    // Add the video to the history
     addToHistory(videoId);
 };
 
@@ -850,13 +824,21 @@ const updateHistoryList = () => {
         const currentTime = Date.now();
 
         if (visited && unlockTime && (currentTime - parseInt(unlockTime)) < 7200000) {
-            button.textContent = 'Read More ✅';
-            button.style.backgroundColor = '#4caf50';
+            // Video is unlocked
+            button.textContent = 'Read ✅';
+            button.style.backgroundColor = '#00b300';
             button.onclick = () => openVideoNav(item.videoUrl, item.title);
+
+            // Add click event to the image to open the video
+            img.onclick = () => openVideoNav(item.videoUrl, item.title);
         } else {
+            // Video is locked
             button.textContent = 'Watch Ad 🔒';
             button.style.backgroundColor = '#ff0000';
             button.onclick = () => visitAd(item.title, item.adUrl, button);
+
+            // Add click event to the image to show a notification
+            img.onclick = () => showNotification('Please Watch the Ad to unlock this Video.', 'warning');
         }
 
         historyItem.appendChild(img);
@@ -990,14 +972,6 @@ setInterval(checkAndLockVideos, 800000);
 createDiscoverSection();
 createCategories();
 updateHistoryList();
-
-setTimeout(() => {
-            document.getElementById('notification-bar').style.opacity = '1';
-        }, 400); // Show after 40 seconds
-
-        function closeNotification() {
-            document.getElementById('notification-bar').style.opacity = '0';
-        }
     </script>
 </body>
 </html>
