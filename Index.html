@@ -194,8 +194,8 @@
         }
         .discover-item {
             flex: 0 0 auto;
-            width: 120px;
-            background-color: #fff;
+            width: 150px;
+            background-color: #f0f0f0;
             border-radius: 8px;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
             overflow: hidden;
@@ -217,9 +217,9 @@
             color: #333;
         }
         .discover-item .content p {
-            font-size: 0px;
+            font-size: 8px;
             color: #777;
-            margin: 0px 0;
+            margin: 2px 0;
         }
         .discover-item button {
     background: linear-gradient(to right, #004d00, #00b300);
@@ -228,7 +228,7 @@
     padding: 5px 5px;
     border-radius: 8px;
     cursor: pointer;
-    font-size: 9px;
+    font-size: 10px;
     text-align: center;
     width: 100%;
     margin-top: 5px;
@@ -244,7 +244,7 @@
             padding: 2px;
         }
         .category-title {
-            font-size: 17px;
+            font-size: 18px;
             font-weight: bold;
             margin-bottom: 15px;
             display: flex;
@@ -283,7 +283,7 @@
         .frame {
             flex: 0 0 auto;
             width: 110px;
-            background-color: #fff;
+            background-color: #f0f0f0;
             border-radius: 8px;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
             overflow: hidden;
@@ -296,9 +296,9 @@
             border-radius: 5px;
         }
         .frame .content h2 {
-            font-size: 0px;
+            font-size: 8px;
             text-align: center;
-            margin-top: 0px;
+            margin-top: 2px;
         }
         .frame .content button {
             background: linear-gradient(to right, #004d00, #00b300);
@@ -311,7 +311,7 @@
             align-items: center;
             justify-content: center;
             width: 100%;            
-            font-size: 9px;
+            font-size: 10px;
             text-align: center;
         }
         .frame .content button:hover {
@@ -382,20 +382,21 @@
 
         /* Notification Styles */
         .notification {
-            padding: 15px 25px;
-            font-size: 10px;
+            padding: 20px 25px;
+            font-size: 13px;
             font-weight: bold;
-            color: #fff;
+            color: #333;
             border-radius: 8px;
+            border: 1px solid #ccc;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
             text-align: center;
             animation: fadeInOut 3s ease-in-out;
         }
         .notification.success {
-            background-color: #4caf50;
+            background-color: #fff;
         }
         .notification.warning {
-            background-color: #ff9800;
+            background-color: #fff;
         }
         .notification.info {
             background-color: #2196f3;
@@ -929,7 +930,7 @@ const createDiscoverSection = () => {
 
         if (visited && unlockTime && (currentTime - parseInt(unlockTime)) < 7400000) {
             // Video is unlocked
-            button.textContent = 'Read ✅';
+            button.textContent = 'Open ✅';
             button.style.backgroundColor = '#00b300';
             img.onclick = () => openVideoNav(item.videoUrl, item.title);
             button.onclick = () => openVideoNav(item.videoUrl, item.title);
@@ -937,7 +938,7 @@ const createDiscoverSection = () => {
             // Video is locked
             button.textContent = 'Watch Ad 🔒';
             button.style.backgroundColor = '#ff0000';
-            img.onclick = () => showNotification('Please watch the ad to unlock this video.', 'warning');
+            img.onclick = () => showNotification('Please watch the ad to Unlock this Novel.', 'warning');
             button.onclick = () => visitAd(item.title, item.adUrl, button);
         }
 
@@ -1006,14 +1007,14 @@ const createFrame = (item) => {
     const currentTime = Date.now();
 
     if (visited && unlockTime && (currentTime - parseInt(unlockTime)) < 10000) {
-        button.textContent = 'Read ✅';
+        button.textContent = 'Open ✅';
         button.style.backgroundColor = '#00b300';
         img.onclick = () => openVideoNav(item.videoUrl, item.title);
         button.onclick = () => openVideoNav(item.videoUrl, item.title);
     } else {
         button.textContent = 'Watch Ad 🔒';
         button.style.backgroundColor = '#ff0000';
-        img.onclick = () => showNotification('Please Watch the Ad to unlock this Video.', 'warning');
+        img.onclick = () => showNotification('Please Watch the Ad to Unlock this Novel.', 'warning');
         button.onclick = () => visitAd(item.title, item.adUrl, button);
     }
 
@@ -1034,7 +1035,7 @@ const visitAd = (videoId, adUrl, button) => {
     localStorage.setItem(`${videoId}-unlock-time`, unlockTime);
 
     // Update the button text and color
-    button.textContent = 'Read ✅';
+    button.textContent = 'Open ✅';
     button.style.backgroundColor = '#00b300';
 
     // Find the associated image and update its click behavior
@@ -1047,7 +1048,7 @@ const visitAd = (videoId, adUrl, button) => {
     }
 
     // Show a success notification
-    showNotification('The video is now unlocked!', 'success');
+    showNotification('The Novel is now unlocked!', 'success');
 };
 
 const openVideoNav = (videoUrl, videoId) => {
@@ -1109,7 +1110,7 @@ const updateHistoryList = () => {
 
         if (visited && unlockTime && (currentTime - parseInt(unlockTime)) < 7200000) {
             // Video is unlocked
-            button.textContent = 'Read ✅';
+            button.textContent = 'Open ✅';
             button.style.backgroundColor = '#00b300';
             button.onclick = () => openVideoNav(item.videoUrl, item.title);
 
@@ -1122,7 +1123,7 @@ const updateHistoryList = () => {
             button.onclick = () => visitAd(item.title, item.adUrl, button);
 
             // Add click event to the image to show a notification
-            img.onclick = () => showNotification('Please Watch the Ad to unlock this Video.', 'warning');
+            img.onclick = () => showNotification('Please Watch the Ad to Unlock this Novel.', 'warning');
         }
 
         historyItem.appendChild(img);
@@ -1158,8 +1159,8 @@ const showAllVideos = (category) => {
     backButton.textContent = 'Back to Categories';
     backButton.style.marginBottom = '10px';
     backButton.style.padding = '10px';
-    backButton.style.backgroundColor = '#00b300';
-    backButton.style.color = '#fff';
+    backButton.style.backgroundColor = '#ddd';
+    backButton.style.color = '#333';
     backButton.style.border = 'none';
     backButton.style.borderRadius = '5px';
     backButton.style.cursor = 'pointer';
@@ -1193,8 +1194,8 @@ const handleSearch = () => {
     backButton.textContent = 'Back to Categories';
     backButton.style.marginBottom = '10px';
     backButton.style.padding = '10px';
-    backButton.style.backgroundColor = '#00b300';
-    backButton.style.color = '#fff';
+    backButton.style.backgroundColor = '#ddd';
+    backButton.style.color = '#333';
     backButton.style.border = 'none';
     backButton.style.borderRadius = '5px';
     backButton.style.cursor = 'pointer';
@@ -1244,14 +1245,14 @@ const checkAndLockVideos = () => {
         const unlockTime = localStorage.getItem(`${item.title}-unlock-time`);
         const currentTime = Date.now();
 
-        if (visited && unlockTime && (currentTime - parseInt(unlockTime)) >= 800000) {
+        if (visited && unlockTime && (currentTime - parseInt(unlockTime)) >= 7400000) {
             localStorage.removeItem(`${item.title}-ad-visited`);
             localStorage.removeItem(`${item.title}-unlock-time`);
         }
     });
 };
 
-setInterval(checkAndLockVideos, 800000);
+setInterval(checkAndLockVideos, 7400000);
 
 createDiscoverSection();
 createCategories();
