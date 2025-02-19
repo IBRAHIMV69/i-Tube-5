@@ -430,12 +430,12 @@
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    width: 35px; /* Adjust size */
-    height: 35px;
+    width: 30px; /* Adjust size */
+    height: 30px;
     border-radius: 50%;
     background: linear-gradient(to right, #004d00, #00b300);
     color: white;
-    font-size: 20px;
+    font-size: 18px;
     cursor: pointer;
     text-decoration: none; /* Prevents default link styling */
     transition: background-color 0.3s ease; /* Smooth hover effect */
@@ -661,44 +661,30 @@ footer.hide {
     transform: translateY(100%);
     transition: transform 0.3s ease-in-out;
 }
-.profile-item {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    padding: 10px;
-    border-bottom: 1px solid #eee;
+/* Scrollable container */
+.scroll-container {
+    height: 400px; /* Fixed height */
+    overflow-y: auto; /* Enable vertical scrolling */
+    padding-right: 10px; /* Add padding for scrollbar */
 }
 
-.profile-item img {
-    width: 100px;
-    height: 100px;
-    border-radius: 8px;
+/* Scrollbar styling */
+.scroll-container::-webkit-scrollbar {
+    width: 8px; /* Width of the scrollbar */
 }
 
-.profile-item h4 {
-    margin: 0;
-    font-size: 8px;
-    color: #333;
+.scroll-container::-webkit-scrollbar-track {
+    background: #f1f1f1; /* Track color */
+    border-radius: 4px; /* Rounded corners */
 }
 
-.profile-item p {
-    margin: 0;
-    font-size: 6px;
-    color: #777;
+.scroll-container::-webkit-scrollbar-thumb {
+    background: #888; /* Thumb color */
+    border-radius: 4px; /* Rounded corners */
 }
 
-.profile-item button {
-    background-color: #00b300;
-    color: #fff;
-    border: none;
-    padding: 5px 10px;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 12px;
-}
-
-.profile-item button:hover {
-    background-color: #008000;
+.scroll-container::-webkit-scrollbar-thumb:hover {
+    background: #555; /* Thumb color on hover */
 }
 </style>
 </head>
@@ -1187,24 +1173,30 @@ const showProfileSection = () => {
     };
     gridContainer.appendChild(backButton);
 
+    // Create a scrollable container for profile items
+    const scrollContainer = document.createElement('div');
+    scrollContainer.style.height = '400px'; // Set a fixed height
+    scrollContainer.style.overflowY = 'auto'; // Enable vertical scrolling
+    scrollContainer.style.paddingRight = '10px'; // Add padding for scrollbar
+
     // Add profile content
     const profileContent = [
         {
-            name: "PalmPay - Transfers, Bills, Rewards",
+            name: "MovieBox - Movies & TV Series",
             description: "Money transfers, pay for airtime and bills, earn rewards.",
-            link: "https://link.palmpay.com/828uc",
-            icon: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS_6zFCuqWj00YpgpbbMr-8Mx7hycUWdg-5McXnyYoWDA&s",
+            link: "https://tinyurl.com/2ry766dp",
+            icon: "https://h5-static.aoneroom.com/oneroomStatic/public/_nuxt/web-logo.apJjVir2.svg",
         },
         {
             name: "OPay - Beyond Banking",
             description: "Send money, pay bills, and more.",
-            link: "https://opay.ng/s/1jaSm",
-            icon: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQva4hX_z36R5w15vmXrRgv4rQBEuz0LO0e0_UlrxZN7Zed4DpkIEXhFsQ&s=10",
+            link: "https://example.com/opay",
+            icon: "https://via.placeholder.com/50",
         },
         {
             name: "NOSH: Buy & Sell Gift Cards",
             description: "Buy and sell gift cards easily.",
-            link: "https://example.com/nosh",
+            link: "https://tinyurl.com/2ry766dp",
             icon: "https://via.placeholder.com/50",
         },
         {
@@ -1229,8 +1221,10 @@ const showProfileSection = () => {
 
     profileContent.forEach(item => {
         const profileItem = createProfileItem(item);
-        gridContainer.appendChild(profileItem);
+        scrollContainer.appendChild(profileItem);
     });
+
+    gridContainer.appendChild(scrollContainer);
 };
 
 const showHomeVideos = () => {
@@ -1718,3 +1712,4 @@ setTimeout(() => {
     </script>
 </body>
 </html>
+
