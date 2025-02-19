@@ -619,7 +619,7 @@ footer {
     justify-content: space-around;
     align-items: center;
     padding: 12px 0;
-    border-radius: 15px;
+    border-radius: 8px;
     background-color: #fff;
     position: fixed;
     bottom: 0;
@@ -643,7 +643,7 @@ footer .nav-icon {
 }
 
 footer .nav-icon i {
-    font-size: 20px;
+    font-size: 21px;
     transition: 0.3s;
 }
 
@@ -670,20 +670,20 @@ footer.hide {
 }
 
 .profile-item img {
-    width: 50px;
-    height: 50px;
+    width: 100px;
+    height: 100px;
     border-radius: 8px;
 }
 
 .profile-item h4 {
     margin: 0;
-    font-size: 14px;
+    font-size: 8px;
     color: #333;
 }
 
 .profile-item p {
     margin: 0;
-    font-size: 12px;
+    font-size: 6px;
     color: #777;
 }
 
@@ -1192,14 +1192,14 @@ const showProfileSection = () => {
         {
             name: "PalmPay - Transfers, Bills, Rewards",
             description: "Money transfers, pay for airtime and bills, earn rewards.",
-            link: "https://example.com/palmpay",
-            icon: "https://via.placeholder.com/50",
+            link: "https://link.palmpay.com/828uc",
+            icon: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS_6zFCuqWj00YpgpbbMr-8Mx7hycUWdg-5McXnyYoWDA&s",
         },
         {
             name: "OPay - Beyond Banking",
             description: "Send money, pay bills, and more.",
-            link: "https://example.com/opay",
-            icon: "https://via.placeholder.com/50",
+            link: "https://opay.ng/s/1jaSm",
+            icon: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQva4hX_z36R5w15vmXrRgv4rQBEuz0LO0e0_UlrxZN7Zed4DpkIEXhFsQ&s=10",
         },
         {
             name: "NOSH: Buy & Sell Gift Cards",
@@ -1385,18 +1385,12 @@ const createFrame = (item) => {
     const unlockTime = localStorage.getItem(`${item.title}-unlock-time`);
     const currentTime = Date.now();
 
-    if (item.trending) {
-        // Trending videos always visit the URL
-        img.onclick = () => window.open(item.videoUrl, '_blank');
-        button.textContent = 'Visit URL';
-        button.style.backgroundColor = '#007bff';
-        button.onclick = () => window.open(item.videoUrl, '_blank');
-    } else if (visited && unlockTime && (currentTime - parseInt(unlockTime)) < 7400000) {
+    if (visited && unlockTime && (currentTime - parseInt(unlockTime)) < 7400000) {
         // Video is unlocked
         button.textContent = 'Open ✅';
         button.style.backgroundColor = '#00b300';
-        img.onclick = () => openVideoNav(item.videoUrl, item.title);
-        button.onclick = () => openVideoNav(item.videoUrl, item.title);
+        img.onclick = () => openVideoNav(item.videoUrl, item.title); // Open URL directly
+        button.onclick = () => openVideoNav(item.videoUrl, item.title); // Open URL directly
     } else {
         // Video is locked
         button.textContent = 'Watch Ad 🔒';
@@ -1430,7 +1424,6 @@ const createUnlockedListItem = (item) => {
     img.style.borderRadius = '5px';
 
     const content = document.createElement('div');
-    content.className = 'content';
     content.style.flex = '1';
 
     const title = document.createElement('h4');
@@ -1454,9 +1447,9 @@ const createUnlockedListItem = (item) => {
     button.style.borderRadius = '8px';
     button.style.cursor = 'pointer';
     button.style.fontSize = '12px';
-    button.onclick = () => openVideoNav(item.videoUrl, item.title);
+    button.onclick = () => openVideoNav(item.videoUrl, item.title); // Open URL directly
 
-    // Add click event to the image to open the video
+    // Add click event to the image to open the video URL directly
     img.onclick = () => openVideoNav(item.videoUrl, item.title);
 
     content.appendChild(title);
@@ -1495,11 +1488,8 @@ const visitAd = (videoId, adUrl, button) => {
 };
 
 const openVideoNav = (videoUrl, videoId) => {
-    // Display the video navigation modal
-    document.getElementById('video-nav').style.display = 'flex';
-
-    // Set the video URL in the iframe
-    document.getElementById('video-player').src = videoUrl;
+    // Open the video URL in a new tab
+    window.open(videoUrl, '_blank');
 
     // Add the video to the history
     addToHistory(videoId);
@@ -1522,61 +1512,59 @@ const addToHistory = (videoId) => {
 };
 
 const updateHistoryList = () => {
-      const history = JSON.parse(localStorage.getItem('videoHistory')) || [];
-      const historyList = document.getElementById('history-list');
-      historyList.innerHTML = '';
+    const history = JSON.parse(localStorage.getItem('videoHistory')) || [];
+    const historyList = document.getElementById('history-list');
+    historyList.innerHTML = '';
 
-      if (history.length === 0) {
-          historyList.innerHTML = '<p>No history available.</p>';
-          return;
-      }
+    if (history.length === 0) {
+        historyList.innerHTML = '<p>No history available.</p>';
+        return;
+    }
 
-      history.forEach(item => {
-          const historyItem = document.createElement('div');
-          historyItem.className = 'history-item';
+    history.forEach(item => {
+        const historyItem = document.createElement('div');
+        historyItem.className = 'history-item';
 
-          const img = document.createElement('img');
-          img.src = item.imgUrl;
-          img.alt = item.title;
+        const img = document.createElement('img');
+        img.src = item.imgUrl;
+        img.alt = item.title;
 
-          const content = document.createElement('div');
-          content.className = 'content';
-          content.innerHTML = `
-              <h4>${item.title}</h4>
-              <p>${item.description}</p>
-          `;
+        const content = document.createElement('div');
+        content.className = 'content';
+        content.innerHTML = `
+            <h4>${item.title}</h4>
+            <p>${item.description}</p>
+        `;
 
-          const button = document.createElement('button');
-          if (item.trending) {
-              // Trending videos always visit the URL
-              img.onclick = () => window.open(item.videoUrl, '_blank');
-              button.textContent = 'Visit URL';
-              button.style.backgroundColor = '#007bff';
-              button.onclick = () => window.open(item.videoUrl, '_blank');
-          } else {
-              const visited = localStorage.getItem(`${item.title}-ad-visited`);
-              const unlockTime = localStorage.getItem(`${item.title}-unlock-time`);
-              const currentTime = Date.now();
+        const button = document.createElement('button');
+        const visited = localStorage.getItem(`${item.title}-ad-visited`);
+        const unlockTime = localStorage.getItem(`${item.title}-unlock-time`);
+        const currentTime = Date.now();
 
-              if (visited && unlockTime && (currentTime - parseInt(unlockTime)) < 7400000) {
-                  button.textContent = 'Open ✅';
-                  button.style.backgroundColor = '#00b300';
-                  button.onclick = () => openVideoNav(item.videoUrl, item.title);
-                  img.onclick = () => openVideoNav(item.videoUrl, item.title);
-              } else {
-                  button.textContent = 'Watch Ad 🔒';
-                  button.style.backgroundColor = '#ff0000';
-                  button.onclick = () => visitAd(item.title, item.adUrl, button);
-                  img.onclick = () => showNotification('Please Watch the Ad to Unlock this Novel.', 'warning');
-              }
-          }
+        if (visited && unlockTime && (currentTime - parseInt(unlockTime)) < 7200000) {
+            // Video is unlocked
+            button.textContent = 'Open ✅';
+            button.style.backgroundColor = '#00b300';
+            button.onclick = () => openVideoNav(item.videoUrl, item.title);
 
-          historyItem.appendChild(img);
-          historyItem.appendChild(content);
-          historyItem.appendChild(button);
-          historyList.appendChild(historyItem);
-      });
-  };
+            // Add click event to the image to open the video
+            img.onclick = () => openVideoNav(item.videoUrl, item.title);
+        } else {
+            // Video is locked
+            button.textContent = 'Watch Ad 🔒';
+            button.style.backgroundColor = '#ff0000';
+            button.onclick = () => visitAd(item.title, item.adUrl, button);
+
+            // Add click event to the image to show a notification
+            img.onclick = () => showNotification('Please Watch the Ad to Unlock this Novel.', 'warning');
+        }
+
+        historyItem.appendChild(img);
+        historyItem.appendChild(content);
+        historyItem.appendChild(button);
+        historyList.appendChild(historyItem);
+    });
+};
 
 const toggleHistoryModal = () => {
     const historyModal = document.getElementById('history-modal');
