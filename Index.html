@@ -656,62 +656,49 @@ footer .nav-icon.active i,
 footer .nav-icon:hover i {
     transform: scale(1.2);
 }
-
-/* Modal for Video Navigation */
-.nav-container {
-    display: none;
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.7);
-    z-index: 2000;
-    justify-content: center;
-    align-items: center;
-}
-
-.nav-content {
-    background-color: #fff;
-    width: 100%;
-    height: 100%;
-    max-width: 800px;
-    border-radius: 12px;
-    overflow: hidden;
-    display: flex;
-    flex-direction: column;
-}
-
-.nav-header {
-    background-color: #333;
-    color: #fff;
-    padding: 8px;
-    text-align: right;
-    flex-shrink: 0;
-}
-
-.nav-header button {
-    background: none;
-    border: none;
-    color: #fff;
-    font-size: 18px;
-    cursor: pointer;
-}
-
-.nav-body {
-    flex-grow: 1;
-    overflow: hidden;
-}
-
-.nav-body iframe {
-    width: 100%;
-    height: 100%;
-    border: none;
-}
 /* Hide Footer */
 footer.hide {
     transform: translateY(100%);
     transition: transform 0.3s ease-in-out;
+}
+.profile-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px;
+    border-bottom: 1px solid #eee;
+}
+
+.profile-item img {
+    width: 50px;
+    height: 50px;
+    border-radius: 8px;
+}
+
+.profile-item h4 {
+    margin: 0;
+    font-size: 14px;
+    color: #333;
+}
+
+.profile-item p {
+    margin: 0;
+    font-size: 12px;
+    color: #777;
+}
+
+.profile-item button {
+    background-color: #00b300;
+    color: #fff;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 12px;
+}
+
+.profile-item button:hover {
+    background-color: #008000;
 }
 </style>
 </head>
@@ -819,35 +806,27 @@ footer.hide {
 
 <!-- Bottom Navigation Bar -->
 <footer>
-    <div class="nav-icon" onclick="openNovels('https://www.youtube.com/embed/VIDEO_ID_1')">
-        <i class="fas fa-clapperboard"></i>
-        <span>Kannywood</span>
+    <div class="nav-icon" onclick="showHomeVideos()">
+        <i class="fas fa-layer-group"></i>
+        <span>Library</span>
     </div>
-    <div class="nav-icon" onclick="showNavModal('https://www.youtube.com/embed/VIDEO_ID_2')">
-        <i class="fas fa-fire"></i>
-        <span>Trending</span>
+    <div class="nav-icon" onclick="showDiscoverAndCategories()">
+        <i class="fas fa-book-open"></i>
+        <span>Discover</span>
     </div>
-    <div class="nav-icon" onclick="showNavModal('https://www.youtube.com/embed/VIDEO_ID_3')">
-        <i class="fas fa-heart"></i>
-        <span>Favorites</span>
+    <div class="nav-icon" onclick="showTrendingVideos()">
+        <i class="fas fa-headphones"></i>
+        <span>Audio Novels</span>
     </div>
-    <div class="nav-icon" onclick="showNavModal('https://www.youtube.com/embed/VIDEO_ID_4')">
-        <i class="fas fa-user"></i>
-        <span>Profile</span>
+    <div class="nav-icon" onclick="showUnlockedVideos()">
+        <i class="fas fa-lock-open"></i>
+        <span>Unlocked</span>
+    </div>
+    <div class="nav-icon" onclick="showProfileSection()">
+         <i class="fas fa-th-large"></i>
+        <span>Apps</span>
     </div>
 </footer>
-
-<!-- Modal for Video Navigation -->
-<div class="nav-container" id="nav-modal">
-    <div class="nav-content">
-        <div class="nav-header">
-            <button onclick="hideNavModal()">✖</button>
-        </div>
-        <div class="nav-body">
-            <iframe id="nav-iframe" src="" allowfullscreen></iframe>
-        </div>
-    </div>
-</div>
 
     <script>
         const data = [
@@ -938,41 +917,26 @@ footer.hide {
         title: "GOATMAN",
         category: "Dangerous Love 💔🔥",
         description: "A terrifying tale of a mythical creature.",
-    }
+    },
+    {
+        imgUrl: "https://bitly.cx/ph6T1",
+        videoUrl: "https://iuptelegram.blogspot.com/2025/02/one.html",
+        adUrl: "https://www.profitablecpmrate.com/hz39pi8hu?key=b1e59314de7d94008170a99be19232cb",
+        title: "TSANTSAR SO",
+        category: "Love at first sentence 📖💘",
+        description: "A thrilling action-packed adventure.",
+        trending: true, // Mark as trending
+    },
+    {
+        imgUrl: "https://bitly.cx/JAxKn",
+        videoUrl: "https://iuptelegram.blogspot.com/2025/02/me-zanyi-da-ita.html",
+        adUrl: "https://www.profitablecpmrate.com/hz39pi8hu?key=b1e59314de7d94008170a99be19232cb",
+        title: "ME ZANYI DA ITA",
+        category: "Best Novels",
+        description: "Epic battles and heroic journeys.",
+        trending: true, // Mark as trending
+    },
 ];
-
-// Function to show the navigation modal with a YouTube video
-function showNavModal(videoUrl) {
-    const navModal = document.getElementById('nav-modal');
-    const navIframe = document.getElementById('nav-iframe');
-
-    // Set the video URL in the iframe
-    navIframe.src = videoUrl;
-
-    // Show the modal
-    navModal.style.display = 'flex';
-}
-
-// Function to hide the navigation modal
-function hideNavModal() {
-    const navModal = document.getElementById('nav-modal');
-    const navIframe = document.getElementById('nav-iframe');
-
-    // Stop the video by clearing the iframe src
-    navIframe.src = '';
-
-    // Hide the modal
-    navModal.style.display = 'none';
-}
-
-const openOnDemand = () => {
-    window.open("https://i-tube-film.netlify.app/", "_blank");
-};
-
-const openNovels = () => {
-    window.open("https://your-novels-url.com", "_blank"); 
-};
-
 
 
 const logosData = [
@@ -1055,23 +1019,20 @@ const populateSidebar = () => {
 populateSidebar();
 
 // Function to shuffle an array
-    const shuffleArray = (array) => {
-        for (let i = array.length - 1; i > 0; i--) {
-            const j = Math.floor(Math.random() * (i + 1));
-            [array[i], array[j]] = [array[j], array[i]]; // Swap elements
-        }
-        return array;
-    };
-
-    // Shuffle the data array on load
-    shuffleArray(data);
+const shuffleArray = (array) => {
+    for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]]; // Swap elements
+    }
+    return array;
+};
 
 const createDiscoverSection = () => {
     const discoverScroll = document.getElementById('discover-scroll');
     discoverScroll.innerHTML = '';
 
-    // Select the first 5 videos for the Discover section
-    const discoverData = data.slice(0, 5);
+    // Select the first 5 videos for the Discover section and shuffle them
+    const discoverData = shuffleArray(data.slice(0, 5)); // Shuffle only the Discover data
 
     discoverData.forEach(item => {
         const discoverItem = document.createElement('div');
@@ -1121,7 +1082,7 @@ const createCategories = () => {
     container.innerHTML = '';
 
     categories.forEach(category => {
-        const categoryData = data.filter(item => item.category === category);
+        const categoryData = data.filter(item => item.category === category); // Use original data
         const categoryContainer = document.createElement('div');
         categoryContainer.className = 'category-container';
 
@@ -1153,6 +1114,258 @@ const createCategories = () => {
     });
 };
 
+const showDiscoverAndCategories = () => {
+    const gridContainer = document.getElementById('grid-container');
+    gridContainer.style.display = 'none'; // Hide grid layout
+
+    // Show Discover and Categories sections
+    document.getElementById('discover-container').style.display = 'block';
+    document.getElementById('categories-container').style.display = 'block';
+};
+
+const showTrendingVideos = () => {
+    const trendingData = data.filter(item => item.trending); // Filter trending videos
+    const gridContainer = document.getElementById('grid-container');
+    gridContainer.innerHTML = '';
+
+    // Hide other sections
+    document.getElementById('discover-container').style.display = 'none';
+    document.getElementById('categories-container').style.display = 'none';
+    gridContainer.style.display = 'grid';
+
+    // Add a back button
+    const backButton = document.createElement('button');
+    backButton.textContent = 'Back to Categories';
+    backButton.style.marginBottom = '10px';
+    backButton.style.padding = '10px';
+    backButton.style.backgroundColor = '#ddd';
+    backButton.style.color = '#333';
+    backButton.style.border = 'none';
+    backButton.style.borderRadius = '5px';
+    backButton.style.cursor = 'pointer';
+    backButton.onclick = () => {
+        gridContainer.style.display = 'none';
+        document.getElementById('discover-container').style.display = 'block';
+        document.getElementById('categories-container').style.display = 'block';
+    };
+    gridContainer.appendChild(backButton);
+
+    // Add trending videos to the grid
+    if (trendingData.length > 0) {
+        trendingData.forEach(item => {
+            const frame = createFrame(item);
+            gridContainer.appendChild(frame);
+        });
+    } else {
+        showNotification('No trending videos found.', 'warning');
+    }
+};
+
+const showProfileSection = () => {
+    const gridContainer = document.getElementById('grid-container');
+    gridContainer.innerHTML = '';
+
+    // Hide other sections
+    document.getElementById('discover-container').style.display = 'none';
+    document.getElementById('categories-container').style.display = 'none';
+    gridContainer.style.display = 'block'; // Use block for list layout
+
+    // Add a back button
+    const backButton = document.createElement('button');
+    backButton.textContent = 'Back to Categories';
+    backButton.style.marginBottom = '10px';
+    backButton.style.padding = '10px';
+    backButton.style.backgroundColor = '#ddd';
+    backButton.style.color = '#333';
+    backButton.style.border = 'none';
+    backButton.style.borderRadius = '5px';
+    backButton.style.cursor = 'pointer';
+    backButton.onclick = () => {
+        gridContainer.style.display = 'none';
+        document.getElementById('discover-container').style.display = 'block';
+        document.getElementById('categories-container').style.display = 'block';
+    };
+    gridContainer.appendChild(backButton);
+
+    // Add profile content
+    const profileContent = [
+        {
+            name: "PalmPay - Transfers, Bills, Rewards",
+            description: "Money transfers, pay for airtime and bills, earn rewards.",
+            link: "https://example.com/palmpay",
+            icon: "https://via.placeholder.com/50",
+        },
+        {
+            name: "OPay - Beyond Banking",
+            description: "Send money, pay bills, and more.",
+            link: "https://example.com/opay",
+            icon: "https://via.placeholder.com/50",
+        },
+        {
+            name: "NOSH: Buy & Sell Gift Cards",
+            description: "Buy and sell gift cards easily.",
+            link: "https://example.com/nosh",
+            icon: "https://via.placeholder.com/50",
+        },
+        {
+            name: "Moniepoint Personal Banking",
+            description: "Send money, request a debit card, and manage savings.",
+            link: "https://example.com/moniepoint",
+            icon: "https://via.placeholder.com/50",
+        },
+        {
+            name: "Blocky Puzzle",
+            description: "A fun block puzzle game.",
+            link: "https://example.com/blockypuzzle",
+            icon: "https://via.placeholder.com/50",
+        },
+        {
+            name: "Triple Master 3D",
+            description: "Remove items from containers in this puzzle game.",
+            link: "https://example.com/triplemaster",
+            icon: "https://via.placeholder.com/50",
+        },
+    ];
+
+    profileContent.forEach(item => {
+        const profileItem = createProfileItem(item);
+        gridContainer.appendChild(profileItem);
+    });
+};
+
+const showHomeVideos = () => {
+    const homeData = data; // Use the entire data array for home videos
+    const gridContainer = document.getElementById('grid-container');
+    gridContainer.innerHTML = '';
+
+    // Hide other sections
+    document.getElementById('discover-container').style.display = 'none';
+    document.getElementById('categories-container').style.display = 'none';
+    gridContainer.style.display = 'grid';
+
+    // Add a back button
+    const backButton = document.createElement('button');
+    backButton.textContent = 'Back to Categories';
+    backButton.style.marginBottom = '10px';
+    backButton.style.padding = '10px';
+    backButton.style.backgroundColor = '#ddd';
+    backButton.style.color = '#333';
+    backButton.style.border = 'none';
+    backButton.style.borderRadius = '5px';
+    backButton.style.cursor = 'pointer';
+    backButton.onclick = () => {
+        gridContainer.style.display = 'none';
+        document.getElementById('discover-container').style.display = 'block';
+        document.getElementById('categories-container').style.display = 'block';
+    };
+    gridContainer.appendChild(backButton);
+
+    // Add home videos to the grid
+    if (homeData.length > 0) {
+        homeData.forEach(item => {
+            const frame = createFrame(item);
+            gridContainer.appendChild(frame);
+        });
+    } else {
+        showNotification('No home videos found.', 'warning');
+    }
+};
+
+const showUnlockedVideos = () => {
+    const unlockedData = data.filter(item => {
+        const visited = localStorage.getItem(`${item.title}-ad-visited`);
+        const unlockTime = localStorage.getItem(`${item.title}-unlock-time`);
+        const currentTime = Date.now();
+        return visited && unlockTime && (currentTime - parseInt(unlockTime)) < 7400000; // Check if video is unlocked
+    });
+
+    const gridContainer = document.getElementById('grid-container');
+    gridContainer.innerHTML = '';
+
+    // Hide other sections
+    document.getElementById('discover-container').style.display = 'none';
+    document.getElementById('categories-container').style.display = 'none';
+    gridContainer.style.display = 'block'; // Use block for list layout
+
+    // Add a back button
+    const backButton = document.createElement('button');
+    backButton.textContent = 'Back to Categories';
+    backButton.style.marginBottom = '10px';
+    backButton.style.padding = '10px';
+    backButton.style.backgroundColor = '#ddd';
+    backButton.style.color = '#333';
+    backButton.style.border = 'none';
+    backButton.style.borderRadius = '5px';
+    backButton.style.cursor = 'pointer';
+    backButton.onclick = () => {
+        gridContainer.style.display = 'none';
+        document.getElementById('discover-container').style.display = 'block';
+        document.getElementById('categories-container').style.display = 'block';
+    };
+    gridContainer.appendChild(backButton);
+
+    // Add unlocked videos to the list
+    if (unlockedData.length > 0) {
+        unlockedData.forEach(item => {
+            const listItem = createUnlockedListItem(item);
+            gridContainer.appendChild(listItem);
+        });
+    } else {
+        showNotification('No unlocked videos found.', 'warning');
+    }
+};
+
+const createProfileItem = (item) => {
+    const profileItem = document.createElement('div');
+    profileItem.className = 'profile-item';
+    profileItem.style.display = 'flex';
+    profileItem.style.alignItems = 'center';
+    profileItem.style.gap = '10px';
+    profileItem.style.padding = '10px';
+    profileItem.style.borderBottom = '1px solid #eee';
+
+    const icon = document.createElement('img');
+    icon.src = item.icon;
+    icon.alt = item.name;
+    icon.style.width = '50px';
+    icon.style.height = '50px';
+    icon.style.borderRadius = '8px';
+
+    const content = document.createElement('div');
+    content.style.flex = '1';
+
+    const name = document.createElement('h4');
+    name.textContent = item.name;
+    name.style.margin = '0';
+    name.style.fontSize = '14px';
+    name.style.color = '#333';
+
+    const description = document.createElement('p');
+    description.textContent = item.description;
+    description.style.margin = '0';
+    description.style.fontSize = '12px';
+    description.style.color = '#777';
+
+    const openButton = document.createElement('button');
+    openButton.textContent = 'Open';
+    openButton.style.backgroundColor = '#00b300';
+    openButton.style.color = '#fff';
+    openButton.style.border = 'none';
+    openButton.style.padding = '5px 10px';
+    openButton.style.borderRadius = '5px';
+    openButton.style.cursor = 'pointer';
+    openButton.style.fontSize = '12px';
+    openButton.onclick = () => window.open(item.link, '_blank');
+
+    content.appendChild(name);
+    content.appendChild(description);
+    profileItem.appendChild(icon);
+    profileItem.appendChild(content);
+    profileItem.appendChild(openButton);
+
+    return profileItem;
+};
+
 const createFrame = (item) => {
     const frame = document.createElement('div');
     frame.className = 'frame';
@@ -1172,12 +1385,20 @@ const createFrame = (item) => {
     const unlockTime = localStorage.getItem(`${item.title}-unlock-time`);
     const currentTime = Date.now();
 
-    if (visited && unlockTime && (currentTime - parseInt(unlockTime)) < 7400000) {
+    if (item.trending) {
+        // Trending videos always visit the URL
+        img.onclick = () => window.open(item.videoUrl, '_blank');
+        button.textContent = 'Visit URL';
+        button.style.backgroundColor = '#007bff';
+        button.onclick = () => window.open(item.videoUrl, '_blank');
+    } else if (visited && unlockTime && (currentTime - parseInt(unlockTime)) < 7400000) {
+        // Video is unlocked
         button.textContent = 'Open ✅';
         button.style.backgroundColor = '#00b300';
         img.onclick = () => openVideoNav(item.videoUrl, item.title);
         button.onclick = () => openVideoNav(item.videoUrl, item.title);
     } else {
+        // Video is locked
         button.textContent = 'Watch Ad 🔒';
         button.style.backgroundColor = '#ff0000';
         img.onclick = () => showNotification('Please Watch the Ad to Unlock this Novel.', 'warning');
@@ -1189,6 +1410,62 @@ const createFrame = (item) => {
     frame.appendChild(img);
     frame.appendChild(content);
     return frame;
+};
+
+const createUnlockedListItem = (item) => {
+    const listItem = document.createElement('div');
+    listItem.className = 'unlocked-item';
+    listItem.style.display = 'flex';
+    listItem.style.alignItems = 'center';
+    listItem.style.gap = '10px';
+    listItem.style.padding = '10px';
+    listItem.style.borderBottom = '1px solid #eee';
+
+    const img = document.createElement('img');
+    img.src = item.imgUrl;
+    img.alt = item.title;
+    img.style.width = '80px';
+    img.style.height = '100px';
+    img.style.objectFit = 'cover';
+    img.style.borderRadius = '5px';
+
+    const content = document.createElement('div');
+    content.className = 'content';
+    content.style.flex = '1';
+
+    const title = document.createElement('h4');
+    title.textContent = item.title;
+    title.style.margin = '0';
+    title.style.fontSize = '14px';
+    title.style.color = '#333';
+
+    const description = document.createElement('p');
+    description.textContent = item.description;
+    description.style.margin = '0';
+    description.style.fontSize = '12px';
+    description.style.color = '#777';
+
+    const button = document.createElement('button');
+    button.textContent = 'Open ✅';
+    button.style.backgroundColor = '#00b300';
+    button.style.color = '#fff';
+    button.style.border = '1px solid #ccc';
+    button.style.padding = '5px 10px';
+    button.style.borderRadius = '8px';
+    button.style.cursor = 'pointer';
+    button.style.fontSize = '12px';
+    button.onclick = () => openVideoNav(item.videoUrl, item.title);
+
+    // Add click event to the image to open the video
+    img.onclick = () => openVideoNav(item.videoUrl, item.title);
+
+    content.appendChild(title);
+    content.appendChild(description);
+    listItem.appendChild(img);
+    listItem.appendChild(content);
+    listItem.appendChild(button);
+
+    return listItem;
 };
 
 const visitAd = (videoId, adUrl, button) => {
@@ -1245,59 +1522,61 @@ const addToHistory = (videoId) => {
 };
 
 const updateHistoryList = () => {
-    const history = JSON.parse(localStorage.getItem('videoHistory')) || [];
-    const historyList = document.getElementById('history-list');
-    historyList.innerHTML = '';
+      const history = JSON.parse(localStorage.getItem('videoHistory')) || [];
+      const historyList = document.getElementById('history-list');
+      historyList.innerHTML = '';
 
-    if (history.length === 0) {
-        historyList.innerHTML = '<p>No history available.</p>';
-        return;
-    }
+      if (history.length === 0) {
+          historyList.innerHTML = '<p>No history available.</p>';
+          return;
+      }
 
-    history.forEach(item => {
-        const historyItem = document.createElement('div');
-        historyItem.className = 'history-item';
+      history.forEach(item => {
+          const historyItem = document.createElement('div');
+          historyItem.className = 'history-item';
 
-        const img = document.createElement('img');
-        img.src = item.imgUrl;
-        img.alt = item.title;
+          const img = document.createElement('img');
+          img.src = item.imgUrl;
+          img.alt = item.title;
 
-        const content = document.createElement('div');
-        content.className = 'content';
-        content.innerHTML = `
-            <h4>${item.title}</h4>
-            <p>${item.description}</p>
-        `;
+          const content = document.createElement('div');
+          content.className = 'content';
+          content.innerHTML = `
+              <h4>${item.title}</h4>
+              <p>${item.description}</p>
+          `;
 
-        const button = document.createElement('button');
-        const visited = localStorage.getItem(`${item.title}-ad-visited`);
-        const unlockTime = localStorage.getItem(`${item.title}-unlock-time`);
-        const currentTime = Date.now();
+          const button = document.createElement('button');
+          if (item.trending) {
+              // Trending videos always visit the URL
+              img.onclick = () => window.open(item.videoUrl, '_blank');
+              button.textContent = 'Visit URL';
+              button.style.backgroundColor = '#007bff';
+              button.onclick = () => window.open(item.videoUrl, '_blank');
+          } else {
+              const visited = localStorage.getItem(`${item.title}-ad-visited`);
+              const unlockTime = localStorage.getItem(`${item.title}-unlock-time`);
+              const currentTime = Date.now();
 
-        if (visited && unlockTime && (currentTime - parseInt(unlockTime)) < 7200000) {
-            // Video is unlocked
-            button.textContent = 'Open ✅';
-            button.style.backgroundColor = '#00b300';
-            button.onclick = () => openVideoNav(item.videoUrl, item.title);
+              if (visited && unlockTime && (currentTime - parseInt(unlockTime)) < 7400000) {
+                  button.textContent = 'Open ✅';
+                  button.style.backgroundColor = '#00b300';
+                  button.onclick = () => openVideoNav(item.videoUrl, item.title);
+                  img.onclick = () => openVideoNav(item.videoUrl, item.title);
+              } else {
+                  button.textContent = 'Watch Ad 🔒';
+                  button.style.backgroundColor = '#ff0000';
+                  button.onclick = () => visitAd(item.title, item.adUrl, button);
+                  img.onclick = () => showNotification('Please Watch the Ad to Unlock this Novel.', 'warning');
+              }
+          }
 
-            // Add click event to the image to open the video
-            img.onclick = () => openVideoNav(item.videoUrl, item.title);
-        } else {
-            // Video is locked
-            button.textContent = 'Watch Ad 🔒';
-            button.style.backgroundColor = '#ff0000';
-            button.onclick = () => visitAd(item.title, item.adUrl, button);
-
-            // Add click event to the image to show a notification
-            img.onclick = () => showNotification('Please Watch the Ad to Unlock this Novel.', 'warning');
-        }
-
-        historyItem.appendChild(img);
-        historyItem.appendChild(content);
-        historyItem.appendChild(button);
-        historyList.appendChild(historyItem);
-    });
-};
+          historyItem.appendChild(img);
+          historyItem.appendChild(content);
+          historyItem.appendChild(button);
+          historyList.appendChild(historyItem);
+      });
+  };
 
 const toggleHistoryModal = () => {
     const historyModal = document.getElementById('history-modal');
