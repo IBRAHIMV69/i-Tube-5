@@ -435,7 +435,7 @@
 #social-media-descriptions h2 {
     font-size: 14px;
     color: #333;
-    margin: 15;
+    margin: 20;
 }
 
 /* Social Media Icons */
@@ -443,7 +443,7 @@
     display: flex;
     justify-content: center;
     gap: 15px;
-    margin: 8px 0;
+    margin: 20px 0;
 }
 
 .social-icon {
@@ -720,71 +720,6 @@ footer.hide {
 .profile-item button:hover {
     background-color: #008000;
 }
-/* Best Videos Section */
-.best-videos-container {
-    margin-top: 20px;
-    padding: 10px;
-}
-
-.best-videos-title {
-    font-size: 18px;
-    font-weight: bold;
-    margin-bottom: 15px;
-    color: #333;
-}
-
-.best-videos-list {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-}
-
-.best-video-item {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    padding: 10px;
-    background-color: #f9f9f9;
-    border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-}
-
-.best-video-item img {
-    width: 100px;
-    height: 140px;
-    object-fit: cover;
-    border-radius: 10px;
-}
-
-.best-video-item .content {
-    flex: 1;
-}
-
-.best-video-item h4 {
-    font-size: 10px;
-    margin: 0;
-    color: #333;
-}
-
-.best-video-item p {
-    font-size: 12px;
-    margin: 0;
-    color: #777;
-}
-
-.best-video-item button {
-    background: linear-gradient(to right, #004d00, #00b300);
-    color: #fff;
-    border: 1px solid #ccc;
-    padding: 5px 10px;
-    border-radius: 8px;
-    cursor: pointer;
-    font-size: 12px;
-}
-
-.best-video-item button:hover {
-    background-color: #cc0000;
-}
 </style>
 </head>
 <body>
@@ -840,10 +775,10 @@ footer.hide {
     </div>
 
     <!-- Discover Section -->
-<div class="discover-container" id="discover-container">
-    <div class="discover-title">Explore</div>
-    <div class="discover-scroll" id="discover-scroll"></div>
-</div>
+    <div class="discover-container" id="discover-container">
+        <div class="discover-title">Explore</div>
+        <div class="discover-scroll" id="discover-scroll"></div>
+    </div>
 
     <!-- Categories Section -->
     <div id="categories-container"></div>
@@ -893,12 +828,6 @@ footer.hide {
     </a>
 </div>
 
-<!-- Best Videos Section -->
-<div class="best-videos-container" id="best-videos-container">
-    <div class="best-videos-title">Limited time deal!</div>
-    <div class="best-videos-list" id="best-videos-list"></div>
-</div>
-
 <!-- Bottom Navigation Bar -->
 <footer>
     <div class="nav-icon" onclick="showHomeVideos()">
@@ -943,7 +872,7 @@ footer.hide {
     },
     {
         imgUrl: "https://bitly.cx/0zlN",
-        videoUrl: "https://drive.google.com/drive/folders/1_ydF695kVOh7kwOVY9qEkMBq7K1mde8q",
+        videoUrl: "https://youtube.com/embed/3_i60BLtN_s",
         adUrl: "https://www.profitablecpmrate.com/hz39pi8hu?key=b1e59314de7d94008170a99be19232cb",
         title: "DAME AKE ADO",
         category: "Battles & Empires 👑🥷",
@@ -1030,27 +959,7 @@ footer.hide {
         category: "Best Novels",
         description: "Epic battles and heroic journeys.",
         trending: true, // Mark as trending
-        best: true, // Mark as Best Video
     },
-    {
-        imgUrl: "https://bitly.cx/ph6T1",
-        videoUrl: "https://iuptelegram.blogspot.com/2025/02/one.html",
-        adUrl: "https://www.profitablecpmrate.com/hz39pi8hu?key=b1e59314de7d94008170a99be19232cb",
-        title: "TSANTSAR SO",
-        category: "Best Novels",
-        description: "A thrilling action-packed adventure.",
-        best: true, // Mark as Best Video
-    },
-    {
-        imgUrl: "https://bitly.cx/JAxKn",
-        videoUrl: "https://iuptelegram.blogspot.com/2025/02/me-zanyi-da-ita.html",
-        adUrl: "https://www.profitablecpmrate.com/hz39pi8hu?key=b1e59314de7d94008170a99be19232cb",
-        title: "ME ZANYI DA ITA",
-        category: "Best Novels",
-        description: "Epic battles and heroic journeys.",
-        best: true, // Mark as Best Video
-    },
-    
 ];
 
 
@@ -1189,68 +1098,6 @@ const createDiscoverSection = () => {
         discoverItem.appendChild(content);
         discoverScroll.appendChild(discoverItem);
     });
-};
-
-const createBestVideosList = () => {
-    const bestVideosList = document.getElementById('best-videos-list');
-    bestVideosList.innerHTML = '';
-
-    // Filter Best Videos
-    const bestVideos = data.filter(item => item.best);
-
-    if (bestVideos.length > 0) {
-        bestVideos.forEach(item => {
-            const bestVideoItem = createBestVideoItem(item);
-            bestVideosList.appendChild(bestVideoItem);
-        });
-    } else {
-        bestVideosList.innerHTML = '<p>No Best Videos found.</p>';
-    }
-};
-
-const createBestVideoItem = (item) => {
-    const bestVideoItem = document.createElement('div');
-    bestVideoItem.className = 'best-video-item';
-
-    const img = document.createElement('img');
-    img.src = item.imgUrl;
-    img.alt = item.title;
-
-    const content = document.createElement('div');
-    content.className = 'content';
-
-    const title = document.createElement('h4');
-    title.textContent = item.title;
-
-    const description = document.createElement('p');
-    description.textContent = item.description;
-
-    const button = document.createElement('button');
-    const visited = localStorage.getItem(`${item.title}-ad-visited`);
-    const unlockTime = localStorage.getItem(`${item.title}-unlock-time`);
-    const currentTime = Date.now();
-
-    if (visited && unlockTime && (currentTime - parseInt(unlockTime)) < 7400000) {
-        // Video is unlocked
-        button.textContent = 'Open ✅';
-        button.style.backgroundColor = '#00b300';
-        img.onclick = () => openVideoNav(item.videoUrl, item.title);
-        button.onclick = () => openVideoNav(item.videoUrl, item.title);
-    } else {
-        // Video is locked
-        button.textContent = 'Watch Ad 🔒';
-        button.style.backgroundColor = '#ff0000';
-        img.onclick = () => showNotification('Please Watch the Ad to Unlock this Novel.', 'warning');
-        button.onclick = () => visitAd(item.title, item.adUrl, button);
-    }
-
-    content.appendChild(title);
-    content.appendChild(description);
-    bestVideoItem.appendChild(img);
-    bestVideoItem.appendChild(content);
-    bestVideoItem.appendChild(button);
-
-    return bestVideoItem;
 };
 
 const createCategories = () => {
@@ -1787,12 +1634,6 @@ const showAllVideos = (category) => {
         gridContainer.appendChild(frame);
     });
 };
-
-// Initialize the page
-createDiscoverSection();
-createCategories();
-createBestVideosList(); // Add this line
-updateHistoryList();
 
 const handleSearch = () => {
     const searchTerm = document.getElementById('search-bar').value.toLowerCase();
