@@ -240,7 +240,7 @@
 
         /* Category Section */
         .category-container {
-            margin-top: 2px;
+            margin-top: 15px;
             padding: 2px;
         }
         .category-title {
@@ -291,14 +291,14 @@
         }
         .frame img {
             width: 100%;
-            aspect-ratio: 16 / 23;
+            aspect-ratio: 16 / 24;
             object-fit: cover;
             border-radius: 5px;
         }
         .frame .content h2 {
-            font-size: 8px;
+            font-size: 6px;
             text-align: center;
-            margin-top: 1px;
+            margin-top: 0px;
         }
         .frame .content button {
             background: linear-gradient(to right, #004d00, #00b300);
@@ -426,23 +426,43 @@
     margin: 25px 0;
 }
 
+/* Social Media Descriptions */
+#social-media-descriptions {
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+#social-media-descriptions h2 {
+    font-size: 14px;
+    color: #333;
+    margin: 15;
+}
+
+/* Social Media Icons */
+#social-media {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin: 8px 0;
+}
+
 .social-icon {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    width: 30px; /* Adjust size */
+    width: 30px;
     height: 30px;
     border-radius: 50%;
     background: linear-gradient(to right, #004d00, #00b300);
     color: white;
     font-size: 18px;
     cursor: pointer;
-    text-decoration: none; /* Prevents default link styling */
-    transition: background-color 0.3s ease; /* Smooth hover effect */
+    text-decoration: none;
+    transition: background-color 0.3s ease;
 }
 
 .social-icon:hover {
-    background-color: #555; /* Slightly lighter color on hover */
+    background-color: #555;
 }
 .notification-bar {
             position: fixed;
@@ -661,30 +681,109 @@ footer.hide {
     transform: translateY(100%);
     transition: transform 0.3s ease-in-out;
 }
-/* Scrollable container */
-.scroll-container {
-    height: 400px; /* Fixed height */
-    overflow-y: auto; /* Enable vertical scrolling */
-    padding-right: 10px; /* Add padding for scrollbar */
+.profile-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px;
+    border-bottom: 1px solid #eee;
 }
 
-/* Scrollbar styling */
-.scroll-container::-webkit-scrollbar {
-    width: 8px; /* Width of the scrollbar */
+.profile-item img {
+    width: 100px;
+    height: 100px;
+    border-radius: 8px;
 }
 
-.scroll-container::-webkit-scrollbar-track {
-    background: #f1f1f1; /* Track color */
-    border-radius: 4px; /* Rounded corners */
+.profile-item h4 {
+    margin: 0;
+    font-size: 8px;
+    color: #333;
 }
 
-.scroll-container::-webkit-scrollbar-thumb {
-    background: #888; /* Thumb color */
-    border-radius: 4px; /* Rounded corners */
+.profile-item p {
+    margin: 0;
+    font-size: 6px;
+    color: #777;
 }
 
-.scroll-container::-webkit-scrollbar-thumb:hover {
-    background: #555; /* Thumb color on hover */
+.profile-item button {
+    background-color: #00b300;
+    color: #fff;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 12px;
+}
+
+.profile-item button:hover {
+    background-color: #008000;
+}
+/* Best Videos Section */
+.best-videos-container {
+    margin-top: 20px;
+    padding: 10px;
+}
+
+.best-videos-title {
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 15px;
+    color: #333;
+}
+
+.best-videos-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.best-video-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.best-video-item img {
+    width: 100px;
+    height: 140px;
+    object-fit: cover;
+    border-radius: 10px;
+}
+
+.best-video-item .content {
+    flex: 1;
+}
+
+.best-video-item h4 {
+    font-size: 10px;
+    margin: 0;
+    color: #333;
+}
+
+.best-video-item p {
+    font-size: 12px;
+    margin: 0;
+    color: #777;
+}
+
+.best-video-item button {
+    background: linear-gradient(to right, #004d00, #00b300);
+    color: #fff;
+    border: 1px solid #ccc;
+    padding: 5px 10px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 12px;
+}
+
+.best-video-item button:hover {
+    background-color: #cc0000;
 }
 </style>
 </head>
@@ -741,10 +840,10 @@ footer.hide {
     </div>
 
     <!-- Discover Section -->
-    <div class="discover-container" id="discover-container">
-        <div class="discover-title">Explore</div>
-        <div class="discover-scroll" id="discover-scroll"></div>
-    </div>
+<div class="discover-container" id="discover-container">
+    <div class="discover-title">Explore</div>
+    <div class="discover-scroll" id="discover-scroll"></div>
+</div>
 
     <!-- Categories Section -->
     <div id="categories-container"></div>
@@ -764,30 +863,40 @@ footer.hide {
         </div>
     </div>
     
-        <div id="social-media" style="display: flex; justify-content: center; margin-top: 10px;">
-            <a href="https://www.facebook.com/username" target="_blank" class="social-icon">
-                <i class="fab fa-facebook-f fa-circle"></i>
-            </a>
-            <a href="https://twitter.com/username" target="_blank" class="social-icon">
-                <i class="fab fa-twitter"></i>
-            </a>
-            <a href="https://telegram.me/username" target="_blank" class="social-icon">
-                <i class="fab fa-telegram social-icon"></i>
-            </a>
-            <a href="https://www.instagram.com/username" target="_blank" class="social-icon">
-                <i class="fab fa-instagram"></i>
-            </a>
-            <a href="https://www.youtube.com/channel/UC123456" target="_blank" class="social-icon">
-                <i class="fab fa-youtube"></i>
-            </a>
-            <a href="https://wa.me/1234567890" target="_blank" class="social-icon">
-                <i class="fab fa-whatsapp"></i>
-            </a>
-            <a href="https://www.tiktok.com/@username" target="_blank" class="social-icon">
-                <i class="fab fa-tiktok"></i>
-            </a>
-        </div>
-    </div>
+        <!-- Social Media Descriptions -->
+<div id="social-media-descriptions">
+    <h2>Follow us on social media:</h2>
+</div>
+
+<!-- Social Media Icons -->
+<div id="social-media">
+    <a href="https://www.facebook.com/username" target="_blank" class="social-icon">
+        <i class="fab fa-facebook-f"></i>
+    </a>
+    <a href="https://twitter.com/username" target="_blank" class="social-icon">
+        <i class="fab fa-twitter"></i>
+    </a>
+    <a href="https://telegram.me/username" target="_blank" class="social-icon">
+        <i class="fab fa-telegram"></i>
+    </a>
+    <a href="https://www.instagram.com/username" target="_blank" class="social-icon">
+        <i class="fab fa-instagram"></i>
+    </a>
+    <a href="https://www.youtube.com/channel/UC123456" target="_blank" class="social-icon">
+        <i class="fab fa-youtube"></i>
+    </a>
+    <a href="https://wa.me/1234567890" target="_blank" class="social-icon">
+        <i class="fab fa-whatsapp"></i>
+    </a>
+    <a href="https://www.tiktok.com/@username" target="_blank" class="social-icon">
+        <i class="fab fa-tiktok"></i>
+    </a>
+</div>
+
+<!-- Best Videos Section -->
+<div class="best-videos-container" id="best-videos-container">
+    <div class="best-videos-title">Limited time deal!</div>
+    <div class="best-videos-list" id="best-videos-list"></div>
 </div>
 
 <!-- Bottom Navigation Bar -->
@@ -834,7 +943,7 @@ footer.hide {
     },
     {
         imgUrl: "https://bitly.cx/0zlN",
-        videoUrl: "https://youtube.com/embed/3_i60BLtN_s",
+        videoUrl: "https://drive.google.com/drive/folders/1_ydF695kVOh7kwOVY9qEkMBq7K1mde8q",
         adUrl: "https://www.profitablecpmrate.com/hz39pi8hu?key=b1e59314de7d94008170a99be19232cb",
         title: "DAME AKE ADO",
         category: "Battles & Empires 👑🥷",
@@ -921,7 +1030,27 @@ footer.hide {
         category: "Best Novels",
         description: "Epic battles and heroic journeys.",
         trending: true, // Mark as trending
+        best: true, // Mark as Best Video
     },
+    {
+        imgUrl: "https://bitly.cx/ph6T1",
+        videoUrl: "https://iuptelegram.blogspot.com/2025/02/one.html",
+        adUrl: "https://www.profitablecpmrate.com/hz39pi8hu?key=b1e59314de7d94008170a99be19232cb",
+        title: "TSANTSAR SO",
+        category: "Best Novels",
+        description: "A thrilling action-packed adventure.",
+        best: true, // Mark as Best Video
+    },
+    {
+        imgUrl: "https://bitly.cx/JAxKn",
+        videoUrl: "https://iuptelegram.blogspot.com/2025/02/me-zanyi-da-ita.html",
+        adUrl: "https://www.profitablecpmrate.com/hz39pi8hu?key=b1e59314de7d94008170a99be19232cb",
+        title: "ME ZANYI DA ITA",
+        category: "Best Novels",
+        description: "Epic battles and heroic journeys.",
+        best: true, // Mark as Best Video
+    },
+    
 ];
 
 
@@ -1062,6 +1191,68 @@ const createDiscoverSection = () => {
     });
 };
 
+const createBestVideosList = () => {
+    const bestVideosList = document.getElementById('best-videos-list');
+    bestVideosList.innerHTML = '';
+
+    // Filter Best Videos
+    const bestVideos = data.filter(item => item.best);
+
+    if (bestVideos.length > 0) {
+        bestVideos.forEach(item => {
+            const bestVideoItem = createBestVideoItem(item);
+            bestVideosList.appendChild(bestVideoItem);
+        });
+    } else {
+        bestVideosList.innerHTML = '<p>No Best Videos found.</p>';
+    }
+};
+
+const createBestVideoItem = (item) => {
+    const bestVideoItem = document.createElement('div');
+    bestVideoItem.className = 'best-video-item';
+
+    const img = document.createElement('img');
+    img.src = item.imgUrl;
+    img.alt = item.title;
+
+    const content = document.createElement('div');
+    content.className = 'content';
+
+    const title = document.createElement('h4');
+    title.textContent = item.title;
+
+    const description = document.createElement('p');
+    description.textContent = item.description;
+
+    const button = document.createElement('button');
+    const visited = localStorage.getItem(`${item.title}-ad-visited`);
+    const unlockTime = localStorage.getItem(`${item.title}-unlock-time`);
+    const currentTime = Date.now();
+
+    if (visited && unlockTime && (currentTime - parseInt(unlockTime)) < 7400000) {
+        // Video is unlocked
+        button.textContent = 'Open ✅';
+        button.style.backgroundColor = '#00b300';
+        img.onclick = () => openVideoNav(item.videoUrl, item.title);
+        button.onclick = () => openVideoNav(item.videoUrl, item.title);
+    } else {
+        // Video is locked
+        button.textContent = 'Watch Ad 🔒';
+        button.style.backgroundColor = '#ff0000';
+        img.onclick = () => showNotification('Please Watch the Ad to Unlock this Novel.', 'warning');
+        button.onclick = () => visitAd(item.title, item.adUrl, button);
+    }
+
+    content.appendChild(title);
+    content.appendChild(description);
+    bestVideoItem.appendChild(img);
+    bestVideoItem.appendChild(content);
+    bestVideoItem.appendChild(button);
+
+    return bestVideoItem;
+};
+
 const createCategories = () => {
     const categories = [...new Set(data.map(item => item.category))]; // Get unique categories
     const container = document.getElementById('categories-container');
@@ -1173,30 +1364,24 @@ const showProfileSection = () => {
     };
     gridContainer.appendChild(backButton);
 
-    // Create a scrollable container for profile items
-    const scrollContainer = document.createElement('div');
-    scrollContainer.style.height = '400px'; // Set a fixed height
-    scrollContainer.style.overflowY = 'auto'; // Enable vertical scrolling
-    scrollContainer.style.paddingRight = '10px'; // Add padding for scrollbar
-
     // Add profile content
     const profileContent = [
         {
-            name: "MovieBox - Movies & TV Series",
+            name: "PalmPay - Transfers, Bills, Rewards",
             description: "Money transfers, pay for airtime and bills, earn rewards.",
-            link: "https://tinyurl.com/2ry766dp",
-            icon: "https://h5-static.aoneroom.com/oneroomStatic/public/_nuxt/web-logo.apJjVir2.svg",
+            link: "https://link.palmpay.com/828uc",
+            icon: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS_6zFCuqWj00YpgpbbMr-8Mx7hycUWdg-5McXnyYoWDA&s",
         },
         {
             name: "OPay - Beyond Banking",
             description: "Send money, pay bills, and more.",
-            link: "https://example.com/opay",
-            icon: "https://via.placeholder.com/50",
+            link: "https://opay.ng/s/1jaSm",
+            icon: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQva4hX_z36R5w15vmXrRgv4rQBEuz0LO0e0_UlrxZN7Zed4DpkIEXhFsQ&s=10",
         },
         {
             name: "NOSH: Buy & Sell Gift Cards",
             description: "Buy and sell gift cards easily.",
-            link: "https://tinyurl.com/2ry766dp",
+            link: "https://example.com/nosh",
             icon: "https://via.placeholder.com/50",
         },
         {
@@ -1221,10 +1406,8 @@ const showProfileSection = () => {
 
     profileContent.forEach(item => {
         const profileItem = createProfileItem(item);
-        scrollContainer.appendChild(profileItem);
+        gridContainer.appendChild(profileItem);
     });
-
-    gridContainer.appendChild(scrollContainer);
 };
 
 const showHomeVideos = () => {
@@ -1605,6 +1788,12 @@ const showAllVideos = (category) => {
     });
 };
 
+// Initialize the page
+createDiscoverSection();
+createCategories();
+createBestVideosList(); // Add this line
+updateHistoryList();
+
 const handleSearch = () => {
     const searchTerm = document.getElementById('search-bar').value.toLowerCase();
     const filteredData = data.filter(item => item.title.toLowerCase().includes(searchTerm));
@@ -1712,4 +1901,3 @@ setTimeout(() => {
     </script>
 </body>
 </html>
-
