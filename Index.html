@@ -429,13 +429,13 @@
 /* Social Media Descriptions */
 #social-media-descriptions {
     text-align: center;
-    margin-bottom: 10px;
+    margin-bottom: 5px;
 }
 
 #social-media-descriptions h2 {
-    font-size: 14px;
+    font-size: 15px;
     color: #333;
-    margin: 20;
+    margin: 5;
 }
 
 /* Social Media Icons */
@@ -720,6 +720,99 @@ footer.hide {
 .profile-item button:hover {
     background-color: #008000;
 }
+/* Carousel Styles */
+.carousel-container {
+    width: 100%;
+    max-width: 600px;
+    overflow: hidden;
+    position: relative;
+    border-radius: 10px;
+    touch-action: pan-y;
+    height: var(--carousel-height); /* Uses the height variable */
+    margin-top: 20px; /* Add some spacing */
+}
+
+.carousel {
+    display: flex;
+    transition: transform 0.4s ease-in-out;
+    will-change: transform;
+    height: 100%;
+}
+
+.slide {
+    min-width: 100%;
+    position: relative;
+    user-select: none;
+    height: 100%;
+}
+
+.slide img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 10px;
+}
+
+.overlay {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 40%;
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.9), transparent);
+    border-radius: 10px;
+}
+
+.video-title {
+    position: absolute;
+    bottom: 30px;
+    left: 15px;
+    font-size: 18px;
+    font-weight: bold;
+    color: white;
+}
+
+.download-btn {
+    position: absolute;
+    bottom: 20px;
+    right: 15px;
+    background: #14A44D;
+    color: white;
+    font-size: 14px;
+    padding: 8px 12px;
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.download-btn img {
+    width: 14px;
+    height: 14px;
+}
+
+.dots {
+    position: absolute;
+    bottom: 5px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 5px;
+}
+
+.dot {
+    width: 8px;
+    height: 8px;
+    background-color: gray;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.dot.active {
+    background-color: white;
+}
 </style>
 </head>
 <body>
@@ -775,10 +868,16 @@ footer.hide {
     </div>
 
     <!-- Discover Section -->
-    <div class="discover-container" id="discover-container">
-        <div class="discover-title">Explore</div>
-        <div class="discover-scroll" id="discover-scroll"></div>
+<div class="discover-container" id="discover-container">
+    <div class="discover-title">Explore</div>
+    <div class="discover-scroll" id="discover-scroll"></div>
+
+    <!-- Carousel Section -->
+    <div class="carousel-container">
+        <div class="carousel" id="carousel"></div>
+        <div class="dots" id="dots"></div>
     </div>
+</div>    
 
     <!-- Categories Section -->
     <div id="categories-container"></div>
@@ -872,19 +971,21 @@ footer.hide {
     },
     {
         imgUrl: "https://bitly.cx/0zlN",
-        videoUrl: "https://youtube.com/embed/3_i60BLtN_s",
+        videoUrl: "https://drive.google.com/drive/folders/1_ydF695kVOh7kwOVY9qEkMBq7K1mde8q",
         adUrl: "https://www.profitablecpmrate.com/hz39pi8hu?key=b1e59314de7d94008170a99be19232cb",
         title: "DAME AKE ADO",
-        category: "Battles & Empires 👑🥷",
+        category: "Life with Destiny 😥💞",
         description: "A story of survival and redemption.",
+        trending: true, // Mark as trending
     },
     {
-        imgUrl: "https://bit.ly/405kXOj",
+        imgUrl: "https://bitly.cx/L2js",
         videoUrl: "https://youtube.com/embed/CumW3IY1mMg",
         adUrl: "https://www.profitablecpmrate.com/hz39pi8hu?key=b1e59314de7d94008170a99be19232cb",
-        title: "GOD OF WAR",
-        category: "Love at first sentence 📖💘",
+        title: "KANIN MIJINA",
+        category: "Life with Destiny 😥💞",
         description: "The legend of a warrior's journey.",
+        trending: true, // Mark as trending
     },
     {
         imgUrl: "https://bit.ly/4gFznvC",
@@ -942,24 +1043,7 @@ footer.hide {
         category: "Dangerous Love 💔🔥",
         description: "A terrifying tale of a mythical creature.",
     },
-    {
-        imgUrl: "https://bitly.cx/ph6T1",
-        videoUrl: "https://iuptelegram.blogspot.com/2025/02/one.html",
-        adUrl: "https://www.profitablecpmrate.com/hz39pi8hu?key=b1e59314de7d94008170a99be19232cb",
-        title: "TSANTSAR SO",
-        category: "Love at first sentence 📖💘",
-        description: "A thrilling action-packed adventure.",
-        trending: true, // Mark as trending
-    },
-    {
-        imgUrl: "https://bitly.cx/JAxKn",
-        videoUrl: "https://iuptelegram.blogspot.com/2025/02/me-zanyi-da-ita.html",
-        adUrl: "https://www.profitablecpmrate.com/hz39pi8hu?key=b1e59314de7d94008170a99be19232cb",
-        title: "ME ZANYI DA ITA",
-        category: "Best Novels",
-        description: "Epic battles and heroic journeys.",
-        trending: true, // Mark as trending
-    },
+    
 ];
 
 
@@ -1609,6 +1693,7 @@ const showAllVideos = (category) => {
     // Hide other sections
     document.getElementById('discover-container').style.display = 'none';
     document.getElementById('categories-container').style.display = 'none';
+    document.querySelector('.carousel-container').style.display = 'none'; // Hide carousel
     gridContainer.style.display = 'grid';
 
     // Add a back button
@@ -1625,6 +1710,7 @@ const showAllVideos = (category) => {
         gridContainer.style.display = 'none';
         document.getElementById('discover-container').style.display = 'block';
         document.getElementById('categories-container').style.display = 'block';
+        document.querySelector('.carousel-container').style.display = 'block'; // Show carousel
     };
     gridContainer.appendChild(backButton);
 
@@ -1644,6 +1730,7 @@ const handleSearch = () => {
     // Hide other sections
     document.getElementById('discover-container').style.display = 'none';
     document.getElementById('categories-container').style.display = 'none';
+    document.querySelector('.carousel-container').style.display = 'none'; // Hide carousel
     gridContainer.style.display = 'grid';
 
     // Add a back button
@@ -1660,6 +1747,7 @@ const handleSearch = () => {
         gridContainer.style.display = 'none';
         document.getElementById('discover-container').style.display = 'block';
         document.getElementById('categories-container').style.display = 'block';
+        document.querySelector('.carousel-container').style.display = 'block'; // Show carousel
     };
     gridContainer.appendChild(backButton);
 
@@ -1715,21 +1803,26 @@ createDiscoverSection();
 createCategories();
 updateHistoryList();
 
-let lastScrollTop = 0; // Track the last scroll position
+let lastScrollTop = 0;
 
 window.addEventListener('scroll', () => {
     const footer = document.querySelector('footer');
     const currentScrollTop = window.pageYOffset || document.documentElement.scrollTop;
+    const windowHeight = window.innerHeight;
+    const documentHeight = document.documentElement.scrollHeight;
 
-    if (currentScrollTop > lastScrollTop) {
-        // Scrolling down
-        footer.classList.add('hide'); // Hide footer
+    // Check if user has reached the bottom of the page
+    const atPageEnd = (currentScrollTop + windowHeight) >= documentHeight;
+
+    if (atPageEnd && currentScrollTop > lastScrollTop) {
+        // Immediately hide footer when at the end of the page and scrolling down
+        footer.classList.add('hide');
     } else {
-        // Scrolling up
-        footer.classList.remove('hide'); // Show footer
+        // Show footer when scrolling down anywhere else or when scrolling up
+        footer.classList.remove('hide');
     }
 
-    lastScrollTop = currentScrollTop; // Update last scroll position
+    lastScrollTop = currentScrollTop;
 });
 
 setTimeout(() => {
@@ -1739,6 +1832,137 @@ setTimeout(() => {
         function closeNotification() {
             document.getElementById('notification-bar').style.opacity = '0';
         }
+        
+        const videos = [
+    { 
+        img: "https://img.youtube.com/vi/22w7z_lT6YM/maxresdefault.jpg", 
+        title: "Dragon", 
+        buttonTitle: "Free Download", 
+        link: "https://moviebox-drs.netlify.app/"
+    },
+    { 
+        img: "https://img.youtube.com/vi/bc9q__VbYL4/maxresdefault.jpg", 
+        title: "The Lady Of Heaven", 
+        buttonTitle: "Watch Now", 
+        link: "https://moviebox-drs.netlify.app/"
+    },
+    { 
+        img: "https://img.youtube.com/vi/qz4c9WPceVM/maxresdefault.jpg", 
+        title: "Take Over", 
+        buttonTitle: "Watch Now", 
+        link: "https://moviebox-drs.netlify.app/"
+    },
+    { 
+        img: "https://img.youtube.com/vi/-hvFs9ntZfc/maxresdefault.jpg", 
+        title: "Project 12", 
+        buttonTitle: "Watch Now", 
+        link: "https://moviebox-drs.netlify.app/"
+    }
+];
+
+const carousel = document.getElementById("carousel");
+const dotsContainer = document.getElementById("dots");
+
+let currentIndex = 0;
+let startX = 0;
+let moveX = 0;
+let isDragging = false;
+
+function createSlides() {
+    videos.forEach((video, index) => {
+        const slide = document.createElement("div");
+        slide.className = "slide";
+        slide.innerHTML = `
+            <img src="${video.img}" alt="${video.title}">
+            <div class="overlay"></div>
+            <div class="video-title">${video.title}</div>
+            <button class="download-btn" onclick="window.open('${video.link}', '_blank')">
+                 
+                ${video.buttonTitle}
+            </button>
+        `;
+        carousel.appendChild(slide);
+
+        const dot = document.createElement("div");
+        dot.className = "dot";
+        if (index === 0) dot.classList.add("active");
+        dot.addEventListener("click", () => goToSlide(index));
+        dotsContainer.appendChild(dot);
+    });
+}
+
+function updateCarousel() {
+    carousel.style.transform = `translateX(-${currentIndex * 100}%)`;
+    document.querySelectorAll(".dot").forEach((dot, index) => {
+        dot.classList.toggle("active", index === currentIndex);
+    });
+}
+
+function goToSlide(index) {
+    currentIndex = index;
+    updateCarousel();
+}
+
+function nextSlide() {
+    currentIndex = (currentIndex + 1) % videos.length;
+    updateCarousel();
+}
+
+function prevSlide() {
+    currentIndex = (currentIndex - 1 + videos.length) % videos.length;
+    updateCarousel();
+}
+
+function handleTouchStart(e) {
+    startX = e.touches[0].clientX;
+    isDragging = true;
+}
+
+function handleTouchMove(e) {
+    if (!isDragging) return;
+    moveX = e.touches[0].clientX - startX;
+}
+
+function handleTouchEnd() {
+    isDragging = false;
+    if (moveX > 50) {
+        prevSlide();
+    } else if (moveX < -50) {
+        nextSlide();
+    }
+}
+
+function handleMouseDown(e) {
+    startX = e.clientX;
+    isDragging = true;
+}
+
+function handleMouseMove(e) {
+    if (!isDragging) return;
+    moveX = e.clientX - startX;
+}
+
+function handleMouseUp() {
+    isDragging = false;
+    if (moveX > 50) {
+        prevSlide();
+    } else if (moveX < -50) {
+        nextSlide();
+    }
+}
+
+carousel.addEventListener("touchstart", handleTouchStart);
+carousel.addEventListener("touchmove", handleTouchMove);
+carousel.addEventListener("touchend", handleTouchEnd);
+
+carousel.addEventListener("mousedown", handleMouseDown);
+carousel.addEventListener("mousemove", handleMouseMove);
+carousel.addEventListener("mouseup", handleMouseUp);
+carousel.addEventListener("mouseleave", handleMouseUp);
+
+createSlides();
+setInterval(nextSlide, 5000); // Auto-slide every 5 seconds
+
     </script>
 </body>
 </html>
