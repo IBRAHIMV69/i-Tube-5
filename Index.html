@@ -168,7 +168,7 @@
 
         /* Discover Section */
         .discover-container {
-            margin-top: 80px;
+            margin-top: 50px;
             padding: 8px;
         }
         .discover-title {
@@ -775,7 +775,7 @@ footer.hide {
     position: absolute;
     bottom: 20px;
     right: 15px;
-    background: #14A44D;
+    background: linear-gradient(to right, #004d00, #00b300);
     color: white;
     font-size: 14px;
     padding: 8px 12px;
@@ -813,6 +813,71 @@ footer.hide {
 .dot.active {
     background-color: white;
 }
+/* Partners Section */
+        .partners-container {
+            margin-top: 20px;
+            padding: 10px;
+        }
+
+        .partners-title {
+            font-size: 18px;
+            text-align: center;
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+
+        .partners-scroll {
+            display: flex;
+            overflow-x: auto;
+            gap: 10px;
+            padding-bottom: 10px;
+            scroll-snap-type: x mandatory;
+            scroll-behavior: smooth;
+            white-space: nowrap;
+        }
+
+        .partners-scroll::-webkit-scrollbar {
+            height: 0px;
+        }
+
+        .partners-scroll::-webkit-scrollbar-thumb {
+            background-color: #ddd;
+            border-radius: 4px;
+        }
+
+        .partners-scroll::-webkit-scrollbar-track {
+            background-color: #f1f1f1;
+        }
+
+        .partner-item {
+            flex: 0 0 auto;
+            width: 120px;
+            text-align: center;
+            cursor: pointer;
+            scroll-snap-align: start;
+        }
+
+        .partner-item img {
+            width: 120px;
+            height: 160px;
+            object-fit: cover;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: transform 0.2s;
+        }
+
+        .partner-item:hover img {
+            transform: scale(1.1);
+        }
+
+        .partner-title {
+            font-size: 14px;
+            margin-top: 5px;
+            color: #333;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
 </style>
 </head>
 <body>
@@ -869,7 +934,7 @@ footer.hide {
 
     <!-- Discover Section -->
 <div class="discover-container" id="discover-container">
-    <div class="discover-title">Explore</div>
+    <div class="discover-title"></div>
     <div class="discover-scroll" id="discover-scroll"></div>
 
     <!-- Carousel Section -->
@@ -877,7 +942,7 @@ footer.hide {
         <div class="carousel" id="carousel"></div>
         <div class="dots" id="dots"></div>
     </div>
-</div>    
+</div>        
 
     <!-- Categories Section -->
     <div id="categories-container"></div>
@@ -895,6 +960,12 @@ footer.hide {
                 <iframe id="video-player" src="" frameborder="0" allowfullscreen></iframe>
             </div>
         </div>
+    </div>
+    
+    <!-- Partners Section -->
+    <div class="partners-container">
+        <div class="partners-title">Kannywood Movies</div>
+        <div class="partners-scroll" id="partners-scroll"></div>
     </div>
     
         <!-- Social Media Descriptions -->
@@ -956,7 +1027,7 @@ footer.hide {
     {
         imgUrl: "https://bitly.cx/ph6T1",
         videoUrl: "https://iuptelegram.blogspot.com/2025/02/one.html",
-        adUrl: "https://www.profitablecpmrate.com/hz39pi8hu?key=b1e59314de7d94008170a99be19232cb",
+        adUrl: "https://www.effectiveratecpm.com/yj516zqeuh?key=67623d7811021ba7d072604ff121c586",
         title: "TSANTSAR SO",
         category: "Love at first sentence 📖💘",
         description: "A thrilling action-packed adventure.",
@@ -964,7 +1035,7 @@ footer.hide {
     {
         imgUrl: "https://bitly.cx/JAxKn",
         videoUrl: "https://iuptelegram.blogspot.com/2025/02/me-zanyi-da-ita.html",
-        adUrl: "https://www.profitablecpmrate.com/hz39pi8hu?key=b1e59314de7d94008170a99be19232cb",
+        adUrl: "https://www.effectiveratecpm.com/yj516zqeuh?key=67623d7811021ba7d072604ff121c586",
         title: "ME ZANYI DA ITA",
         category: "Best Novels",
         description: "Epic battles and heroic journeys.",
@@ -972,7 +1043,7 @@ footer.hide {
     {
         imgUrl: "https://bitly.cx/0zlN",
         videoUrl: "https://drive.google.com/drive/folders/1_ydF695kVOh7kwOVY9qEkMBq7K1mde8q",
-        adUrl: "https://www.profitablecpmrate.com/hz39pi8hu?key=b1e59314de7d94008170a99be19232cb",
+        adUrl: "https://www.effectiveratecpm.com/vuq0mnejn?key=7241c685c3c694f609c9eebacbd85a50",
         title: "DAME AKE ADO",
         category: "Life with Destiny 😥💞",
         description: "A story of survival and redemption.",
@@ -981,24 +1052,25 @@ footer.hide {
     {
         imgUrl: "https://bitly.cx/L2js",
         videoUrl: "https://youtube.com/embed/CumW3IY1mMg",
-        adUrl: "https://www.profitablecpmrate.com/hz39pi8hu?key=b1e59314de7d94008170a99be19232cb",
+        adUrl: "https://www.effectiveratecpm.com/vuq0mnejn?key=7241c685c3c694f609c9eebacbd85a50",
         title: "KANIN MIJINA",
         category: "Life with Destiny 😥💞",
         description: "The legend of a warrior's journey.",
         trending: true, // Mark as trending
     },
     {
-        imgUrl: "https://bit.ly/4gFznvC",
+        imgUrl: "https://bitly.cx/plVPM",
         videoUrl: "https://youtube.com/embed/SFtKVKoscqA",
-        adUrl: "https://www.profitablecpmrate.com/hz39pi8hu?key=b1e59314de7d94008170a99be19232cb",
-        title: "CORA",
+        adUrl: "https://www.effectiveratecpm.com/yj516zqeuh?key=67623d7811021ba7d072604ff121c586",
+        title: "TASHIN HANKALI",
         category: "Best Novels",
         description: "A heartwarming tale of love and loss.",
+        trending: true, // Mark as trending
     },
     {
         imgUrl: "https://bit.ly/4gDe4dm",
         videoUrl: "https://youtube.com/embed/hJzZRl1C8X0",
-        adUrl: "https://www.profitablecpmrate.com/hz39pi8hu?key=b1e59314de7d94008170a99be19232cb",
+        adUrl: "https://www.effectiveratecpm.com/yj516zqeuh?key=67623d7811021ba7d072604ff121c586",
         title: "JACK THE GIANT SLAYER",
         category: "Best Novels",
         description: "A classic tale of bravery and courage.",
@@ -1006,7 +1078,7 @@ footer.hide {
     {
         imgUrl: "https://bit.ly/4fwBQqK",
         videoUrl: "https://youtube.com/embed/BjkncLAZu80",
-        adUrl: "https://www.profitablecpmrate.com/hz39pi8hu?key=b1e59314de7d94008170a99be19232cb",
+        adUrl: "https://www.effectiveratecpm.com/vuq0mnejn?key=7241c685c3c694f609c9eebacbd85a50",
         title: "VIKING HUNTRESS",
         category: "Love at first sentence 📖💘",
         description: "A fierce warrior's quest for justice.",
@@ -1014,7 +1086,7 @@ footer.hide {
     {
         imgUrl: "https://bit.ly/3ZLSaxS",
         videoUrl: "https://youtube.com/embed/UPjyNg1mKAM",
-        adUrl: "https://www.profitablecpmrate.com/hz39pi8hu?key=b1e59314de7d94008170a99be19232cb",
+        adUrl: "https://www.effectiveratecpm.com/yj516zqeuh?key=67623d7811021ba7d072604ff121c586",
         title: "JURASSIC TRIANGLE",
         category: "Battles & Empires 👑🥷",
         description: "A prehistoric adventure like no other.",
@@ -1022,7 +1094,7 @@ footer.hide {
     {
         imgUrl: "https://bit.ly/3VSO1am",
         videoUrl: "https://youtube.com/embed/iTNyJse9fdk",
-        adUrl: "https://www.profitablecpmrate.com/hz39pi8hu?key=b1e59314de7d94008170a99be19232cb",
+        adUrl: "https://www.effectiveratecpm.com/vuq0mnejn?key=7241c685c3c694f609c9eebacbd85a50",
         title: "ALIEN INVASION",
         category: "Dangerous Love 💔🔥",
         description: "Earth's last stand against an alien threat.",
@@ -1030,7 +1102,7 @@ footer.hide {
     {
         imgUrl: "https://bit.ly/3BxGSW6",
         videoUrl: "https://youtube.com/embed/siFLpeqOWDQ",
-        adUrl: "https://www.profitablecpmrate.com/hz39pi8hu?key=b1e59314de7d94008170a99be19232cb",
+        adUrl: "https://www.effectiveratecpm.com/vuq0mnejn?key=7241c685c3c694f609c9eebacbd85a50",
         title: "KNIGHT OF THE DEAD",
         category: "Dangerous Love 💔🔥",
         description: "A knight's battle against the undead.",
@@ -1038,7 +1110,7 @@ footer.hide {
     {
         imgUrl: "https://bit.ly/3Pi2GYX",
         videoUrl: "https://youtube.com/embed/Ma9xquhYyT0",
-        adUrl: "https://www.profitablecpmrate.com/hz39pi8hu?key=b1e59314de7d94008170a99be19232cb",
+        adUrl: "https://www.effectiveratecpm.com/yj516zqeuh?key=67623d7811021ba7d072604ff121c586",
         title: "GOATMAN",
         category: "Dangerous Love 💔🔥",
         description: "A terrifying tale of a mythical creature.",
@@ -1962,6 +2034,79 @@ carousel.addEventListener("mouseleave", handleMouseUp);
 
 createSlides();
 setInterval(nextSlide, 5000); // Auto-slide every 5 seconds
+
+const partnersData = [
+            { imgUrl: "https://bitly.cx/ph6T1", videoUrl: "https://youtube.com/embed/3_i60BLtN_s", title: "Video 1" },
+            { imgUrl: "https://bitly.cx/0zlN", videoUrl: "https://youtube.com/embed/CumW3IY1mMg", title: "Video 2" },
+            { imgUrl: "https://bitly.cx/ph6T1", videoUrl: "https://youtube.com/embed/SFtKVKoscqA", title: "Video 3" },
+            { imgUrl: "https://bitly.cx/0zlN", videoUrl: "https://youtube.com/embed/hJzZRl1C8X0", title: "Video 4" },
+            { imgUrl: "https://bitly.cx/ph6T1", videoUrl: "https://youtube.com/embed/BjkncLAZu80", title: "Video 5" },
+        ];
+
+        const partnersScroll = document.getElementById('partners-scroll');
+
+        // Function to create the partner items
+        const createPartnersSection = () => {
+            partnersScroll.innerHTML = '';
+
+            partnersData.forEach(partner => {
+                const partnerItem = document.createElement('div');
+                partnerItem.className = 'partner-item';
+
+                const img = document.createElement('img');
+                img.src = partner.imgUrl;
+                img.alt = 'Partner Logo';
+                img.loading = 'lazy';
+
+                const title = document.createElement('div');
+                title.className = 'partner-title';
+                title.textContent = partner.title;
+
+                partnerItem.appendChild(img);
+                partnerItem.appendChild(title);
+                partnersScroll.appendChild(partnerItem);
+
+                // Open video in a new tab when clicked
+                partnerItem.addEventListener('click', () => {
+                    window.open(partner.videoUrl, '_blank');
+                });
+            });
+        };
+
+        // Auto-scroll function
+        let scrollIndex = 0;
+        let autoScrollActive = true;
+        let scrollTimeout;
+
+        const autoScroll = () => {
+            if (!autoScrollActive) return;
+
+            const items = document.querySelectorAll('.partner-item');
+            if (items.length === 0) return;
+
+            scrollIndex = (scrollIndex + 1) % items.length;
+            const nextItem = items[scrollIndex];
+
+            partnersScroll.scrollTo({
+                left: nextItem.offsetLeft,
+                behavior: 'smooth'
+            });
+        };
+
+        // Detect manual scroll and pause auto-scrolling for 5 seconds
+        partnersScroll.addEventListener('scroll', () => {
+            autoScrollActive = false;
+            clearTimeout(scrollTimeout);
+            scrollTimeout = setTimeout(() => {
+                autoScrollActive = true;
+            }, 4000);
+        });
+
+        // Initialize the section
+        createPartnersSection();
+
+        // Start auto-scrolling every 10 seconds
+        setInterval(autoScroll, 1000);
 
     </script>
 </body>
