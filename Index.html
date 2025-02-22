@@ -942,10 +942,7 @@ footer.hide {
         <div class="carousel" id="carousel"></div>
         <div class="dots" id="dots"></div>
     </div>
-</div>
-
-<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5252268332085749"
-     crossorigin="anonymous"></script>        
+</div>        
 
     <!-- Categories Section -->
     <div id="categories-container"></div>
@@ -1030,20 +1027,89 @@ footer.hide {
     {
         imgUrl: "https://bitly.cx/ph6T1",
         videoUrl: "https://iuptelegram.blogspot.com/2025/02/one.html",
-        adUnitId: "ca-pub-5252268332085749", // Example Interstitial Ad Unit ID
+        adUrl: "https://www.effectiveratecpm.com/yj516zqeuh?key=67623d7811021ba7d072604ff121c586",
         title: "TSANTSAR SO",
-        category: "Love at first sentence 📖💘",
-        description: "A thrilling action-packed adventure.",
-    },
+        category: "Love at first sentence💘",
+    },        
     {
         imgUrl: "https://bitly.cx/JAxKn",
         videoUrl: "https://iuptelegram.blogspot.com/2025/02/me-zanyi-da-ita.html",
-        adUnitId: "ca-pub-5252268332085749", // Example Interstitial Ad Unit ID
+        adUrl: "https://www.effectiveratecpm.com/yj516zqeuh?key=67623d7811021ba7d072604ff121c586",
         title: "ME ZANYI DA ITA",
         category: "Best Novels",
-        description: "Epic battles and heroic journeys.",
     },
-    // Add more videos with AdMob Ad Unit IDs
+    {
+        imgUrl: "https://bitly.cx/0zlN",
+        videoUrl: "https://drive.google.com/drive/folders/1_ydF695kVOh7kwOVY9qEkMBq7K1mde8q",
+        adUrl: "https://www.effectiveratecpm.com/vuq0mnejn?key=7241c685c3c694f609c9eebacbd85a50",
+        title: "DAME AKE ADO",
+        category: "Life with Destiny 😥💞",
+        trending: true, // Mark as trending
+    },
+    {
+        imgUrl: "https://bitly.cx/L2js",
+        videoUrl: "https://youtube.com/embed/CumW3IY1mMg",
+        adUrl: "https://www.effectiveratecpm.com/vuq0mnejn?key=7241c685c3c694f609c9eebacbd85a50",
+        title: "KANIN MIJINA",
+        category: "Life with Destiny 😥💞",
+        trending: true, // Mark as trending
+    },
+    {
+        imgUrl: "https://bitly.cx/plVPM",
+        videoUrl: "https://drive.google.com/drive/folders/1Rav4QE-_qWoPLCXg0Jwsuwpdqc5V2jNI",
+        adUrl: "https://www.effectiveratecpm.com/yj516zqeuh?key=67623d7811021ba7d072604ff121c586",
+        title: "TASHIN HANKALI",
+        category: "Best Novels",
+        trending: true, // Mark as trending
+    },
+    {
+        imgUrl: "https://bitly.cx/9wgp",
+        videoUrl: "https://drive.google.com/drive/folders/1bK3z-9hAUWWfLUtQWIpO9MLMSDVigA_8",
+        adUrl: "https://www.effectiveratecpm.com/yj516zqeuh?key=67623d7811021ba7d072604ff121c586",
+        title: "RAYUWATA",
+        category: "Best Novels",
+        trending: true, // Mark as trending
+    },
+    {
+        imgUrl: "https://bitly.cx/IeJi4",
+        videoUrl: "https://drive.google.com/drive/folders/1WmfeocTBQSUhzyxp-JCOhJDCmEAjh4sa",
+        adUrl: "https://www.effectiveratecpm.com/vuq0mnejn?key=7241c685c3c694f609c9eebacbd85a50",
+        title: "RAYUWARMU AYAU",
+        category: "Life with Destiny 😥💞",
+        trending: true, // Mark as trending
+    },
+    {
+        imgUrl: "https://bitly.cx/JR7u",
+        videoUrl: "https://youtube.com/embed/UPjyNg1mKAM",
+        adUrl: "https://www.effectiveratecpm.com/yj516zqeuh?key=67623d7811021ba7d072604ff121c586",
+        title: "MAZAN JIYA",
+        category: "Battles & Empires 👑🥷",
+        trending: true, // Mark as trending
+    },
+    {
+        imgUrl: "https://bitly.cx/InGlx",
+        videoUrl: "https://youtube.com/embed/iTNyJse9fdk",
+        adUrl: "https://www.effectiveratecpm.com/vuq0mnejn?key=7241c685c3c694f609c9eebacbd85a50",
+        title: "RUWAN BAGAJA",
+        category: "Battles & Empires 👑🥷",
+        trending: true, // Mark as trending
+    },
+    {
+        imgUrl: "https://bitly.cx/UOHgu",
+        videoUrl: "https://iuptelegram.blogspot.com/2025/02/yaro-ne-dasunan-allah-mai-rahma-mai-jin.html",
+        adUrl: "https://www.effectiveratecpm.com/vuq0mnejn?key=7241c685c3c694f609c9eebacbd85a50",
+        title: "YARO NE",
+        category: "Love at first sentence💘",
+    },
+    {
+        imgUrl: "https://bit.ly/3Pi2GYX",
+        videoUrl: "https://youtube.com/embed/Ma9xquhYyT0",
+        adUrl: "https://www.effectiveratecpm.com/yj516zqeuh?key=67623d7811021ba7d072604ff121c586",
+        title: "GOATMAN",
+        category: "Dangerous Love 💔🔥",
+        description: "A terrifying tale of a mythical creature.",
+    },
+    
 ];
 
 
@@ -1556,71 +1622,30 @@ const createUnlockedListItem = (item) => {
     return listItem;
 };
 
-const displayAdSenseAd = () => {
-    // Create a container for the ad
-    const adContainer = document.createElement('div');
-    adContainer.id = 'ad-container';
-    adContainer.style.position = 'fixed';
-    adContainer.style.top = '50%';
-    adContainer.style.left = '50%';
-    adContainer.style.transform = 'translate(-50%, -50%)';
-    adContainer.style.zIndex = '1000';
-    adContainer.style.backgroundColor = '#fff';
-    adContainer.style.padding = '20px';
-    adContainer.style.borderRadius = '10px';
-    adContainer.style.boxShadow = '0 4px 6px rgba(0, 0, 0, 0.1)';
+const visitAd = (videoId, adUrl, button) => {
+    // Open the ad in a new tab
+    window.open(adUrl, '_blank');
 
-    // Create the ad element
-    const adElement = document.createElement('ins');
-    adElement.className = 'adsbygoogle';
-    adElement.style.display = 'block';
-    adElement.setAttribute('data-ad-client', 'ca-pub-5252268332085749');
-    adElement.setAttribute('data-ad-slot', '8449541517');
-    adElement.setAttribute('data-ad-format', 'auto');
-    adElement.setAttribute('data-full-width-responsive', 'true');
+    // Mark the video as unlocked in localStorage
+    const unlockTime = Date.now();
+    localStorage.setItem(`${videoId}-ad-visited`, true);
+    localStorage.setItem(`${videoId}-unlock-time`, unlockTime);
 
-    // Append the ad element to the container
-    adContainer.appendChild(adElement);
+    // Update the button text and color
+    button.textContent = 'Open ✅';
+    button.style.backgroundColor = '#00b300';
 
-    // Append the container to the body
-    document.body.appendChild(adContainer);
+    // Find the associated image and update its click behavior
+    const img = button.closest('.discover-item, .history-item, .frame').querySelector('img');
+    const video = data.find(item => item.title === videoId);
 
-    // Load the ad
-    (adsbygoogle = window.adsbygoogle || []).push({});
+    if (video) {
+        img.onclick = () => openVideoNav(video.videoUrl, videoId);
+        button.onclick = () => openVideoNav(video.videoUrl, videoId);
+    }
 
-    // Close the ad after a few seconds (simulate ad completion)
-    setTimeout(() => {
-        document.body.removeChild(adContainer);
-    }, 5000); // Simulate a 5-second ad
-};
-
-const visitAd = (videoId, adUnitId, button) => {
-    // Display the AdSense ad
-    displayAdSenseAd();
-
-    // Simulate ad completion (replace this with actual ad display logic)
-    setTimeout(() => {
-        // Mark the video as unlocked
-        const unlockTime = Date.now();
-        localStorage.setItem(`${videoId}-ad-visited`, true);
-        localStorage.setItem(`${videoId}-unlock-time`, unlockTime);
-
-        // Update the button text and color
-        button.textContent = 'Open ✅';
-        button.style.backgroundColor = '#00b300';
-
-        // Find the associated image and update its click behavior
-        const img = button.closest('.discover-item, .history-item, .frame').querySelector('img');
-        const video = data.find(item => item.title === videoId);
-
-        if (video) {
-            img.onclick = () => openVideoNav(video.videoUrl, videoId);
-            button.onclick = () => openVideoNav(video.videoUrl, videoId);
-        }
-
-        // Show a success notification
-        showNotification('The Novel is now unlocked!', 'success');
-    }, 5000); // Simulate a 5-second ad
+    // Show a success notification
+    showNotification('The Novel is now unlocked!', 'success');
 };
 
 const openVideoNav = (videoUrl, videoId) => {
@@ -2075,4 +2100,16 @@ const partnersData = [
 
     </script>
 </body>
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5252268332085749"
+     crossorigin="anonymous"></script>
+<!-- Hausa Novels -->
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-5252268332085749"
+     data-ad-slot="8449541517"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
 </html>
