@@ -1027,89 +1027,20 @@ footer.hide {
     {
         imgUrl: "https://bitly.cx/ph6T1",
         videoUrl: "https://iuptelegram.blogspot.com/2025/02/one.html",
-        adUrl: "https://www.effectiveratecpm.com/yj516zqeuh?key=67623d7811021ba7d072604ff121c586",
+        adUnitId: "ca-app-pub-9603710953667126/6362466043", // Example Interstitial Ad Unit ID
         title: "TSANTSAR SO",
-        category: "Love at first sentence💘",
-    },        
+        category: "Love at first sentence 📖💘",
+        description: "A thrilling action-packed adventure.",
+    },
     {
         imgUrl: "https://bitly.cx/JAxKn",
         videoUrl: "https://iuptelegram.blogspot.com/2025/02/me-zanyi-da-ita.html",
-        adUrl: "https://www.effectiveratecpm.com/yj516zqeuh?key=67623d7811021ba7d072604ff121c586",
+        adUnitId: "ca-app-pub-9603710953667126/6362466043", // Example Interstitial Ad Unit ID
         title: "ME ZANYI DA ITA",
         category: "Best Novels",
+        description: "Epic battles and heroic journeys.",
     },
-    {
-        imgUrl: "https://bitly.cx/0zlN",
-        videoUrl: "https://drive.google.com/drive/folders/1_ydF695kVOh7kwOVY9qEkMBq7K1mde8q",
-        adUrl: "https://www.effectiveratecpm.com/vuq0mnejn?key=7241c685c3c694f609c9eebacbd85a50",
-        title: "DAME AKE ADO",
-        category: "Life with Destiny 😥💞",
-        trending: true, // Mark as trending
-    },
-    {
-        imgUrl: "https://bitly.cx/L2js",
-        videoUrl: "https://youtube.com/embed/CumW3IY1mMg",
-        adUrl: "https://www.effectiveratecpm.com/vuq0mnejn?key=7241c685c3c694f609c9eebacbd85a50",
-        title: "KANIN MIJINA",
-        category: "Life with Destiny 😥💞",
-        trending: true, // Mark as trending
-    },
-    {
-        imgUrl: "https://bitly.cx/plVPM",
-        videoUrl: "https://drive.google.com/drive/folders/1Rav4QE-_qWoPLCXg0Jwsuwpdqc5V2jNI",
-        adUrl: "https://www.effectiveratecpm.com/yj516zqeuh?key=67623d7811021ba7d072604ff121c586",
-        title: "TASHIN HANKALI",
-        category: "Best Novels",
-        trending: true, // Mark as trending
-    },
-    {
-        imgUrl: "https://bitly.cx/9wgp",
-        videoUrl: "https://drive.google.com/drive/folders/1bK3z-9hAUWWfLUtQWIpO9MLMSDVigA_8",
-        adUrl: "https://www.effectiveratecpm.com/yj516zqeuh?key=67623d7811021ba7d072604ff121c586",
-        title: "RAYUWATA",
-        category: "Best Novels",
-        trending: true, // Mark as trending
-    },
-    {
-        imgUrl: "https://bitly.cx/IeJi4",
-        videoUrl: "https://drive.google.com/drive/folders/1WmfeocTBQSUhzyxp-JCOhJDCmEAjh4sa",
-        adUrl: "https://www.effectiveratecpm.com/vuq0mnejn?key=7241c685c3c694f609c9eebacbd85a50",
-        title: "RAYUWARMU AYAU",
-        category: "Life with Destiny 😥💞",
-        trending: true, // Mark as trending
-    },
-    {
-        imgUrl: "https://bitly.cx/JR7u",
-        videoUrl: "https://youtube.com/embed/UPjyNg1mKAM",
-        adUrl: "https://www.effectiveratecpm.com/yj516zqeuh?key=67623d7811021ba7d072604ff121c586",
-        title: "MAZAN JIYA",
-        category: "Battles & Empires 👑🥷",
-        trending: true, // Mark as trending
-    },
-    {
-        imgUrl: "https://bitly.cx/InGlx",
-        videoUrl: "https://youtube.com/embed/iTNyJse9fdk",
-        adUrl: "https://www.effectiveratecpm.com/vuq0mnejn?key=7241c685c3c694f609c9eebacbd85a50",
-        title: "RUWAN BAGAJA",
-        category: "Battles & Empires 👑🥷",
-        trending: true, // Mark as trending
-    },
-    {
-        imgUrl: "https://bitly.cx/UOHgu",
-        videoUrl: "https://iuptelegram.blogspot.com/2025/02/yaro-ne-dasunan-allah-mai-rahma-mai-jin.html",
-        adUrl: "https://www.effectiveratecpm.com/vuq0mnejn?key=7241c685c3c694f609c9eebacbd85a50",
-        title: "YARO NE",
-        category: "Love at first sentence💘",
-    },
-    {
-        imgUrl: "https://bit.ly/3Pi2GYX",
-        videoUrl: "https://youtube.com/embed/Ma9xquhYyT0",
-        adUrl: "https://www.effectiveratecpm.com/yj516zqeuh?key=67623d7811021ba7d072604ff121c586",
-        title: "GOATMAN",
-        category: "Dangerous Love 💔🔥",
-        description: "A terrifying tale of a mythical creature.",
-    },
-    
+    // Add more videos with AdMob Ad Unit IDs
 ];
 
 
@@ -1622,30 +1553,33 @@ const createUnlockedListItem = (item) => {
     return listItem;
 };
 
-const visitAd = (videoId, adUrl, button) => {
-    // Open the ad in a new tab
-    window.open(adUrl, '_blank');
+const visitAd = (videoId, adUnitId, button) => {
+    // Display AdMob ad (for web, use Google Ad Manager or AdSense)
+    console.log("Displaying AdMob ad with Ad Unit ID:", adUnitId);
 
-    // Mark the video as unlocked in localStorage
-    const unlockTime = Date.now();
-    localStorage.setItem(`${videoId}-ad-visited`, true);
-    localStorage.setItem(`${videoId}-unlock-time`, unlockTime);
+    // Simulate ad completion (replace this with actual ad display logic)
+    setTimeout(() => {
+        // Mark the video as unlocked
+        const unlockTime = Date.now();
+        localStorage.setItem(`${videoId}-ad-visited`, true);
+        localStorage.setItem(`${videoId}-unlock-time`, unlockTime);
 
-    // Update the button text and color
-    button.textContent = 'Open ✅';
-    button.style.backgroundColor = '#00b300';
+        // Update the button text and color
+        button.textContent = 'Open ✅';
+        button.style.backgroundColor = '#00b300';
 
-    // Find the associated image and update its click behavior
-    const img = button.closest('.discover-item, .history-item, .frame').querySelector('img');
-    const video = data.find(item => item.title === videoId);
+        // Find the associated image and update its click behavior
+        const img = button.closest('.discover-item, .history-item, .frame').querySelector('img');
+        const video = data.find(item => item.title === videoId);
 
-    if (video) {
-        img.onclick = () => openVideoNav(video.videoUrl, videoId);
-        button.onclick = () => openVideoNav(video.videoUrl, videoId);
-    }
+        if (video) {
+            img.onclick = () => openVideoNav(video.videoUrl, videoId);
+            button.onclick = () => openVideoNav(video.videoUrl, videoId);
+        }
 
-    // Show a success notification
-    showNotification('The Novel is now unlocked!', 'success');
+        // Show a success notification
+        showNotification('The Novel is now unlocked!', 'success');
+    }, 3000); // Simulate a 3-second ad
 };
 
 const openVideoNav = (videoUrl, videoId) => {
