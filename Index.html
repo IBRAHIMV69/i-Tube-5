@@ -942,7 +942,10 @@ footer.hide {
         <div class="carousel" id="carousel"></div>
         <div class="dots" id="dots"></div>
     </div>
-</div>        
+</div>
+
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5252268332085749"
+     crossorigin="anonymous"></script>        
 
     <!-- Categories Section -->
     <div id="categories-container"></div>
@@ -1027,7 +1030,7 @@ footer.hide {
     {
         imgUrl: "https://bitly.cx/ph6T1",
         videoUrl: "https://iuptelegram.blogspot.com/2025/02/one.html",
-        adUnitId: "ca-app-pub-9603710953667126/6362466043", // Example Interstitial Ad Unit ID
+        adUnitId: "ca-pub-5252268332085749", // Example Interstitial Ad Unit ID
         title: "TSANTSAR SO",
         category: "Love at first sentence 📖💘",
         description: "A thrilling action-packed adventure.",
@@ -1035,7 +1038,7 @@ footer.hide {
     {
         imgUrl: "https://bitly.cx/JAxKn",
         videoUrl: "https://iuptelegram.blogspot.com/2025/02/me-zanyi-da-ita.html",
-        adUnitId: "ca-app-pub-9603710953667126/6362466043", // Example Interstitial Ad Unit ID
+        adUnitId: "ca-pub-5252268332085749", // Example Interstitial Ad Unit ID
         title: "ME ZANYI DA ITA",
         category: "Best Novels",
         description: "Epic battles and heroic journeys.",
@@ -1553,9 +1556,47 @@ const createUnlockedListItem = (item) => {
     return listItem;
 };
 
+const displayAdSenseAd = () => {
+    // Create a container for the ad
+    const adContainer = document.createElement('div');
+    adContainer.id = 'ad-container';
+    adContainer.style.position = 'fixed';
+    adContainer.style.top = '50%';
+    adContainer.style.left = '50%';
+    adContainer.style.transform = 'translate(-50%, -50%)';
+    adContainer.style.zIndex = '1000';
+    adContainer.style.backgroundColor = '#fff';
+    adContainer.style.padding = '20px';
+    adContainer.style.borderRadius = '10px';
+    adContainer.style.boxShadow = '0 4px 6px rgba(0, 0, 0, 0.1)';
+
+    // Create the ad element
+    const adElement = document.createElement('ins');
+    adElement.className = 'adsbygoogle';
+    adElement.style.display = 'block';
+    adElement.setAttribute('data-ad-client', 'ca-pub-5252268332085749');
+    adElement.setAttribute('data-ad-slot', '8449541517');
+    adElement.setAttribute('data-ad-format', 'auto');
+    adElement.setAttribute('data-full-width-responsive', 'true');
+
+    // Append the ad element to the container
+    adContainer.appendChild(adElement);
+
+    // Append the container to the body
+    document.body.appendChild(adContainer);
+
+    // Load the ad
+    (adsbygoogle = window.adsbygoogle || []).push({});
+
+    // Close the ad after a few seconds (simulate ad completion)
+    setTimeout(() => {
+        document.body.removeChild(adContainer);
+    }, 5000); // Simulate a 5-second ad
+};
+
 const visitAd = (videoId, adUnitId, button) => {
-    // Display AdMob ad (for web, use Google Ad Manager or AdSense)
-    console.log("Displaying AdMob ad with Ad Unit ID:", adUnitId);
+    // Display the AdSense ad
+    displayAdSenseAd();
 
     // Simulate ad completion (replace this with actual ad display logic)
     setTimeout(() => {
@@ -1579,7 +1620,7 @@ const visitAd = (videoId, adUnitId, button) => {
 
         // Show a success notification
         showNotification('The Novel is now unlocked!', 'success');
-    }, 3000); // Simulate a 3-second ad
+    }, 5000); // Simulate a 5-second ad
 };
 
 const openVideoNav = (videoUrl, videoId) => {
