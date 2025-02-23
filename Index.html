@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Video Unlock System</title>
+    <title>Hausa Novels</title>
     <!-- Add Font Awesome for icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
@@ -639,7 +639,7 @@ footer {
     justify-content: space-around;
     align-items: center;
     padding: 12px 0;
-    border-radius: 8px;
+    border-radius: 10px;
     background-color: #fff;
     position: fixed;
     bottom: 0;
@@ -1026,14 +1026,14 @@ footer.hide {
         const data = [
     {
         imgUrl: "https://bitly.cx/ph6T1",
-        videoUrl: "https://iuptelegram.blogspot.com/2025/02/one.html",
+        videoUrl: "https://hausanovelsdrs.blogspot.com/2025/02/one.html",
         adUrl: "https://www.effectiveratecpm.com/yj516zqeuh?key=67623d7811021ba7d072604ff121c586",
         title: "TSANTSAR SO",
         category: "Love at first sentence💘",
     },        
     {
         imgUrl: "https://bitly.cx/JAxKn",
-        videoUrl: "https://iuptelegram.blogspot.com/2025/02/me-zanyi-da-ita.html",
+        videoUrl: "https://hausanovelsdrs.blogspot.com/2025/02/me-zanyi-da-ita.html",
         adUrl: "https://www.effectiveratecpm.com/yj516zqeuh?key=67623d7811021ba7d072604ff121c586",
         title: "ME ZANYI DA ITA",
         category: "Best Novels",
@@ -1088,24 +1088,24 @@ footer.hide {
     },
     {
         imgUrl: "https://bitly.cx/InGlx",
-        videoUrl: "https://youtube.com/embed/iTNyJse9fdk",
+        videoUrl: "https://drive.google.com/drive/folders/1zCgTyHLCnEl2MgZs8eHzRLpLly0G9epB",
         adUrl: "https://www.effectiveratecpm.com/vuq0mnejn?key=7241c685c3c694f609c9eebacbd85a50",
         title: "RUWAN BAGAJA",
         category: "Battles & Empires 👑🥷",
         trending: true, // Mark as trending
     },
     {
-        imgUrl: "https://bitly.cx/UOHgu",
-        videoUrl: "https://iuptelegram.blogspot.com/2025/02/yaro-ne-dasunan-allah-mai-rahma-mai-jin.html",
+        imgUrl: "https://bitly.cx/hgnMs",
+        videoUrl: "https://hausanovelsdrs.blogspot.com/2025/02/yaro-ne-dasunan-allah-mai-rahma-mai-jin.html",
         adUrl: "https://www.effectiveratecpm.com/vuq0mnejn?key=7241c685c3c694f609c9eebacbd85a50",
         title: "YARO NE",
         category: "Love at first sentence💘",
     },
     {
-        imgUrl: "https://bit.ly/3Pi2GYX",
+        imgUrl: "https://bitly.cx/XMtdI",
         videoUrl: "https://youtube.com/embed/Ma9xquhYyT0",
         adUrl: "https://www.effectiveratecpm.com/yj516zqeuh?key=67623d7811021ba7d072604ff121c586",
-        title: "GOATMAN",
+        title: "RAUNIN ZUCIYA",
         category: "Dangerous Love 💔🔥",
         description: "A terrifying tale of a mythical creature.",
     },
@@ -1200,7 +1200,6 @@ const shuffleArray = (array) => {
     }
     return array;
 };
-
 
 const createDiscoverSection = () => {
     const discoverScroll = document.getElementById('discover-scroll');
@@ -1299,7 +1298,7 @@ const showDiscoverAndCategories = () => {
 };
 
 const showTrendingVideos = () => {
-    const trendingData = shuffleArray(data.filter(item => item.trending)); // Shuffle trending videos
+    const trendingData = data.filter(item => item.trending); // Filter trending videos
     const gridContainer = document.getElementById('grid-container');
     gridContainer.innerHTML = '';
 
@@ -1325,11 +1324,15 @@ const showTrendingVideos = () => {
     };
     gridContainer.appendChild(backButton);
 
-    // Add shuffled trending videos to the grid
-    trendingData.forEach(item => {
-        const frame = createFrame(item);
-        gridContainer.appendChild(frame);
-    });
+    // Add trending videos to the grid
+    if (trendingData.length > 0) {
+        trendingData.forEach(item => {
+            const frame = createFrame(item);
+            gridContainer.appendChild(frame);
+        });
+    } else {
+        showNotification('No Audio Novels found.', 'warning');
+    }
 };
 
 const showProfileSection = () => {
@@ -1405,7 +1408,7 @@ const showProfileSection = () => {
 };
 
 const showHomeVideos = () => {
-    const homeData = shuffleArray(data); // Shuffle all videos for the Home section
+    const homeData = data; // Use the entire data array for home videos
     const gridContainer = document.getElementById('grid-container');
     gridContainer.innerHTML = '';
 
@@ -1431,15 +1434,25 @@ const showHomeVideos = () => {
     };
     gridContainer.appendChild(backButton);
 
-    // Add shuffled home videos to the grid
-    homeData.forEach(item => {
-        const frame = createFrame(item);
-        gridContainer.appendChild(frame);
-    });
+    // Add home videos to the grid
+    if (homeData.length > 0) {
+        homeData.forEach(item => {
+            const frame = createFrame(item);
+            gridContainer.appendChild(frame);
+        });
+    } else {
+        showNotification('No home videos found.', 'warning');
+    }
 };
 
 const showUnlockedVideos = () => {
-    const unlockedData = getUnlockedVideos(); // Get unlocked videos in original order
+    const unlockedData = data.filter(item => {
+        const visited = localStorage.getItem(`${item.title}-ad-visited`);
+        const unlockTime = localStorage.getItem(`${item.title}-unlock-time`);
+        const currentTime = Date.now();
+        return visited && unlockTime && (currentTime - parseInt(unlockTime)) < 7400000; // Check if video is unlocked
+    });
+
     const gridContainer = document.getElementById('grid-container');
     gridContainer.innerHTML = '';
 
@@ -1472,7 +1485,7 @@ const showUnlockedVideos = () => {
             gridContainer.appendChild(listItem);
         });
     } else {
-        showNotification('No unlocked videos found.', 'warning');
+        showNotification('No unlocked Novels found.', 'warning');
     }
 };
 
@@ -1837,15 +1850,6 @@ const closeNav = () => {
     document.getElementById('video-player').src = '';
 };
 
-const getUnlockedVideos = () => {
-    return data.filter(item => {
-        const visited = localStorage.getItem(`${item.title}-ad-visited`);
-        const unlockTime = localStorage.getItem(`${item.title}-unlock-time`);
-        const currentTime = Date.now();
-        return visited && unlockTime && (currentTime - parseInt(unlockTime)) < 7400000; // Check if video is unlocked
-    });
-};
-
 const checkAndLockVideos = () => {
     data.forEach((item) => {
         const visited = localStorage.getItem(`${item.title}-ad-visited`);
@@ -1897,27 +1901,27 @@ setTimeout(() => {
         
         const videos = [
     { 
-        img: "https://img.youtube.com/vi/22w7z_lT6YM/maxresdefault.jpg", 
-        title: "Dragon", 
-        buttonTitle: "Watch Now", 
+        img: "https://bit.ly/4hGtbnr", 
+        title: "She has a heart of ice. 🌹", 
+        buttonTitle: "Read Now", 
         link: "https://moviebox-drs.netlify.app/"
     },
     { 
-        img: "https://img.youtube.com/vi/bc9q__VbYL4/maxresdefault.jpg", 
-        title: "The Lady Of Heaven", 
-        buttonTitle: "Watch Now", 
+        img: "https://bitly.cx/qmaGQ", 
+        title: "Time is running out. 🥀", 
+        buttonTitle: "Read Now", 
         link: "https://moviebox-drs.netlify.app/"
     },
     { 
-        img: "https://img.youtube.com/vi/qz4c9WPceVM/maxresdefault.jpg", 
-        title: "Take Over", 
-        buttonTitle: "Watch Now", 
+        img: "https://bitly.cx/HI0s4", 
+        title: "Everything is on the line. 🥀", 
+        buttonTitle: "Read Now", 
         link: "https://moviebox-drs.netlify.app/"
     },
     { 
-        img: "https://img.youtube.com/vi/-hvFs9ntZfc/maxresdefault.jpg", 
-        title: "Project 12", 
-        buttonTitle: "Watch Now", 
+        img: "https://bitly.cx/I3USx", 
+        title: "Possessive passion ignites.", 
+        buttonTitle: "Read Now", 
         link: "https://moviebox-drs.netlify.app/"
     }
 ];
@@ -2026,11 +2030,11 @@ createSlides();
 setInterval(nextSlide, 5000); // Auto-slide every 5 seconds
 
 const partnersData = [
-            { imgUrl: "https://bitly.cx/ph6T1", videoUrl: "https://youtube.com/embed/3_i60BLtN_s", title: "Video 1" },
-            { imgUrl: "https://bitly.cx/0zlN", videoUrl: "https://youtube.com/embed/CumW3IY1mMg", title: "Video 2" },
-            { imgUrl: "https://bitly.cx/ph6T1", videoUrl: "https://youtube.com/embed/SFtKVKoscqA", title: "Video 3" },
-            { imgUrl: "https://bitly.cx/0zlN", videoUrl: "https://youtube.com/embed/hJzZRl1C8X0", title: "Video 4" },
-            { imgUrl: "https://bitly.cx/ph6T1", videoUrl: "https://youtube.com/embed/BjkncLAZu80", title: "Video 5" },
+            { imgUrl: "https://bitly.cx/mXvED", videoUrl: "https://youtube.com/embed/3_i60BLtN_s", title: "Gidan Sarauta" },
+            { imgUrl: "https://bitly.cx/kzrm", videoUrl: "https://youtube.com/embed/CumW3IY1mMg", title: "Labarina" },
+            { imgUrl: "https://bitly.cx/mXvED", videoUrl: "https://youtube.com/embed/SFtKVKoscqA", title: "Gidan Sarauta" },
+            { imgUrl: "https://bitly.cx/kzrm", videoUrl: "https://youtube.com/embed/hJzZRl1C8X0", title: "Labarina" },
+            { imgUrl: "https://bitly.cx/mXvED", videoUrl: "https://youtube.com/embed/BjkncLAZu80", title: "Gidan Sarauta" },
         ];
 
         const partnersScroll = document.getElementById('partners-scroll');
@@ -2100,16 +2104,4 @@ const partnersData = [
 
     </script>
 </body>
-<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5252268332085749"
-     crossorigin="anonymous"></script>
-<!-- Hausa Novels -->
-<ins class="adsbygoogle"
-     style="display:block"
-     data-ad-client="ca-pub-5252268332085749"
-     data-ad-slot="8449541517"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>
-     (adsbygoogle = window.adsbygoogle || []).push({});
-</script>
 </html>
