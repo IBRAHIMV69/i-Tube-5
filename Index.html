@@ -12,15 +12,15 @@
             font-family: Arial, sans-serif;
             margin: 0;
             padding: 0;
-            background-color: #f9f9f9;
+            background: linear-gradient(500deg, #b21f1f, #000, #121212, #121212, #121212, #000);
         }
         header {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
-            height: 50px;
-            background-color: #fff;
+            height: 55px;
+            background-color: rgba(0, 0, 0, 0.8);
             display: flex;
             border: 1px solid #ccc;
             border-radius: 8px;
@@ -40,7 +40,7 @@
             font-size: 16px;
             margin: 0 9px;
             border: 1px solid #ccc;
-            background: linear-gradient(to right, #004d00, #00b300);
+            background: #;
             border-radius: 20px;
             padding: 9px 9px;
             font-weight: bold;
@@ -50,7 +50,7 @@
             flex: 0 1 100px;
             margin: 0 10px;            
             padding: 7px;
-            background-color: #f1f1f1;
+            background-color: #444;
             border: 2px solid #ccc;
             border-radius: 20px;
             font-size: 14px;
@@ -63,7 +63,7 @@
         .history-icon {
             font-size: 20px;
             cursor: pointer;
-            color: #333;
+            color: #ddd;
         }
         .history-icon:hover {
             color: #00b300;
@@ -194,8 +194,8 @@
         }
         .discover-item {
             flex: 0 0 auto;
-            width: 130px;
-            background-color: #f0f0f0;
+            width: 110px;
+            background-color: #121212;
             border-radius: 8px;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
             overflow: hidden;
@@ -214,7 +214,7 @@
         .discover-item .content h2 {
             font-size: 6px;
             margin: 0;
-            color: #333;
+            color: #fff;
         }
         .discover-item .content p {
             font-size: 0px;
@@ -222,7 +222,7 @@
             margin: 0px 0;
         }
         .discover-item button {
-    background: linear-gradient(to right, #004d00, #00b300);
+    background: linear-gradient(to right, #004d00, #ff6600);
     color: #fff;
     border: 1px solid #ccc;
     padding: 5px 2px;
@@ -248,6 +248,7 @@
             font-weight: bold;
             margin-bottom: 15px;
             display: flex;
+            color: #fff;
             margin-left: 7px;
             justify-content: space-between;
             align-items: center;
@@ -284,7 +285,7 @@
         .frame {
             flex: 0 0 auto;
             width: 112px;
-            background-color: #f0f0f0;
+            background-color: #121212;
             border-radius: 8px;
             margin-left: 5px;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
@@ -299,11 +300,12 @@
         }
         .frame .content h2 {
             font-size: 6px;
+            color: #fff;
             text-align: center;
             margin-top: 0px;
         }
         .frame .content button {
-            background: linear-gradient(to right, #004d00, #00b300);
+            background: linear-gradient(to right, #004d00, #ff6600);
             color: #fff;
             border: 1px solid #ccc;
             padding: 5px 5px;
@@ -587,7 +589,7 @@
 .bars-icon {
     font-size: 20px;
     cursor: pointer;
-    color: #333;
+    color: #ddd;
     margin-left: 10px;
 }
 
@@ -641,8 +643,9 @@ footer {
     justify-content: space-around;
     align-items: center;
     padding: 12px 0;
+    border: 1px solid #ccc;
     border-radius: 10px;
-    background-color: #fff;
+    background-color: rgba(0, 0, 0, 0.9);
     position: fixed;
     bottom: 0;
     left: 0;
@@ -654,7 +657,7 @@ footer {
 footer .nav-icon {
     flex: 1;
     text-align: center;
-    color: #333;
+    color: #ddd;
     transition: all 0.3s ease-in-out;
     cursor: pointer;
     font-size: 9.2px;
@@ -777,7 +780,7 @@ footer.hide {
     position: absolute;
     bottom: 20px;
     right: 15px;
-    background: linear-gradient(to right, #004d00, #00b300);
+    background: linear-gradient(to right, #004d00, #ff6600);
     color: white;
     font-size: 14px;
     padding: 8px 12px;
@@ -1002,13 +1005,13 @@ footer.hide {
 
 <!-- Bottom Navigation Bar -->
 <footer>
-    <div class="nav-icon" onclick="showHomeVideos()">
-        <i class="fas fa-layer-group"></i>
-        <span>Library</span>
+     <div class="nav-icon" onclick="showDiscoverAndCategories()">
+        <i class="fas fa-home"></i>
+        <span>Home</span>
     </div>
-    <div class="nav-icon" onclick="showDiscoverAndCategories()">
-        <i class="fas fa-book-open"></i>
-        <span>Discover</span>
+    <div class="nav-icon" onclick="showHomeVideos()">
+        <i class="fas fa-clapperboard"></i>
+        <span>Library</span>
     </div>
     <div class="nav-icon" onclick="showTrendingVideos()">
         <i class="fas fa-fire"></i>
@@ -1019,7 +1022,7 @@ footer.hide {
         <span>Unlocked</span>
     </div>
     <div class="nav-icon" onclick="showProfileSection()">
-         <i class="fab fa-app-store"></i>
+         <i class="fas fa-grip-horizontal"></i>
         <span>Apps</span>
     </div>
 </footer>
