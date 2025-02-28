@@ -12,7 +12,7 @@
             font-family: Arial, sans-serif;
             margin: 0;
             padding: 0;
-            background: linear-gradient(500deg, #121212, #333);
+            background: linear-gradient(500deg, #333, #121212, #121212, #333, #121212, #333, #121212, #333);
         }
         header {
             position: fixed;
@@ -20,7 +20,7 @@
             left: 0;
             width: 100%;
             height: 56px;
-            background-color: rgba(0, 0, 0, 0.8);
+            background-color: rgba(0, 0, 0, 0.7);
             display: flex;
             border: 1px solid #ccc;
             border-radius: 8px;
@@ -40,7 +40,7 @@
             font-size: 15px;
             margin: 0 9px;
             border: 1px solid #ccc;
-            background: #;
+            background: linear-gradient(to right, #004d00, #00b300);
             border-radius: 20px;
             padding: 9px 9px;
             font-weight: bold;
@@ -195,7 +195,7 @@
         .discover-item {
             flex: 0 0 auto;
             width: 110px;
-            background-color: #121212;
+            background-color: rgba(0, 0, 0, 0.3);
             border-radius: 8px;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
             overflow: hidden;
@@ -222,7 +222,7 @@
             margin: 0px 0;
         }
         .discover-item button {
-    background: linear-gradient(to right, #004d00, #ff);
+    background: linear-gradient(to right, #004d00, #00b300);
     color: #fff;
     border: 1px solid #ccc;
     padding: 5px 2px;
@@ -244,7 +244,7 @@
             padding: 2px;
         }
         .category-title {
-            font-size: 20px;
+            font-size: 17px;
             font-weight: bold;
             margin-bottom: 15px;
             display: flex;
@@ -287,14 +287,14 @@
             width: 112px;
             background-color: #121212;
             border-radius: 8px;
-            margin-left: 5px;
+            margin-left: 7px;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
             overflow: hidden;
             text-align: center;
         }
         .frame img {
             width: 100%;
-            aspect-ratio: 16 / 24;
+            aspect-ratio: 16 / 23;
             object-fit: cover;
             border-radius: 5px;
         }
@@ -305,7 +305,7 @@
             margin-top: 0px;
         }
         .frame .content button {
-            background: linear-gradient(to right, #004d00, #ff);
+            background: linear-gradient(to right, #004d00, #00b300);
             color: #fff;
             border: 1px solid #ccc;
             padding: 5px 5px;
@@ -703,7 +703,7 @@ footer.hide {
 .profile-item h4 {
     margin: 0;
     font-size: 8px;
-    color: #333;
+    color: #fff;
 }
 
 .profile-item p {
@@ -780,11 +780,11 @@ footer.hide {
     position: absolute;
     bottom: 20px;
     right: 15px;
-    background: linear-gradient(to right, #004d00, #ff6600);
+    background: linear-gradient(to right, #004d00, #00b300);
     color: white;
     font-size: 14px;
     padding: 8px 12px;
-    border-radius: 8px;
+    border-radius: 5px;
     border: none;
     cursor: pointer;
     display: flex;
@@ -826,6 +826,7 @@ footer.hide {
 
         .partners-title {
             font-size: 18px;
+            color: #fff;
             text-align: left;
             font-weight: bold;
             margin-bottom: 15px;
@@ -878,7 +879,7 @@ footer.hide {
         .partner-title {
             font-size: 14px;
             margin-top: 5px;
-            color: #333;
+            color: #fff;
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
@@ -1044,7 +1045,7 @@ footer.hide {
         category: "Algaita Dub-Studio",
     },
     {
-        imgUrl: "https://short-link.me/R0Vt",
+        imgUrl: "https://short-link.me/Rm6-",
         videoUrl: "https://mega.nz/embed/B5xjQDQL#635tqMQmikItwWsXWKMwTKyMTpQ8U5PX_cVTF4vv0_I",
         adUrl: "https://www.effectiveratecpm.com/yj516zqeuh?key=67623d7811021ba7d072604ff121c586",
         title: "DOKIN KARFE",
@@ -1495,8 +1496,8 @@ const createProfileItem = (item) => {
     const name = document.createElement('h4');
     name.textContent = item.name;
     name.style.margin = '0';
-    name.style.fontSize = '14px';
-    name.style.color = '#333';
+    name.style.fontSize = '12px';
+    name.style.color = '#fff';
 
     const description = document.createElement('p');
     description.textContent = item.description;
@@ -1509,7 +1510,7 @@ const createProfileItem = (item) => {
     openButton.style.backgroundColor = '#00b300';
     openButton.style.color = '#fff';
     openButton.style.border = 'none';
-    openButton.style.padding = '5px 10px';
+    openButton.style.padding = '7px 10px';
     openButton.style.borderRadius = '5px';
     openButton.style.cursor = 'pointer';
     openButton.style.fontSize = '12px';
@@ -1576,8 +1577,8 @@ const createUnlockedListItem = (item) => {
     const img = document.createElement('img');
     img.src = item.imgUrl;
     img.alt = item.title;
-    img.style.width = '80px';
-    img.style.height = '100px';
+    img.style.width = '105px';
+    img.style.height = '150px';
     img.style.objectFit = 'cover';
     img.style.borderRadius = '5px';
 
@@ -1588,7 +1589,7 @@ const createUnlockedListItem = (item) => {
     title.textContent = item.title;
     title.style.margin = '0';
     title.style.fontSize = '14px';
-    title.style.color = '#333';
+    title.style.color = '#fff';
 
     const description = document.createElement('p');
     description.textContent = item.description;
