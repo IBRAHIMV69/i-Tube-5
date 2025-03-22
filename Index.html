@@ -21,8 +21,13 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 15px;
+            padding: 10px;
+            font-size: 20px;
+            font-weight: bold;
             margin-bottom: 30px;
+        }
+        .header span {
+            color: #fff;
         }
         .balance {
             font-size: 1.2em;
@@ -165,7 +170,7 @@
         function openAd(url) {
             let adWindow = window.open(url, '_blank');
             setTimeout(() => {
-                miningData.balance += 0.02000;
+                miningData.balance += 0.00020;
                 miningData.rate = 0.05;
                 miningData.boostEnd = Date.now() + 3600000;
                 localStorage.setItem('piBalance', miningData.balance);
