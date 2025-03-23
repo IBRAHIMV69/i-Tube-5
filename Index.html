@@ -3,130 +3,330 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pi Mining</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <title>NIN ID Card</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
     <style>
         body {
-            background: linear-gradient(to bottom, #3b0c59, #220a35);
-            color: white;
             font-family: Arial, sans-serif;
-            text-align: center;
-            margin: 0;
-            padding: 20px;
-            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 200vh;
+            width: 80vh;
+            background-color: #f4f4f4;
+            flex-direction: column;
         }
-
-        .container {
-            max-width: 400px;
-            margin: 50px auto;
-            background: rgba(255, 255, 255, 0.08);
-            padding: 20px;
+        .id-card {
+            width: 480px;
+            height: 300px;
+            background: linear-gradient(to bottom, #eef7eb, #c8e6c9);
+            padding: 15px;
             border-radius: 10px;
-            backdrop-filter: blur(10px);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            text-align: left;
+            position: relative;
+            border: 2px solid #004d00;
+            overflow: hidden;
         }
-
-        .balance {
-            font-size: 1.5em;
-            margin-bottom: 15px;
+        .header {
+            text-align: left;
+            font-size: 18px;
+            font-weight: bold;
         }
-
-        .button {
-            background: #ff4444;
-            color: white;
-            padding: 12px;
-            border: none;
-            border-radius: 8px;
-            font-size: 1em;
+        .header .top {
+            color: #008000;
+            font-size: 20px;
+        }
+        .header .bottom {
+            color: black;
+            font-size: 17px;
+            font-weight: bold;
+        }
+        .coat-of-arms {
+            position: absolute;            
+            width: 350px;
+            height: auto;
+            opacity: 0.15;
+            top:  0px;
+            left: 90px;
+            z-index: 0;
+        }
+        .profile {
+            position: absolute;
+            left: 15px;
+            top: 70px;
+            text-align: center;
+            z-index: 1;
+        }
+        .profile img {
+            width: 110px;
+            height: 145px;
+            border-radius: 5px;
+            border: 2px solid #;
             cursor: pointer;
-            width: 100%;
-            margin-top: 10px;
         }
-
-        .button.active {
-            background: #00cc66;
+        .content {
+            position: absolute;
+            left: 140px;
+            top: px;
+            font-size: 14px;
+            color: #555;
+            z-index: 1;
+        }
+        input {
+            border: none;
+            background: transparent;
+            font-weight: bold;
+            font-size: 16px;
+            width: 300px;
+            text-transform: uppercase;
+        }
+        .qr-container {
+            position: absolute;
+            right: 20px;
+            top: 50px;
+            text-align: right;
+            z-index: 1;
+        }
+        .qr-code {
+            background: white;
+            padding: 5px;
+            border-radius: 5px;
+            width: 80px;
+            height: 80px;
+            margin-bottom: 5px;
+        }
+        .qr-text {
+            font-size: 20px;
+            text-align: center;
+            font-weight: bold;
+            color: black;
+            margin-top: 2px;
+        }
+        .issue-date-container {
+            text-align: center;
+            margin-top: 5px;
+        }
+        .issue-date-title {
+            font-size: 15px;
+            text-align: center;
+            font-weight: bold;
+            color: black;
+            margin-bottom: 5px;
+        }
+        .issue-date-value {
+            font-size: 14px;
+            font-weight: bold;
+            color: black;
+            text-align: center;
+            border: none;
+            background: transparent;
+            width: 90px;
+        }
+        .issue-date-value:focus {
+            outline: none;
+            border-bottom: 1px solid #004d00;
+        }
+        .nin-section {
+            position: absolute;
+            bottom: 15px;
+            width: 100%;
+            text-align: center;
+            font-size: 23px;
+            font-weight: bold;
+            color: black;
+            z-index: 1;
+        }
+        .nin-number {
+            font-size: 35px;
+            text-align: center;
+            font-weight: bold;
+            letter-spacing: 2px;
+            color: black;
+        }
+        .button {
+            margin-top: 20px;
+            padding: 10px 15px;
+            background: #f4f4f4;
+            color: #f4f4f4;
+            border: none;
+            cursor: pointer;
+            font-size: 16px;
+            border-radius: 5px;
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <h2><i class="fas fa-rocket"></i> Pi Mining</h2>
-        <div class="balance">
-            Balance: <span id="balance">0.00000</span> π
+
+    <div class="id-card" id="idCard">
+        <div class="header">
+            <div class="top">FEDERAL REPUBLIC OF NIGERIA</div>
+            <div class="bottom">DIGITAL NIN SLIP</div>
         </div>
 
-        <button class="button" id="mineBtn">
-            <i class="fas fa-power-off"></i> Start Mining
-        </button>
+        <img src="https://shortlink.uk/WMwt" class="coat-of-arms">
 
-        <button class="button" id="boostBtn">
-            <i class="fas fa-bolt"></i> Boost Mining (Watch Ad)
-        </button>
+        <div class="profile">
+            <input type="file" id="uploadImage" accept="image/*" style="display: none;">
+            <img id="profilePic" src="https://shortlink.uk/WP3Y" onclick="document.getElementById('uploadImage').click();">
+        </div>
 
-        <p id="status"><i class="fas fa-circle"></i> Mining Inactive</p>
+        <div class="content">
+            <p><b>SURNAME/NOM</b> <input type="text" id="surname" value="LAWAL"></p>
+            <p><b>GIVEN NAMES/PRENOMS</b> <input type="text" id="givenName" value="IBRAHIM,"></p>
+            <p><b>DATE OF BIRTH</b> <input type="text" id="dob" value="12 NOV 1997     SEX/SEXE: M"></p>
+        </div>
+
+        <div class="qr-container">
+            <div class="qr-code" id="qrcode"></div>
+            <div class="qr-text">NGA</div>
+            <div class="issue-date-container">
+                <div class="issue-date-title">ISSUE DATE</div>
+                <input type="text" id="issueDate" class="issue-date-value" value="21 FEB 2024">
+            </div>
+        </div>
+
+        <div class="nin-section">
+            National Identification Number (NIN)<br>
+            <input type="text" id="nin" class="nin-number" value="5245 007 5958">
+        </div>
     </div>
 
+    <button class="button" onclick="window.open('https://shortlink.uk/U4An', '_blank')">TURN BACK OF THE CARD</button>
+    </div>    
+
     <script>
-        const miningRate = 0.00001; // Pi per second
-        const adBoostAmount = 0.05; // Pi per ad watch
+        function generateQRCode() {
+            document.getElementById("qrcode").innerHTML = "";
+            new QRCode(document.getElementById("qrcode"), {
+                text: document.getElementById("nin").value,
+                width: 80,
+                height: 80
+            });
+        }
+        generateQRCode();
 
-        let miningData = {
-            balance: parseFloat(localStorage.getItem('piBalance')) || 0,
-            isMining: localStorage.getItem('isMining') === 'true',
-            lastUpdate: parseInt(localStorage.getItem('lastUpdate')) || Date.now()
-        };
+        document.getElementById("uploadImage").addEventListener("change", function(event) {
+            let reader = new FileReader();
+            reader.onload = function() {
+                document.getElementById("profilePic").src = reader.result;
+            };
+            reader.readAsDataURL(event.target.files[0]);
+        });
 
-        function updateBalance() {
-            if (miningData.isMining) {
-                let now = Date.now();
-                let elapsedTime = (now - miningData.lastUpdate) / 1000; // Convert to seconds
-                miningData.balance += elapsedTime * miningRate;
-                miningData.lastUpdate = now;
-                localStorage.setItem('lastUpdate', miningData.lastUpdate);
-                localStorage.setItem('piBalance', miningData.balance);
-            }
-            document.getElementById('balance').textContent = miningData.balance.toFixed(5);
+        function downloadID() {
+            html2canvas(document.getElementById('idCard')).then(canvas => {
+                let link = document.createElement('a');
+                link.href = canvas.toDataURL();
+                link.download = 'National_ID.png';
+                link.click();
+            });
         }
 
-        function updateDisplay() {
-            document.getElementById('balance').textContent = miningData.balance.toFixed(5);
-            document.getElementById('status').innerHTML = miningData.isMining ?
-                `<i class="fas fa-circle" style="color:#00cc66;"></i> Mining Active` :
-                `<i class="fas fa-circle" style="color:#ff4444;"></i> Mining Inactive`;
-
-            document.getElementById('mineBtn').textContent = miningData.isMining ? "Stop Mining" : "Start Mining";
-            document.getElementById('mineBtn').classList.toggle('active', miningData.isMining);
-        }
-
-        function toggleMining() {
-            miningData.isMining = !miningData.isMining;
-            miningData.lastUpdate = Date.now();
-            localStorage.setItem('isMining', miningData.isMining);
-            localStorage.setItem('lastUpdate', miningData.lastUpdate);
-            updateDisplay();
-        }
-
-        function boostMining() {
-            const adURL = "https://www.effectiveratecpm.com/vuq0mnejn?key=7241c685c3c694f609c9eebacbd85a50"; // Replace with actual Top Traffic ad link
-            localStorage.setItem("boostPending", "true");
-            window.open(adURL, "_blank"); 
-        }
-
-        function checkBoost() {
-            if (localStorage.getItem("boostPending") === "true") {
-                miningData.balance += adBoostAmount;
-                localStorage.setItem('piBalance', miningData.balance);
-                localStorage.removeItem("boostPending");
-                updateDisplay();
-                alert(`You earned ${adBoostAmount} π for watching the ad!`);
-            }
-        }
-
-        document.getElementById('mineBtn').addEventListener('click', toggleMining);
-        document.getElementById('boostBtn').addEventListener('click', boostMining);
-
-        setInterval(updateBalance, 1000); // Update balance every second
-        updateDisplay();
-        checkBoost();
+        document.getElementById("nin").addEventListener("input", generateQRCode);
     </script>
+
+</body>
+</htm<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NIN ID Card - Back</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 160vh;
+            width: 100vh;
+            background-color: #f4f4f4;
+            flex-direction: column;
+        }
+        .id-card-back {
+            width: 480px;
+            height: 300px;
+            background: linear-gradient(to bottom, #eef7eb, #c8e6c9);
+            padding: 15px;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            text-align: center;
+            position: relative;
+            border: 2px solid #004d00;
+        }
+        .coat-of-arms {
+            position: absolute;
+            width: 340px;
+            height: auto;
+            opacity: 0.15;
+            top: 35px;
+            left: 80px;
+            z-index: 0;
+        }
+        .disclaimer {
+            font-size: 14px;
+            text-align: center;
+            font-weight: bold;
+        }
+        .disclaimer h2 {
+            font-size: 18px;
+            font-weight: bold;
+        }
+        .disclaimer h3 {
+            font-size: 16px;
+            font-style: italic;
+            margin-bottom: 10px;
+        }
+        .disclaimer p {
+            font-size: 12px;
+            text-align: justify;
+            margin: 5px 10px;
+        }
+        .download-btn {
+            margin-top: 20px;
+            padding: 10px 15px;
+            background: green;
+            color: white;
+            border: none;
+            cursor: pointer;
+            font-size: 16px;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="id-card-back" id="idCardBack">
+        <img src="https://shortlink.uk/U4Ml" class="coat-of-arms">
+        
+        <div class="disclaimer">
+            <h2>DISCLAIMER</h2>
+            <h3>Trust, but verify</h3>
+            <p>Kindly ensure each time this ID is presented, that you verify the credentials using a Government APPROVED verification resource.</p>
+            <p>The details on the front of this NIN Slip must EXACTLY match the verification result.</p>
+
+            <h2>CAUTION!</h2>
+            <p>If this NIN was not issued to the person on the front of this document, please DO NOT attempt to scan, photocopy or replicate the personal data contained herein.</p>
+            <p>You are only permitted to scan the barcode for the purpose of identity verification.</p>
+            <p>The FEDERAL GOVERNMENT OF NIGERIA assumes no responsibility if you accept any variance on the scan result or do not scan the 2D barcode overleaf.</p>
+        </div>
+    </div>
+
+    <button class="download-btn" onclick="downloadBackID()">Download Back of ID</button>
+
+    <script>
+        function downloadBackID() {
+            html2canvas(document.getElementById('idCardBack')).then(canvas => {
+                let link = document.createElement('a');
+                link.href = canvas.toDataURL();
+                link.download = 'National_ID_Back.png';
+                link.click();
+            });
+        }
+    </script>
+
 </body>
 </html>
